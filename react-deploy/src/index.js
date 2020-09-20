@@ -13,16 +13,31 @@ ReactDOM.render(
   document.getElementById('root')
 );
 */
+
+
 function Air() {
-  const [info, setCarbonDioxide] = useState(null);
+  const  setCarbonDioxide = useState(null);
+  var response
 
   const fetchData = async () => {
-    const response = await axios.get(
-      'https://global-warming.org/api/co2-api'
-    );
 
-    setCarbonDioxide(response.data);
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = 'https://global-warming.org/api/co2-api'
+    const response = await axios.get(
+      proxyurl+url
+    )
+      .then(function(response){
+        console.log(response.data)
+        //setCarbonDioxide(response.data);
+    })
+      .catch(err => {
+        // what now?
+      console.log(err);
+    });
+
+
   };
+
   return (
       <div className="App">
         <h1>Air Quality</h1>
@@ -44,7 +59,14 @@ function Air() {
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
+//var express = require('express');
+// Import the library:
+//var cors = require('cors');
 
+//var app = express();
+
+// Then use it before your routes are set up:
+//app.use(cors());
 //start application
 const rootElement = document.getElementById('root');
 ReactDOM.render(<Air />, rootElement);
