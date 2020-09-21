@@ -5,49 +5,66 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 
-/*
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-*/
 
+var startCarbonDioxide=function(carbonArray){
+  console.log(carbonArray.co2[100]);
+  console.log(carbonArray.co2.length)
+  return carbonArray
+
+}
+var startMethane=function(methArray){
+  console.log(methArray.methane[100]);
+  console.log(methArray.methane.length)
+  return methArray
+
+}
+var startNitrous=function(nitArray){
+  console.log(nitArray.nitrous[100]);
+  console.log(nitArray.nitrous.length)
+  return nitArray
+
+}
 
 function Enviorment() {
 
-  function getApibyUrl(url){
-
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const response = axios.get(
-      proxyurl+url
-    ).then(function(response){
-        console.log(response.data)
-        //setCarbonDioxide(response.data);
-    }).catch(err => {
-        // what now?
-      console.log(err);
-    });
-  }
-  const  setCarbonDioxide = useState(null);
+  //const  [carbonDioxide, setCarbonDioxide] = useState(null);
 
   const fetchData = async () => {
+
+    function getApibyUrl(url, dataFunction){
+
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+      var response = axios.get(
+        proxyurl+url
+      ).then(function(response){
+          console.log(response.data)
+          return dataFunction(response.data)
+      }).catch(err => {
+          // what now?
+        console.log(err);
+      });
+
+    }
     //Air
     var url = 'https://global-warming.org/api/co2-api'
-    getApibyUrl(url)
+    const carbonData = getApibyUrl(url,startCarbonDioxide)
+    //console.log(carbonData);
+
     url = 'https://global-warming.org/api/methane-api'
-    getApibyUrl(url)
+    var responseData =  getApibyUrl(url,startMethane)
+    //console.log(responseData.result);
+
     url = 'https://global-warming.org/api/nitrous-oxide-api'
-    getApibyUrl(url)
+    responseData = getApibyUrl(url,startNitrous)
+    //console.log(responseData.result);
     //surface temperature
     url = 'https://global-warming.org/api/temperature-api'
-    getApibyUrl(url)
+    //responseData = getApibyUrl(url.result)
     //arctic ice
     url = 'https://global-warming.org/api/arctic-api'
-    getApibyUrl(url)
+    //responseData = getApibyUrl(url result)
   };
-
 
   return (
       <div className="App">
@@ -59,6 +76,7 @@ function Enviorment() {
           <button className="fetch-button" onClick={fetchData}>
             Fetch Data
           </button>
+
           <br />
         </div>
 
@@ -66,19 +84,8 @@ function Enviorment() {
   );
 }
 
-//function setCarbonDioxide(value: any ){}
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-//var express = require('express');
-// Import the library:
-//var cors = require('cors');
-
-//var app = express();
-
-// Then use it before your routes are set up:
-//app.use(cors());
 //start application
+
 const rootElement = document.getElementById('root');
+
 ReactDOM.render(<Enviorment />, rootElement);
-//serviceWorker.unregister();
