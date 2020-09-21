@@ -15,28 +15,39 @@ ReactDOM.render(
 */
 
 
-function Air() {
-  const  setCarbonDioxide = useState(null);
-  var response
+function Enviorment() {
 
-  const fetchData = async () => {
+  function getApibyUrl(url){
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = 'https://global-warming.org/api/co2-api'
-    const response = await axios.get(
+    const response = axios.get(
       proxyurl+url
-    )
-      .then(function(response){
+    ).then(function(response){
         console.log(response.data)
         //setCarbonDioxide(response.data);
-    })
-      .catch(err => {
+    }).catch(err => {
         // what now?
       console.log(err);
     });
+  }
+  const  setCarbonDioxide = useState(null);
 
-
+  const fetchData = async () => {
+    //Air
+    var url = 'https://global-warming.org/api/co2-api'
+    getApibyUrl(url)
+    url = 'https://global-warming.org/api/methane-api'
+    getApibyUrl(url)
+    url = 'https://global-warming.org/api/nitrous-oxide-api'
+    getApibyUrl(url)
+    //surface temperature
+    url = 'https://global-warming.org/api/temperature-api'
+    getApibyUrl(url)
+    //arctic ice
+    url = 'https://global-warming.org/api/arctic-api'
+    getApibyUrl(url)
   };
+
 
   return (
       <div className="App">
@@ -69,5 +80,5 @@ function Air() {
 //app.use(cors());
 //start application
 const rootElement = document.getElementById('root');
-ReactDOM.render(<Air />, rootElement);
+ReactDOM.render(<Enviorment />, rootElement);
 //serviceWorker.unregister();
