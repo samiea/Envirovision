@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
+import P5Wrapper from 'react-p5-wrapper';
+import sketch from './sketches/sketch';
 
 
 var startCarbonDioxide=function(carbonArray){
@@ -76,6 +78,7 @@ function Enviorment() {
           <button className="fetch-button" onClick={fetchData}>
             Fetch Data
           </button>
+          <P5Wrapper sketch={sketch}></P5Wrapper>
 
           <br />
         </div>
