@@ -27,7 +27,12 @@ var startNitrous=function(nitArray){
 
 function Enviorment() {
 
-  //const  [carbonDioxide, setCarbonDioxide] = useState(null);
+  const fill = function(){
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.fillRect(20, 20, 150, 100);
+
+  }
 
   const fetchData = async () => {
 
@@ -64,23 +69,23 @@ function Enviorment() {
     //arctic ice
     url = 'https://global-warming.org/api/arctic-api'
     //responseData = getApibyUrl(url result)
+    //change the screen
+
   };
+  fetchData()
 
   return (
-      <div className="App">
-        <h1>Air Quality</h1>
-        <h2>Fetch a list from an API and display it</h2>
 
-        /* Fetch data from API */
-        <div>
-          <button className="fetch-button" onClick={fetchData}>
-            Fetch Data
-          </button>
+    <html>
+      <body>
+        <div className="firstWave" ></div>
+        <div className="secondWave" ></div>
+        <div className="firstWave" ></div>
+        <div className="secondWave" ></div>
 
-          <br />
-        </div>
+      </body>
+    </html>
 
-      </div>
   );
 }
 

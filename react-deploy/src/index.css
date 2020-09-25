@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*this is the source i used to create a wave
+https://www.youtube.com/watch?v=Tf6qm5JMUXQ*/
+
+.firstWave {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background: blue;
+  animation: animateFirst 4s ease-in-out infinite;
+}
+@keyframes animateFirst{
+
+  0%,100%
+  {
+    clip-path:polygon(0% 50%, 15% 44%, 35% 50%,
+      54% 60%,70% 61%,84% 59%,100% 50%,100% 100%, 0% 100%);
+  }
+  50%
+  {
+    clip-path:polygon(0% 50%, 15% 65%, 35% 66%,
+      51% 62%, 67% 50%, 84% 45%, 100% 50%, 100% 100%, 0% 100%);
+  }
+}
+.secondWave {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  background: blue;
+  animation: animate 4s ease-in-out infinite;
+}
+@keyframes animate{
+
+  0%,100%
+  {
+    clip-path:polygon(0% 50%, 15% 65%, 35% 66%,
+      51% 62%, 67% 50%, 84% 45%, 100% 50%, 100% 100%, 0% 100%);
+  }
+  50%
+  {
+    clip-path:polygon(0% 50%, 15% 44%, 35% 50%,
+      54% 60%,70% 61%,84% 59%,100% 50%,100% 100%, 0% 100%);
+  }
+}
