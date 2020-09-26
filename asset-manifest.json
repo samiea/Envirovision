@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Ocean-Weather-Visualization/static/css/main.5f361e03.chunk.css",
+    "main.js": "/Ocean-Weather-Visualization/static/js/main.454b53e8.chunk.js",
+    "main.js.map": "/Ocean-Weather-Visualization/static/js/main.454b53e8.chunk.js.map",
+    "runtime-main.js": "/Ocean-Weather-Visualization/static/js/runtime-main.41f43b2d.js",
+    "runtime-main.js.map": "/Ocean-Weather-Visualization/static/js/runtime-main.41f43b2d.js.map",
+    "static/js/2.b887ee38.chunk.js": "/Ocean-Weather-Visualization/static/js/2.b887ee38.chunk.js",
+    "static/js/2.b887ee38.chunk.js.map": "/Ocean-Weather-Visualization/static/js/2.b887ee38.chunk.js.map",
+    "index.html": "/Ocean-Weather-Visualization/index.html",
+    "precache-manifest.6d031294396b01f7f6225d86e8337686.js": "/Ocean-Weather-Visualization/precache-manifest.6d031294396b01f7f6225d86e8337686.js",
+    "service-worker.js": "/Ocean-Weather-Visualization/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/Ocean-Weather-Visualization/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.b887ee38.chunk.js.LICENSE.txt": "/Ocean-Weather-Visualization/static/js/2.b887ee38.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/Ocean-Weather-Visualization/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.41f43b2d.js",
+    "static/js/2.b887ee38.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.454b53e8.chunk.js"
+  ]
+}
