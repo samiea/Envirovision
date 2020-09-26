@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios'; 
 
 // there is probably a way better way to do this, but new urls are added to end of the urls csv string
 ReactDOM.render(
