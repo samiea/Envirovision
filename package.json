@@ -11,10 +11,12 @@
     "cors": "^2.8.5",
     "d3": "^6.2.0",
     "heroku": "^7.43.2",
+    "p5": "^1.1.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
     "topojson": "^3.0.2"
+    "react-p5-wrapper": "^2.3.0",
+    "react-scripts": "3.4.3"
   },
   "scripts": {
     "predeploy": "npm run build",
