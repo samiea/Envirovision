@@ -9,23 +9,68 @@ import sketch from './sketches/sketch';
 
 
 var startCarbonDioxide=function(carbonArray){
-  console.log(carbonArray.co2[100]);
-  console.log(carbonArray.co2.length)
-  return carbonArray
+  return carbonArray;
 
 }
 var startMethane=function(methArray){
-  console.log(methArray.methane[100]);
-  console.log(methArray.methane.length)
-  return methArray
+  return methArray;
 
 }
 var startNitrous=function(nitArray){
-  console.log(nitArray.nitrous[100]);
-  console.log(nitArray.nitrous.length)
-  return nitArray
-
+  return nitArray;
 }
+var startTemp=function(temperatureArray){
+  return temperatureArray;
+}
+var startArc=function(arcArray){
+  return arcArray;
+}
+
+let loaded = false;
+let carbData = [];
+let metData = [];
+let iceData = [];
+let nitrData = [];
+let tempData = [];
+
+const pullData = async () => {
+
+  function getApibyUrl(url, dataFunction){
+
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+    var response = axios.get(
+      proxyurl+url
+    ).then(function(response){
+        console.log(response.data)
+        return dataFunction(response.data)
+    }).catch(err => {
+        // what now?
+      console.log(err);
+    });
+
+  }
+  //Air
+  var url = 'https://global-warming.org/api/co2-api'
+  carbData = getApibyUrl(url,startCarbonDioxide)
+  //console.log(carbonData);
+
+  url = 'https://global-warming.org/api/methane-api'
+  metData =  getApibyUrl(url,startMethane)
+  //console.log(responseData.result);
+
+  url = 'https://global-warming.org/api/nitrous-oxide-api'
+  nitrData = getApibyUrl(url,startNitrous)
+  //console.log(responseData.result);
+  //surface temperature
+  url = 'https://global-warming.org/api/temperature-api'
+  tempData = getApibyUrl(url, startTemp)
+  //arctic ice
+  url = 'https://global-warming.org/api/arctic-api'
+  iceData = getApibyUrl(url, startArc)
+
+  
+};
 
 function Enviorment() {
 
@@ -68,6 +113,8 @@ function Enviorment() {
     //responseData = getApibyUrl(url result)
   };
 
+  
+
   return (
       <div className="App">
         <h1>Air Quality</h1>
@@ -91,4 +138,11 @@ function Enviorment() {
 
 const rootElement = document.getElementById('root');
 
-ReactDOM.render(<Enviorment />, rootElement);
+pullData().then(function(response){
+    loaded = true;
+    console.log("data loaded");
+    ReactDOM.render(<Enviorment />, rootElement);
+  }
+);
+
+//ReactDOM.render(<Enviorment />, rootElement);
