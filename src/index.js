@@ -22,8 +22,8 @@ serviceWorker.unregister();
 =======
 
 var startCarbonDioxide=function(carbonArray){
-  console.log(carbonArray.co2[100]);
-  console.log(carbonArray.co2.length)
+  //console.log(carbonArray.co2[100]);
+  //console.log(carbonArray.co2.length)
   return carbonArray
 
 }
@@ -39,6 +39,8 @@ var startNitrous=function(nitArray){
   return nitArray
 
 }
+
+var carbonData = [];
 
 function Enviorment() {
 
@@ -63,8 +65,10 @@ function Enviorment() {
     }
     //Air
     var url = 'https://global-warming.org/api/co2-api'
-    const carbonData = getApibyUrl(url,startCarbonDioxide)
-    //console.log(carbonData);
+    //const carbonData = getApibyUrl(url,startCarbonDioxide)
+    carbonData = getApibyUrl(url, startCarbonDioxide);
+    console.log("First log: ");
+    console.log(carbonData);
 
     url = 'https://global-warming.org/api/methane-api'
     var responseData =  getApibyUrl(url,startMethane)
@@ -91,7 +95,8 @@ function Enviorment() {
           <button className="fetch-button" onClick={fetchData}>
             Fetch Data
           </button>
-          <P5Wrapper sketch={sketch}></P5Wrapper>
+          
+          <P5Wrapper sketch={sketch} carbon={carbonData}></P5Wrapper>
 
           <br />
         </div>
