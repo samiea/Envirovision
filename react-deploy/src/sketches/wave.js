@@ -17,7 +17,6 @@ export default function wave(p) {
   p.setup = () => {
     canvas = p.createCanvas(600, 300);
     w = p.width + 16;
-    console.log(Math.PI);
     dx = (2*Math.PI / period) * xspacing;
     yvalues = new Array(p.floor(w / xspacing));
     backvalues = new Array(p.floor(w / xspacing));
@@ -49,7 +48,7 @@ export default function wave(p) {
     // A simple way to draw the wave with an ellipse at each location
     for (let x = 0; x < yvalues.length; x++) {
       var waveHeight = 4*p.height / 8 + yvalues[x]
-      p.ellipse((x) * xspacing, p.height, 32,waveHeight);
+      p.ellipse((x) * xspacing, p.height, 64,waveHeight);
 
     }
   }
@@ -59,7 +58,7 @@ export default function wave(p) {
     // A simple way to draw the wave with an ellipse at each location
     for (let x = 0; x < backvalues.length; x++) {
       var waveHeight = 4*p.height / 8 + backvalues[x]
-      p.ellipse((x) * xspacing, p.height, 32,waveHeight);
+      p.ellipse((x) * xspacing, p.height, 64,waveHeight);
 
     }
   }
