@@ -7,27 +7,6 @@ import axios from 'axios';
 import P5Wrapper from 'react-p5-wrapper';
 import sketch from './sketches/sketch';
 
-
-var startCarbonDioxide=function(carbonArray){
-  return carbonArray;
-}
-
-var startMethane=function(methArray){
-  return methArray;
-}
-
-var startNitrous=function(nitArray){
-  return nitArray;
-}
-
-var startTemp=function(temperatureArray){
-  return temperatureArray;
-}
-
-var startArc=function(arcArray){
-  return arcArray;
-}
-
 let loaded = false;
 let carbData = [];
 let metData = [];
@@ -37,7 +16,7 @@ let tempData = [];
 
 const pullData = async () => {
 
-  function getApibyUrl(url, dataFunction){
+  function getApibyUrl(url, dataArray){
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
@@ -45,7 +24,10 @@ const pullData = async () => {
       proxyurl+url
     ).then(function(response){
         //console.log(response.data)
-        return dataFunction(response.data)
+        dataArray = response.data;
+        console.log("dataArray: ");
+        console.log(dataArray);
+        return dataArray;
     }).catch(err => {
         // what now?
       console.log(err);
@@ -55,24 +37,17 @@ const pullData = async () => {
 
   //Air
   var url = 'https://global-warming.org/api/co2-api'
-  carbData = getApibyUrl(url,startCarbonDioxide).then(function(response) {
-    console.log("After loading: ");
-    console.log(carbData);
-  });
+  getApibyUrl(url, carbData);
 
   url = 'https://global-warming.org/api/methane-api'
-  metData =  getApibyUrl(url,startMethane)
 
   url = 'https://global-warming.org/api/nitrous-oxide-api'
-  nitrData = getApibyUrl(url,startNitrous)
 
   //surface temperature
   url = 'https://global-warming.org/api/temperature-api'
-  tempData = getApibyUrl(url, startTemp)
 
   //arctic ice
   url = 'https://global-warming.org/api/arctic-api'
-  iceData = getApibyUrl(url, startArc)
 };
 
 function Environment() {
