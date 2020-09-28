@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
+import P5Wrapper from 'react-p5-wrapper';
+import wave from './sketches/wave';
 
 
 var startCarbonDioxide=function(carbonArray){
@@ -27,12 +29,7 @@ var startNitrous=function(nitArray){
 
 function Enviorment() {
 
-  const fill = function(){
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
-    ctx.fillRect(20, 20, 150, 100);
-
-  }
+  //const  [carbonDioxide, setCarbonDioxide] = useState(null);
 
   const fetchData = async () => {
 
@@ -69,23 +66,24 @@ function Enviorment() {
     //arctic ice
     url = 'https://global-warming.org/api/arctic-api'
     //responseData = getApibyUrl(url result)
-    //change the screen
-
   };
-  fetchData()
 
   return (
+      <div className="App">
+        <h1>Air Quality</h1>
+        <h2>Fetch a list from an API and display it</h2>
 
-    <html>
-      <body>
-        <div className="firstWave" ></div>
-        <div className="secondWave" ></div>
-        <div className="firstWave" ></div>
-        <div className="secondWave" ></div>
+        /* Fetch data from API */
+        <div>
+          <button className="fetch-button" onClick={fetchData}>
+            Fetch Data
+          </button>
+          <P5Wrapper sketch={wave}></P5Wrapper>
 
-      </body>
-    </html>
+          <br />
+        </div>
 
+      </div>
   );
 }
 
