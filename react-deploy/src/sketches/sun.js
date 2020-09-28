@@ -6,7 +6,7 @@ export default function sketch(p) {
     let canvas;
     var co2_array = 0;
     p.setup = () => {
-        canvas = p.createCanvas(600, 600);
+        canvas = p.createCanvas(600, 300);
         p.noStroke();
     }
 
@@ -14,7 +14,8 @@ export default function sketch(p) {
         //console.log('draw');
         //console.log(this);
         p.background('blue');
-        p.ellipse(300, 300, co2_array.length/10, co2_array.length/10);
+        p.ellipse(p.width, 0, co2_array.length/10, co2_array.length/10);
+        p.fill('yellow')
         //p.fill(color)
     }
 

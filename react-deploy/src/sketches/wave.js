@@ -15,7 +15,7 @@ export default function wave(p) {
   let back = 2 // back offset
 
   p.setup = () => {
-    canvas = p.createCanvas(710, 400);
+    canvas = p.createCanvas(600, 300);
     w = p.width + 16;
     console.log(Math.PI);
     dx = (2*Math.PI / period) * xspacing;
@@ -23,12 +23,12 @@ export default function wave(p) {
     backvalues = new Array(p.floor(w / xspacing));
   }
   p.draw = () => {
-    p.background(0);
+    p.background('blue');
     p.calcWave();
     p.renderWave();
     p.backWave();
   }
-  
+
   p.calcWave= () =>  {
     // Increment theta (try different values for
     // 'angular velocity' here)
