@@ -1,91 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 
+function GlobalWarmingData() {
+    // state hooks; reference: https://reactjs.org/docs/hooks-effect.html
+    const [count, setCount] = useState(0);
+    const [carbonData, setCarbonData] = useState({})
+    const [methaneData, setMethaneData] = useState({})
+    const [nitrousData, setNitrousData] = useState({})
+    const [temperatureData, setTemperatureData] = useState({})
 
-var startCarbonDioxide=function(carbonArray){
-  console.log(carbonArray.co2[100]);
-  console.log(carbonArray.co2.length)
-  return carbonArray
+    // reference: https://www.robinwieruch.de/react-hooks-fetch-data
+    useEffect(() => {
+        const fetchData = async () => {
+            let urls = [
+                "https://global-warming.org/api/co2-api/",
+                "https://global-warming.org/api/methane-api",
+                "https://global-warming.org/api/nitrous-oxide-api",
+                "https://global-warming.org/api/temperature-api",
+            ]
+            const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
-}
-var startMethane=function(methArray){
-  console.log(methArray.methane[100]);
-  console.log(methArray.methane.length)
-  return methArray
+            let promises = [];
+            urls.forEach(function(url) {
+                promises.push(axios(proxyurl + url))
+            })
 
-}
-var startNitrous=function(nitArray){
-  console.log(nitArray.nitrous[100]);
-  console.log(nitArray.nitrous.length)
-  return nitArray
+            // order of promises is retained; reference: https://stackoverflow.com/questions/28066429/promise-all-order-of-resolved-values/28066851
+            const data = await Promise.all(promises);
+            setCarbonData(data[0]);
+            setMethaneData(data[1]);
+            setNitrousData(data[2]);
+            setTemperatureData(data[3]);
 
-}
+            console.log(carbonData);
+            console.log(methaneData);
+            console.log(nitrousData);
+            console.log(temperatureData);
+        };
+  
+      fetchData();
+    }, []); // Or [] if effect doesn't need props or state
 
-function Enviorment() {
-
-  //const  [carbonDioxide, setCarbonDioxide] = useState(null);
-
-  const fetchData = async () => {
-
-    function getApibyUrl(url, dataFunction){
-
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
-      var response = axios.get(
-        proxyurl+url
-      ).then(function(response){
-          console.log(response.data)
-          return dataFunction(response.data)
-      }).catch(err => {
-          // what now?
-        console.log(err);
-      });
-
-    }
-    //Air
-    var url = 'https://global-warming.org/api/co2-api'
-    const carbonData = getApibyUrl(url,startCarbonDioxide)
-    //console.log(carbonData);
-
-    url = 'https://global-warming.org/api/methane-api'
-    var responseData =  getApibyUrl(url,startMethane)
-    //console.log(responseData.result);
-
-    url = 'https://global-warming.org/api/nitrous-oxide-api'
-    responseData = getApibyUrl(url,startNitrous)
-    //console.log(responseData.result);
-    //surface temperature
-    url = 'https://global-warming.org/api/temperature-api'
-    //responseData = getApibyUrl(url.result)
-    //arctic ice
-    url = 'https://global-warming.org/api/arctic-api'
-    //responseData = getApibyUrl(url result)
-  };
-
-  return (
-      <div className="App">
-        <h1>Air Quality</h1>
-        <h2>Fetch a list from an API and display it</h2>
-
-        /* Fetch data from API */
+    return (
         <div>
-          <button className="fetch-button" onClick={fetchData}>
-            Fetch Data
-          </button>
-
-          <br />
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>
+                Click me
+            </button>
         </div>
-
-      </div>
-  );
+    );
 }
-
-//start application
 
 const rootElement = document.getElementById('root');
 
-ReactDOM.render(<Enviorment />, rootElement);
+ReactDOM.render(<GlobalWarmingData />, rootElement);
