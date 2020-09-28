@@ -10,18 +10,20 @@ import sketch from './sketches/sketch';
 
 var startCarbonDioxide=function(carbonArray){
   return carbonArray;
-
 }
+
 var startMethane=function(methArray){
   return methArray;
-
 }
+
 var startNitrous=function(nitArray){
   return nitArray;
 }
+
 var startTemp=function(temperatureArray){
   return temperatureArray;
 }
+
 var startArc=function(arcArray){
   return arcArray;
 }
@@ -42,7 +44,7 @@ const pullData = async () => {
     var response = axios.get(
       proxyurl+url
     ).then(function(response){
-        console.log(response.data)
+        //console.log(response.data)
         return dataFunction(response.data)
     }).catch(err => {
         // what now?
@@ -50,71 +52,30 @@ const pullData = async () => {
     });
 
   }
+
   //Air
   var url = 'https://global-warming.org/api/co2-api'
-  carbData = getApibyUrl(url,startCarbonDioxide)
-  //console.log(carbonData);
+  carbData = getApibyUrl(url,startCarbonDioxide).then(function(response) {
+    console.log("After loading: ");
+    console.log(carbData);
+  });
 
   url = 'https://global-warming.org/api/methane-api'
   metData =  getApibyUrl(url,startMethane)
-  //console.log(responseData.result);
 
   url = 'https://global-warming.org/api/nitrous-oxide-api'
   nitrData = getApibyUrl(url,startNitrous)
-  //console.log(responseData.result);
+
   //surface temperature
   url = 'https://global-warming.org/api/temperature-api'
   tempData = getApibyUrl(url, startTemp)
+
   //arctic ice
   url = 'https://global-warming.org/api/arctic-api'
   iceData = getApibyUrl(url, startArc)
-
-  
 };
 
-function Enviorment() {
-
-  //const  [carbonDioxide, setCarbonDioxide] = useState(null);
-
-  const fetchData = async () => {
-
-    function getApibyUrl(url, dataFunction){
-
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
-      var response = axios.get(
-        proxyurl+url
-      ).then(function(response){
-          console.log(response.data)
-          return dataFunction(response.data)
-      }).catch(err => {
-          // what now?
-        console.log(err);
-      });
-
-    }
-    //Air
-    var url = 'https://global-warming.org/api/co2-api'
-    const carbonData = getApibyUrl(url,startCarbonDioxide)
-    console.log("First log: ");
-    console.log(carbonData);
-
-    url = 'https://global-warming.org/api/methane-api'
-    var responseData =  getApibyUrl(url,startMethane)
-    //console.log(responseData.result);
-
-    url = 'https://global-warming.org/api/nitrous-oxide-api'
-    responseData = getApibyUrl(url,startNitrous)
-    //console.log(responseData.result);
-    //surface temperature
-    url = 'https://global-warming.org/api/temperature-api'
-    //responseData = getApibyUrl(url.result)
-    //arctic ice
-    url = 'https://global-warming.org/api/arctic-api'
-    //responseData = getApibyUrl(url result)
-  };
-
-  
+function Environment() {
 
   return (
       <div className="App">
@@ -123,8 +84,8 @@ function Enviorment() {
 
         /* Fetch data from API */
         <div>
-          <button className="fetch-button" onClick={fetchData}>
-            Fetch Data
+          <button className="fetch-button" onClick={pullData}>
+            Pull Data
           </button>
           
           <P5Wrapper sketch={sketch} carbon={carbData}></P5Wrapper>
@@ -143,8 +104,8 @@ const rootElement = document.getElementById('root');
 pullData().then(function(response){
     loaded = true;
     console.log("data loaded");
-    ReactDOM.render(<Enviorment />, rootElement);
+    ReactDOM.render(<Environment />, rootElement);
   }
 );
 
-//ReactDOM.render(<Enviorment />, rootElement);
+//ReactDOM.render(<Environment />, rootElement);
