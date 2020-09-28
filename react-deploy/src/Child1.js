@@ -3,7 +3,7 @@ import './Child1.css'
 
 import P5Wrapper from 'react-p5-wrapper';
 import sun from './sketches/sun';
-import co2Length from './sketches/sun'
+//import co2Length from './sketches/sun'
 
 
 class Child1 extends React.Component {
@@ -18,7 +18,7 @@ class Child1 extends React.Component {
       //console.log(this.state);
         return (
 
-            <P5Wrapper sketch={sun} co2Array = {this.props}></P5Wrapper>
+            <P5Wrapper sketch={sun} tempArray = {this.props}></P5Wrapper>
 
             //<P5Wrapper sketch={wave} ></P5Wrapper>
         );

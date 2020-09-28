@@ -4,7 +4,7 @@
 
 export default function sketch(p) {
     let canvas;
-    var co2_array = 0;
+    var temp_array = 0;
     p.setup = () => {
         canvas = p.createCanvas(600, 300);
         p.noStroke();
@@ -14,7 +14,7 @@ export default function sketch(p) {
         //console.log('draw');
         //console.log(this);
         p.background('blue');
-        p.ellipse(p.width, 0, co2_array.length/10, co2_array.length/10);
+        p.ellipse(p.width, 0, temp_array.length/10, temp_array.length/10);
         p.fill('yellow')
         //p.fill(color)
     }
@@ -22,8 +22,8 @@ export default function sketch(p) {
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
       if(canvas){ //Make sure the canvas has been created
         console.log('customProp');
-        console.log(newProps.co2Array.carbonData);
-        co2_array = newProps.co2Array.carbonData
+        console.log(newProps.tempArray);
+        temp_array = newProps.tempArray.tempData
       }
         //color = newProps.color
         //co2Length = newProps.co2Length

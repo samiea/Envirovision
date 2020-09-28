@@ -64,7 +64,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Child1
-                    carbonData={this.state.carbonData} // need to pass data into children via props
+                    tempData={this.state.temperatureData} // need to pass data into children via props
                 />
                 <Child2
                 />
