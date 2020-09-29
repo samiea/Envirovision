@@ -4,6 +4,13 @@ import Child1 from './Child1' // import both children
 import Child2 from './Child2'
 import axios from 'axios'; // used for API stuff
 
+// below imports are for static files to avoid 429 errors from requests while testing
+import carbonJSON from './static/carbon.json'
+import methaneJSON from './static/methane.json'
+import nitrousJSON from './static/nitrous.json'
+import temperatureJSON from './static/temperature.json'
+// end testing-related import block
+
 class App extends React.Component {
     // you can create class-scope fields in here like in Java
     constructor(props) {
@@ -11,10 +18,11 @@ class App extends React.Component {
         this.handleQuarterChange = this.handleQuarterChange.bind(this); // notice that functions need to be binded
         this.handleCountyChange = this.handleCountyChange.bind(this);
         this.state = { // you can add new states here
-            carbonData: null,
-            methaneData: null,
-            nitrousData: null,
-            temperatureData: null,
+            // initialize below states to null if not using static data for testing
+            carbonData: carbonJSON.co2,
+            methaneData: methaneJSON.methane,
+            nitrousData: nitrousJSON.nitrous,
+            temperatureData: temperatureJSON.result,
             dataIsLoaded: false
         };
     }
@@ -51,7 +59,7 @@ class App extends React.Component {
 
     componentDidMount() { // this is called when the page is initially loaded/mounted
         console.log("Parent Mounted");
-        this.loadData();
+        // this.loadData(); // comment this out if using static files; loadData() will make requests
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) { // when re-render occurs, componentDidUpdate() is called
