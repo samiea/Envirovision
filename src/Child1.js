@@ -8,20 +8,21 @@ class Child1 extends React.Component {
         this.state = {};
     }
 
-    render() {
-        return (
-            <P5Wrapper sketch={sun} tempArray={this.props}></P5Wrapper>
-        );
-    }
-
     componentDidMount() {
         console.log("Child1 Mounted");
+        console.log(this.props.carbonData);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("Child1 Updated");
         //console.log(this.props.carbonData); // access data from props; prints data after re-render
         // recall that setting the state forced re-render, causing componentDidUpdate() to be called by children
+    }
+
+    render() {
+        return (
+            <P5Wrapper sketch={sun} carbArray={this.props}></P5Wrapper>
+        );
     }
 }
 
