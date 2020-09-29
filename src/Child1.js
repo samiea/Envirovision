@@ -10,7 +10,6 @@ class Child1 extends React.Component {
 
     componentDidMount() {
         console.log("Child1 Mounted");
-        console.log(this.props.carbonData);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -21,7 +20,7 @@ class Child1 extends React.Component {
 
     render() {
         return (
-            <P5Wrapper sketch={sun} carbArray={this.props}></P5Wrapper>
+            <P5Wrapper sketch={sun} carbArray={this.props.carbonData}></P5Wrapper>
         );
     }
 }

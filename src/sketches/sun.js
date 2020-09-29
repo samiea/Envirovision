@@ -5,7 +5,7 @@ export default function sketch(p) {
     p.setup = () => {
         canvas = p.createCanvas(600, 300);
         p.noStroke();
-        p.fill(Number(carbArray.carbonData[0].trend));
+        p.fill(Number(carbArray[0].trend));
         console.log("In sketch: ");
         console.log(carbArray);
     }
