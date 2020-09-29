@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import P5Wrapper from 'react-p5-wrapper';
 import sun from './sketches/sun';
-import wave from './sketches/wave';
 
 class Child1 extends React.Component {
     constructor(props) {
