@@ -10,6 +10,7 @@
     "axios": "^0.20.0",
     "cors": "^2.8.5",
     "d3": "^6.2.0",
+    "d3-simple-slider": "^1.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
