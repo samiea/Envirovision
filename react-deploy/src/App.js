@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Child1 from './Child1' // import both children
 import Child2 from './Child2'
+import Child3 from './Child3'
 import axios from 'axios'; // used for API stuff
 
 
@@ -68,6 +69,7 @@ class App extends React.Component {
                 />
                 <Child2
                 />
+                <Child3/>
             </div>
         );
     }
