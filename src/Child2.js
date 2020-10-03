@@ -1,6 +1,9 @@
 import React from 'react'
 import './Child2.css'
 
+import P5Wrapper from 'react-p5-wrapper';
+import wave from './sketches/wave';
+
 class Child2 extends React.Component {
     constructor(props) {
         super(props);
@@ -9,8 +12,7 @@ class Child2 extends React.Component {
 
     render() {
         return (
-            <div className="Child2" >
-            </div>
+          <P5Wrapper sketch={wave} ></P5Wrapper>
         );
     }
 
