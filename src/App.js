@@ -10,6 +10,9 @@ import methaneJSON from './static/methane.json'
 import nitrousJSON from './static/nitrous.json'
 import temperatureJSON from './static/temperature.json'
 
+//get plastic //repeat for others
+import macroGrowth2050 from './plastic_pollution/macroGrowth2050.json'
+
 import * as d3 from 'd3';
 // import {sliderBottom} from 'd3-simple-slider';
 // end testing-related import block
@@ -25,6 +28,10 @@ class App extends React.Component {
             methaneData: methaneJSON.methane,
             nitrousData: nitrousJSON.nitrous,
             temperatureData: temperatureJSON.result,
+
+            //get plastic //repeat for others
+            macroGrowth2050: macroGrowth2050.macroGrowth2050,
+
             currentDate: new Date(), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             dataIsLoaded: false
         };
