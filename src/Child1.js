@@ -32,12 +32,14 @@ class Child1 extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("Child1 Updated");
+        console.log(prevProps);
         //console.log("didUpdate");
 
         //console.log(this); // access data from props; prints data after re-render
-        //this.state=this.props// recall that setting the state forced re-render, causing componentDidUpdate() to be called by children
+        this.state=this.props// recall that setting the state forced re-render, causing componentDidUpdate() to be called by children
 
     }
+
 
 }
 

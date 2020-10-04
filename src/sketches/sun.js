@@ -60,12 +60,13 @@ export default function sketch(p) {
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
       if(canvas){ //Make sure the canvas has been created
         //console.log('customProp');
-        //console.log(newProps.tempArray);
-        temp_array = newProps.tempArray.tempData
+
         //console.log(newProps.tempArray.tempData);
 
       }
-
+      console.log('do this');
+      console.log(newProps.tempArray.tempArray);
+      temp_array = newProps.tempArray.tempArray
     }
 
 

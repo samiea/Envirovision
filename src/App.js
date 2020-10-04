@@ -33,12 +33,12 @@ class App extends React.Component {
     loadData() {
         const fetchData = async () => {
             const proxyurl = "https://cors-anywhere.herokuapp.com/"; // proxy url that is used in combination with real url
-            
+
             let promises = []; // make an array of promises
             this.props.urls.split(",").forEach(function(url) {
                 promises.push(axios(proxyurl + url)); // push request onto promise array
             })
-            
+
             // order of promises is retained; reference: https://stackoverflow.com/questions/28066429/promise-all-order-of-resolved-values/28066851
             const data = await Promise.all(promises);
 
@@ -61,7 +61,7 @@ class App extends React.Component {
 
         let startDate = new Date("2004-11-01");
         let endDate = new Date("2017-04-01");
-        
+
         let margin = {top:50, right:50, bottom:0, left:50};
         let width = 960 - margin.left - margin.right;
         let height = 500 - margin.top - margin.bottom;
@@ -92,7 +92,7 @@ class App extends React.Component {
                     button.text("Pause"); // change text to pause
                 }
             })
-        
+
 
         let svg = d3.select(".App") // appends svg on top of .App svg
             .append("svg") // add new svg on top of exterior svg
@@ -148,7 +148,7 @@ class App extends React.Component {
                 case "ArrowLeft":
                     currentValue = // ensure handle does not decrement below zero
                         (currentValue === 0) ? currentValue : currentValue - 1;
-                    update(x.invert(currentValue)); // shift handle one to left 
+                    update(x.invert(currentValue)); // shift handle one to left
                     break;
                 case "ArrowRight":
                     currentValue++; // increment current value
@@ -188,7 +188,7 @@ class App extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) { // when re-render occurs, componentDidUpdate() is called
         console.log("Parent Updated");
-        console.log(this.state.currentDate);
+
     }
 
     render() {
@@ -196,7 +196,7 @@ class App extends React.Component {
             <div id="App" className="App">
                 <Child1
                     currentDate={this.state.currentDate}
-                    carbonData={this.state.carbonData} // need to pass data into children via props
+                    tempArray={this.state.temperatureData} // need to pass data into children via props
                 />
                 <Child2
                     currentDate={this.state.currentDate}
