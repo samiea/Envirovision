@@ -1,12 +1,13 @@
-import "../libs/p5sound";
 import p5 from "p5";
+import "../libs/p5.sound.js";
+( <any>window ).p5 = p5;
 
 export default function sketch(p) {
-    let canvas;
-    let osc;
-    let playing;
-    let freq;
-    let amp;
+    var canvas = p.createCanvas(600, 300);
+    var osc;
+    var playing;
+    var freq;
+    var amp;
 
     function playOscillator() {
         osc.start();
@@ -16,9 +17,10 @@ export default function sketch(p) {
     }
 
     p.setup = () => {
-        canvas = p.createCanvas(600, 300);
+        var canvas = p.createCanvas(600, 300);
         canvas.mousePressed(playOscillator);
-        osc = new p5.Oscillator('sine');
+        var osc = new p5.Oscillator('sine');
+        console.log("Setup actually ran");
     }
 
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
