@@ -13,6 +13,23 @@
     stroke-linecap: round;
 }
 
+.slider {
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    background-color : antiquewhite;
+    left: 5%;
+    top: 70%;
+    width: 90%;
+    height: 25%;
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.App .label {
+    font-size: 15px;
+}
+
 .App .track {
     stroke: #000;
     stroke-opacity: 0.3;
@@ -38,7 +55,7 @@
     stroke-width: 1.25px;
 }
 
-#play-button {
+/* #play-button {
     position: absolute;
     top: 140px;
     left: 50px;
@@ -51,6 +68,16 @@
     padding: 0 12px;
     width: 60px;
     cursor: pointer;
+    height: 30px;
+} */
+
+#play-button {
+    background: #f08080;
+    border-radius: 3px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 60px;
     height: 30px;
 }
 

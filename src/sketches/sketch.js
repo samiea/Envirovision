@@ -1,5 +1,8 @@
+import e from "cors";
+import { isCompositeComponent } from "react-dom/test-utils";
+
 export default function sketch(p) {
-    let canvas;
+    let canvas = null;
 
     p.setup = () => {
         canvas = p.createCanvas(600, 600);

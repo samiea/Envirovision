@@ -20,7 +20,7 @@ import * as d3 from 'd3';
 class App extends React.Component {
     // you can create class-scope fields in here like in Java
     constructor(props) {
-        super(props);
+        super();
         this.createSlider = this.createSlider.bind(this);
         this.state = { // you can add new states here
             // initialize below states to null if not using static data for testing
@@ -35,6 +35,32 @@ class App extends React.Component {
             currentDate: new Date(), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             dataIsLoaded: false
         };
+    }
+
+    render() {
+        return (
+            <div id="App" className="App">
+                <Child1
+                    currentDate={this.state.currentDate}
+                    temperatureData={this.state.temperatureData} // need to pass data into children via props
+                />
+                <Child2
+                    currentDate={this.state.currentDate}
+                />
+                {/* <button id="play-button">Play</button> */}
+            </div>
+        );
+    }
+
+    componentDidMount() { // this is called when the page is initially loaded/mounted
+        console.log("Parent Mounted");
+        // this.loadData(); // comment this out if using static files; loadData() will make API requests
+        this.createSlider(d3.select(".App"));
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) { // when re-render occurs, componentDidUpdate() is called
+        console.log("Parent Updated");
+
     }
 
     loadData() {
@@ -59,23 +85,41 @@ class App extends React.Component {
         fetchData();
     }
 
-    createSlider() {
+    createSlider(element) {
         const self = this;
 
         let formatDateIntoYear = d3.timeFormat("%Y");
-        let formatDate = d3.timeFormat("%B %d, %Y");
-        // https://github.com/d3/d3-time-format
+        let formatDate = d3.timeFormat("%d %B %Y"); // https://github.com/d3/d3-time-format
 
         let startDate = new Date("2004-11-01");
         let endDate = new Date("2017-04-01");
 
-        let margin = {top:50, right:50, bottom:0, left:50};
-        let width = 960 - margin.left - margin.right;
-        let height = 500 - margin.top - margin.bottom;
+        let margin = {top:50, right:50, bottom:0, left:75};
+        let width = window.innerWidth - margin.left - margin.right;
+        let height = 200 - margin.top - margin.bottom;
 
         let timer = 0;
         let currentValue = 0;
-        let targetValue = width;
+        let targetValue = width - 50;
+
+        let sliderRange = element // appends svg on top of .App svg
+            .append("svg") // add new svg on top of exterior svg
+            .attr("width", width + margin.left + margin.right) // set width of svg
+            .attr("height", height + margin.top + margin.bottom); // set height of svg
+
+        let slider = sliderRange.append("g") // create the slider
+            .attr("class", "slider") // apply slider css properties
+            .attr("transform", "translate(" + margin.left + "," + height / 3 + ")"); // shift from left and make it higher
+
+        slider
+            .append("foreignObject")
+            .attr("x", 60)
+            .attr("y", 60)
+            .attr("width", 60)
+            .attr("height", 30)
+            .html(function(d) {
+                return '<button id="play-button">Play</button>'
+            })
 
         let playButton = d3.select("#play-button"); // select play button
 
@@ -98,18 +142,8 @@ class App extends React.Component {
                     }, 100); // loops for about 20 seconds going from month to month
                     button.text("Pause"); // change text to pause
                 }
-            })
-
-
-        let svg = d3.select(".App") // appends svg on top of .App svg
-            .append("svg") // add new svg on top of exterior svg
-            .attr("width", width + margin.left + margin.right) // set width of svg
-            .attr("height", height + margin.top + margin.bottom); // set height of svg
-
-        let slider = svg.append("g") // create the slider
-            .attr("class", "slider") // apply slider css properties
-            .attr("transform", "translate(" + margin.left + "," + height / 5 + ")"); // shift from left and make it higher
-
+            });
+            
         let x = d3.scaleTime() // https://observablehq.com/@d3/d3-scaletime
             .domain([startDate, endDate]) // use timescale domain between start and end dates
             .range([0, targetValue]) // define range of slider being from beginning to end of its range
@@ -187,31 +221,6 @@ class App extends React.Component {
         }
     }
 
-    componentDidMount() { // this is called when the page is initially loaded/mounted
-        console.log("Parent Mounted");
-        // this.loadData(); // comment this out if using static files; loadData() will make API requests
-        this.createSlider();
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) { // when re-render occurs, componentDidUpdate() is called
-        console.log("Parent Updated");
-
-    }
-
-    render() {
-        return (
-            <div id="App" className="App">
-                <Child1
-                    currentDate={this.state.currentDate}
-                    tempArray={this.state.temperatureData} // need to pass data into children via props
-                />
-                <Child2
-                    currentDate={this.state.currentDate}
-                />
-                <button id="play-button">Play</button>
-            </div>
-        );
-    }
 }
 
 export default App;

@@ -6,7 +6,7 @@ import wave from './sketches/wave';
 
 class Child2 extends React.Component {
     constructor(props) {
-        super(props);
+        super();
         this.state = { };
     }
 
