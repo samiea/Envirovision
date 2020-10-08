@@ -12,7 +12,7 @@ class Child2 extends React.Component {
 
     render() {
         return (
-          <P5Wrapper sketch={wave} ></P5Wrapper>
+          <div></div>
         );
     }
 
