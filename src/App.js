@@ -39,7 +39,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div id="App" className="App">
+            <div id="App" className="App-container">
                 <Child1
                     currentDate={this.state.currentDate}
                     temperatureData={this.state.temperatureData} // need to pass data into children via props
@@ -55,7 +55,7 @@ class App extends React.Component {
     componentDidMount() { // this is called when the page is initially loaded/mounted
         console.log("Parent Mounted");
         // this.loadData(); // comment this out if using static files; loadData() will make API requests
-        this.createSlider(d3.select(".App"));
+        this.createSlider(d3.select(".App-container"));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) { // when re-render occurs, componentDidUpdate() is called
@@ -85,139 +85,142 @@ class App extends React.Component {
         fetchData();
     }
 
-    createSlider(element) {
-        const self = this;
+    createSlider(element) { // parameter is the App-container svg body
+        const self = this; // reference constructor
 
         let formatDateIntoYear = d3.timeFormat("%Y");
-        let formatDate = d3.timeFormat("%d %B %Y"); // https://github.com/d3/d3-time-format
+        let formatDate = d3.timeFormat("%d %B %Y"); // DD MM YY https://github.com/d3/d3-time-format
 
-        let startDate = new Date("2004-11-01");
-        let endDate = new Date("2017-04-01");
+        let startDate = new Date("2004-11-01"); // subject to change
+        let endDate = new Date("2017-04-01"); // subject to change
 
         let margin = {top:50, right:50, bottom:0, left:75};
-        let width = window.innerWidth - margin.left - margin.right;
-        let height = 200 - margin.top - margin.bottom;
+        let width = window.innerWidth; // - margin.left - margin.right;
 
         let timer = 0;
         let currentValue = 0;
         let targetValue = width - 50;
+        console.log(targetValue);
 
         let sliderRange = element // appends svg on top of .App svg
-            .append("svg") // add new svg on top of exterior svg
-            .attr("width", width + margin.left + margin.right) // set width of svg
-            .attr("height", height + margin.top + margin.bottom); // set height of svg
+            .append("div")
+            .classed("slider-svg", true) // container class to make iresponsive
+            .attr("id", "App");
 
-        let slider = sliderRange.append("g") // create the slider
-            .attr("class", "slider") // apply slider css properties
-            .attr("transform", "translate(" + margin.left + "," + height / 3 + ")"); // shift from left and make it higher
+        let gRange = sliderRange // gRange is the svg body that will be made responsive
+            .append("svg") // append the responsive svg container
+            .attr("preserveAspectRatio", "xMinYMin meet") // responsive svg container needs to preserve aspect ratio for responsiveness
+            .attr("viewBox", `0 0 ${window.innerWidth + margin.left * 2} 200`) // set aspect ratio for slider svg body
+            // it seems that ADDING margin would actually shrink the slider svg body
+            .append("g") // overlay the slider svg body; now gRange reflects the slider body
+            .attr("transform", "translate(" + margin.left + ", 100)") // shift slider to right and down
+            // .classed("class", "slider") // apply slider css properties
 
-        slider
-            .append("foreignObject")
+        gRange // we want to add a foreign object embodied in a html element
+            .append("foreignObject") // append the foreign object then set coordinates relative to slider svg body
             .attr("x", 60)
             .attr("y", 60)
-            .attr("width", 60)
+            .attr("width", 60) // set width and height of the play button
             .attr("height", 30)
-            .html(function(d) {
+            .html(function(d) { // this is the html element we want to append
                 return '<button id="play-button">Play</button>'
             })
 
-        let playButton = d3.select("#play-button"); // select play button
+        let playButton = d3.select("#play-button"); // get the play button svg
 
         playButton
-            .on("click", function() {
-                let button = d3.select(this); // recall 'this' references the d3 selection
-                if (button.text() === "Pause") {
-                    clearInterval(timer); // if pause, clear interval
-                    button.text("Play"); // change text to play
-                } else {
+            .on("click", function() { // set the play button's behavior
+                let button = d3.select(this); // note that 'this' references the play button svg
+                if (button.text() === "Pause") { // if paused, clear interval and change text to 'play'
+                    clearInterval(timer);
+                    button.text("Play");
+                } else { // otherwise set behavior for the play button
                     timer = setInterval(function() { // play interval asynchronously
-                        update(x.invert(currentValue)); // update handle position
-                        currentValue = currentValue + (targetValue / 151); // update/adjust current value tick jups
-                        if (currentValue > targetValue) { // if at end of range
-                            // currentValue = 0;
-                            clearInterval(timer); // clear interval so that it can restart
-                            playButton.text("Play"); // at end of interval, change text to play
+                        update(x.invert(currentValue)); // update handle position and adjust current value tick jumps
+                        currentValue = currentValue + (targetValue / 151);
+                        if (currentValue > targetValue) { // if at end of range, clear interval and change text to 'play'
+                            clearInterval(timer); // this will stop the asynchronous interval
+                            playButton.text("Play");
                         }
-                        self.setState({ currentDate: x.invert(currentValue) }); // communicate with child
-                    }, 100); // loops for about 20 seconds going from month to month
-                    button.text("Pause"); // change text to pause
+                        self.setState({ currentDate: x.invert(currentValue) }); // ref parent constructor and communicate with child
+                    }, 100); // loops for about 20 seconds going from month to month (or longer)
+                    button.text("Pause"); // when play button is selected, change text to 'pause'
                 }
             });
             
-        let x = d3.scaleTime() // https://observablehq.com/@d3/d3-scaletime
+        let x = d3.scaleTime() // ref: https://observablehq.com/@d3/d3-scaletime
             .domain([startDate, endDate]) // use timescale domain between start and end dates
             .range([0, targetValue]) // define range of slider being from beginning to end of its range
             .clamp(true); // ensure that handle does not escape range
 
-        slider.append("line")
-            .attr("class", "track") // apply track css properties
+        gRange.append("line")
+            .attr("class", "track") // apply track css properties within slider svg body
             .attr("x1", x.range()[0])
             .attr("x2", x.range()[1])
             .select(function() {
-                return this.parentNode.appendChild(this.cloneNode(true));
+                return this.parentNode.appendChild(this.cloneNode(true)); // not sure what this is yet
             })
-            .attr("class", "track-inset") // apply track-inset cs properties
+            .attr("class", "track-inset") // apply track-inset css properties within slider svg body
             .select(function() {
                 return this.parentNode.appendChild(this.cloneNode(true));
             })
-            .attr("class", "track-overlay") // apply track-overlay css properties
+            .attr("class", "track-overlay") // apply track-overlay css properties within slider svg body
             .call(d3.drag() // dragging behavior
-                .on("start.interrupt", function() { // on any interrupts
-                    slider.interrupt();
+                .on("start.interrupt", function() { // handle interrupts
+                    gRange.interrupt();
                 })
-                .on("start drag", function(event) { // while hande is dragged
-                    currentValue = event.x; // store current value
-                    update(x.invert(currentValue)); // update handle location
+                .on("start drag", function(event) { // while hande is dragged, store current value and update handle location
+                    currentValue = event.x;
+                    update(x.invert(currentValue));
                 })
-                .on("end", function(event) { // when handle is released
+                .on("end", function(event) { // when handle is released, use the last recorded current value
                     self.setState({ currentDate: x.invert(currentValue) });
                 })
             );
 
-        let handle = slider.insert("circle", ".track-overlay") // inserts the track
-            .attr("class", "handle") // apply .handle css properties
-            .attr("r", 9); // radius of handle
+        let handle = gRange.insert("circle", ".track-overlay") // inserts the track
+            .attr("class", "handle") // apply handle css properties to track within slider svg body
+            .attr("r", 9); // set radius of handle
 
-        let label = slider.append("text") // append text onto slider
+        let label = gRange.append("text") // append text onto slider which will be our tick representations
             .attr("class", "label") // apply label css properties
             .attr("text-anchor", "middle") // anchor text to middle
-            .text(formatDate(startDate)) // display currently selected date
-            .attr("transform", "translate(0," + (-25) + ")") // shift it to the right
+            .text(formatDate(startDate)) // display currently selected date in text
+            .attr("transform", "translate(0," + (-25) + ")") // shift text to left
 
         document.addEventListener('keydown', function(event) { // listen for keypresses
             switch (event.key) { // we are only concerned about left/right arrow keys
                 case "ArrowLeft":
                     currentValue = // ensure handle does not decrement below zero
                         (currentValue === 0) ? currentValue : currentValue - 1;
-                    update(x.invert(currentValue)); // shift handle one to left
+                    update(x.invert(currentValue)); // shift handle one tick to left
                     break;
                 case "ArrowRight":
                     currentValue++; // increment current value
-                    update(x.invert(currentValue)); // shift handle one to right
+                    update(x.invert(currentValue)); // shift handle one tick to right
                     break;
                 default:
                     break;
             }
         });
 
-        slider.insert("g", ".track-overlay") // create the track overlay
-            .attr("class", "ticks") // apply ticks css properties
-            .attr("transform", "translate(0," + 18 + ")") // shift it to right
+        gRange.insert("g", ".track-overlay") // create the track overlay
+            .attr("class", "ticks") // apply ticks css properties within slider svg body
+            .attr("transform", "translate(0," + 18 + ")") // shift to right
             .selectAll("text") // apply following changes to all text on slider (ticks)
-            .data(x.ticks(10)) // https://observablehq.com/@d3/d3-scaletime
-            .enter() // https://observablehq.com/@dnarvaez27/understanding-enter-exit-merge-key-function
-            .append("text") // append text representing ticks
-            .attr("x", x) // initialize x position
-            .attr("y", 10) // initialize y position
+            .data(x.ticks(10)) // ref: https://observablehq.com/@d3/d3-scaletime
+            .enter() // ref: https://observablehq.com/@dnarvaez27/understanding-enter-exit-merge-key-function
+            .append("text") // append text representing ticks then set its coordinates (x-coordinate is variable, y-coordinate is fixed)
+            .attr("x", x)
+            .attr("y", 10)
             .attr("text-anchor", "middle") // center text on tick
             .text((d) => formatDateIntoYear(d)); // write formatted date as text
 
-        function update(h) {
-            // update position and text of label according to slider scale
+        function update(h) { // update position and text of label according to slider scale
             handle.attr("cx", x(h)); // update handle position
-            label
-                .attr("x", x(h)) // update tick label position
-                .text(formatDate(h)); // update tick label with new date
+            label // update tick label position and tick label content to new date
+                .attr("x", x(h))
+                .text(formatDate(h));
         }
     }
 
