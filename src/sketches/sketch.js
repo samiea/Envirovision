@@ -17,13 +17,13 @@ export default function sketch(p) {
         p.noStroke();
         setupSun(p);
         setupWave(p);
-        setupDrops(p);
+        setupDrops(p,microGrowth2050);
     }
 
     p.draw = () => {
         p.background("blue");
         p.fill("yellow");
-        sun(p, temperatureData);
+        sun(p, temperatureData,currentDate);
         wave(p);
         drawDots(p,microGrowth2050,currentDate);
     }
@@ -32,8 +32,9 @@ export default function sketch(p) {
 
         temperatureData = newProps.temperatureData;
         currentDate = newProps.currentDate;
-        microGrowth2050 = newProps.microGrowth2050;
-                
+        microGrowth2050 = newProps.children[1];
+
+
 
 
     }

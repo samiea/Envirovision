@@ -6,17 +6,17 @@ import sketch from './sketches/sketch';
 class Child1 extends React.Component {
     constructor(props) {
         super();
-        this.state = {
-            carbonData: null,
-        };
+
     }
 
     render() {
+      console.log(this.props);
         return (
             <P5Wrapper
                 sketch={sketch}
                 temperatureData={this.props.temperatureData}
                 currentDate={this.props.currentDate}>
+                microGrowth2050 ={this.props.microGrowth2050}
             </P5Wrapper>
             //<P5Wrapper sketch={wave}></P5Wrapper>
         );

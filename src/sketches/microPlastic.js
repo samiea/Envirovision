@@ -43,14 +43,20 @@ export function setupDrops(p,microGrowth2050)  {
 export function drawDots(p,microGrowth2050,current_date) {
   //calc microplastic
   //
+  var currentDate = current_date.getFullYear()
   //p.background(230, 230, 250);
+  //console.log(microGrowth2050);
+  //console.log(current_date);
+
   for (var i = 0; i < drops.length; i++) {
     drops[i].update(p);
     drops[i].show(p);
   }
   if (microGrowth2050 != null){
-    micro_Size = -1*(microGrowth2050[(current_date -2000)*5][1]-367)/10
-    //console.log(micro_Size);
+  
+    micro_Size = -1*(microGrowth2050[(currentDate -2000)*5][1]-367)/10
+
+
   }
 
 
