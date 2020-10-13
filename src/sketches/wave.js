@@ -32,8 +32,9 @@ function renderWave(p) {
     p.fill(37, 207, 122);
     // A simple way to draw the wave with an ellipse at each location
     for (let x = 0; x < yvalues.length; x++) {
-        var waveHeight = (4 * p.height) / 8 + yvalues[x];
-        p.ellipse(x * xspacing, p.height, 64, waveHeight);
+        var waveHeight =  p.height / 2 + yvalues[x];
+          var waveY_position = (3*p.height/5)+150
+        p.ellipse(x * xspacing, waveY_position, 64, waveHeight);
     }
 };
 
@@ -42,8 +43,9 @@ function backWave(p) {
     p.fill(19, 149, 244);
     // A simple way to draw the wave with an ellipse at each location
     for (let x = 0; x < backvalues.length; x++) {
-        var waveHeight = (4 * p.height) / 8 + backvalues[x];
-        p.ellipse(x * xspacing, p.height, 64, waveHeight);
+        var waveHeight = p.height / 2 + backvalues[x];
+        var waveY_position = (3*p.height/5)+150
+        p.ellipse(x * xspacing,waveY_position , 64, waveHeight);
     }
 };
 

@@ -13,7 +13,7 @@ class Child1 extends React.Component {
 
     render() {
         return (
-            <P5Wrapper 
+            <P5Wrapper
                 sketch={sketch}
                 temperatureData={this.props.temperatureData}
                 currentDate={this.props.currentDate}>

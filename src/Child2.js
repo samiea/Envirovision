@@ -2,7 +2,7 @@ import React from 'react'
 import './Child2.css'
 
 import P5Wrapper from 'react-p5-wrapper';
-import wave from './sketches/wave';
+
 
 class Child2 extends React.Component {
     constructor(props) {
