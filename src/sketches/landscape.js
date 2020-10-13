@@ -176,7 +176,7 @@ function Cloud(p, key) { // class for cloud objects
     this.move = function () {
         this.x += 0.2; // cloud movement speed
 
-        if (this.x === p.width) {
+        if (this.x >= p.width) {
             this.x = p.width - 1200 * num_clouds; // reset cloud to this position
         }
     };

@@ -25,7 +25,7 @@ function calcSun(temperatureData, current_date) {
             average = average + parseFloat(temperatureData[i + count].station);
         }
         //console.log(i);
-        console.log(average);
+        // console.log(average);
         currentY_value = average / 100 + 2;
         //yvalues[i] = average + 1;
         /*for (let i = 0; i < temperatureData.length / 8; i++) {
