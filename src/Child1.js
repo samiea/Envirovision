@@ -1,7 +1,7 @@
 import React from 'react'
 import './Child1.css'
 import P5Wrapper from 'react-p5-wrapper';
-import sun from './sketches/sun';
+import landscape from './sketches/landscape';
 
 class Child1 extends React.Component {
     constructor(props) {
@@ -12,9 +12,9 @@ class Child1 extends React.Component {
     }
 
     render() {
-        return (
+        return ( // props on p5 wrapper are redundant, just for demonstration purposes
             <P5Wrapper 
-                sketch={sun}
+                sketch={landscape}
                 temperatureData={this.props.temperatureData}
                 currentDate={this.props.currentDate}>
             </P5Wrapper>
@@ -28,7 +28,7 @@ class Child1 extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("Child1 Updated");
-        console.log(prevProps);
+        // console.log(prevProps);
 
     }
 

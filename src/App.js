@@ -100,7 +100,6 @@ class App extends React.Component {
         let timer = 0;
         let currentValue = 0;
         let targetValue = width - 50;
-        console.log(targetValue);
 
         let sliderRange = element // appends svg on top of .App svg
             .append("div")
