@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
-import Child1 from './Child1' // import both children
-import Child2 from './Child2'
+import OWVisualization from './OWVisualization' // import both children
 import axios from 'axios'; // used for API stuff
 
 // below imports are for static files to avoid 429 errors from requests while testing
@@ -12,6 +11,7 @@ import temperatureJSON from './static/temperature.json'
 
 //get plastic //repeat for others
 import macroGrowth2050 from './plastic_pollution/macroGrowth2050.json'
+import microGrowth2050 from './plastic_pollution/microGrowth2050.json'
 
 import * as d3 from 'd3';
 // import {sliderBottom} from 'd3-simple-slider';
@@ -31,21 +31,21 @@ class App extends React.Component {
 
             //get plastic //repeat for others
             macroGrowth2050: macroGrowth2050.macroGrowth2050,
+            microGrowth2050: microGrowth2050.microGrowth2050,
 
-            currentDate: new Date(), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+            currentDate: new Date("2004-11-01"), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             dataIsLoaded: false
         };
     }
 
     render() {
+      
         return (
             <div id="App" className="App-container">
-                <Child1
+                <OWVisualization
                     currentDate={this.state.currentDate}
                     temperatureData={this.state.temperatureData} // need to pass data into children via props
-                />
-                <Child2
-                    currentDate={this.state.currentDate}
+                    microGrowth2050 = {this.state.microGrowth2050}
                 />
                 {/* <button id="play-button">Play</button> */}
             </div>
@@ -146,7 +146,7 @@ class App extends React.Component {
                     button.text("Pause"); // when play button is selected, change text to 'pause'
                 }
             });
-            
+
         let x = d3.scaleTime() // ref: https://observablehq.com/@d3/d3-scaletime
             .domain([startDate, endDate]) // use timescale domain between start and end dates
             .range([0, targetValue]) // define range of slider being from beginning to end of its range
