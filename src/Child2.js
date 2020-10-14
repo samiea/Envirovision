@@ -1,37 +1,67 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Sampler } from "tone";
-import A1 from "./sounds/oriMainTheme.m4a"
+//import ReactDOM from "react-dom";
+import * as Tone from "tone";
+import ori from "./sounds/oriMainTheme.m4a"
 import "./Child2.css";
 
 class Child2 extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { isLoaded: false };
-        this.handleClick = this.handleClick.bind(this);
+        this.state = { 
+            isLoaded: false,
+            isDistorted: false
+        };
+        this.clickStart = this.clickStart.bind(this);
+        this.clickDistort = this.clickDistort.bind(this);
+        this.clickNoDistort = this.clickNoDistort.bind(this);
 
-        this.sampler = new Sampler(
-            { A1 },
-            {
-                onload: () => {
-                    this.setState({ isLoaded: true });
-                }
-            }
-        ).toMaster();
+        this.buffer = new Tone.ToneAudioBuffer(ori, () => {
+            console.log("Loading successful!");
+        }, () => {
+            console.log("ERROR LOADING SOUND!");
+        });
+
+        this.dist = new Tone.Distortion(0).toDestination();
+
+        this.player = new Tone.Player(this.buffer, () => {
+            console.log("Player ready!");
+            this.setState({ isLoaded: true });
+        }).connect(this.dist).toMaster();
     }
 
-    handleClick() {
-        this.sampler.triggerAttack("A1");
+    clickStart() {
+        Tone.start();
+        this.player.start(0);
+    }
+
+    clickDistort() {
+        this.dist.distortion = 1;
+        this.setState({ isDistorted: true });
+    }
+
+    clickNoDistort() {
+        this.dist.distortion = 0;
+        this.setState({ isDistorted: false });
     }
 
     render() {
         const { isLoaded } = this.state;
+        console.log(this.state);
 
         return (
             <div className="Child2" >
-                <button disabled={!isLoaded} onClick={this.handleClick}>
+                <button disabled={!isLoaded} onClick={this.clickStart}>
                     start
                 </button>
+
+                <button disabled={!isLoaded} onClick={this.clickDistort}>
+                    distort
+                </button>
+
+                <button disabled={!isLoaded} onClick={this.clickNoDistort}>
+                    no distort
+                </button>
+
             </div>
         );
     }
