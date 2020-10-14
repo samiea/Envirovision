@@ -69,10 +69,8 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Child1
-                    carbonData={this.state.carbonData} // need to pass data into children via props
-                />
                 <Child2
+                    carbonData={this.state.carbonData}
                 />
             </div>
         );

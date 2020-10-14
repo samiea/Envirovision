@@ -1,5 +1,4 @@
 import React from "react";
-//import ReactDOM from "react-dom";
 import * as Tone from "tone";
 import ori from "./sounds/oriMainTheme.m4a"
 import "./Child2.css";
@@ -7,13 +6,30 @@ import "./Child2.css";
 class Child2 extends React.Component {
     constructor(props) {
         super(props);
+        
+        //Setting state
         this.state = { 
             isLoaded: false,
-            isDistorted: false
+            isDistorted: false,
+            isReverbOn: false
         };
-        this.clickStart = this.clickStart.bind(this);
+
+        //Binding functions
+        this.clickStartAudio = this.clickStartAudio.bind(this);
+        this.clickFatOsc = this.clickFatOsc.bind(this);
+        this.clickAMOsc = this.clickAMOsc.bind(this);
+        this.clickFMOsc = this.clickFMOsc.bind(this);
         this.clickDistort = this.clickDistort.bind(this);
         this.clickNoDistort = this.clickNoDistort.bind(this);
+        this.clickReverb = this.clickReverb.bind(this);
+        this.clickNoReverb = this.clickNoReverb.bind(this);
+
+        //Effects
+        this.dist = new Tone.Distortion(0).toDestination();
+
+        this.rev = new Tone.Reverb(1).toDestination();
+
+        //Sound sources
 
         this.buffer = new Tone.ToneAudioBuffer(ori, () => {
             console.log("Loading successful!");
@@ -21,17 +37,33 @@ class Child2 extends React.Component {
             console.log("ERROR LOADING SOUND!");
         });
 
-        this.dist = new Tone.Distortion(0).toDestination();
-
         this.player = new Tone.Player(this.buffer, () => {
             console.log("Player ready!");
             this.setState({ isLoaded: true });
-        }).connect(this.dist).toMaster();
+            Tone.start();
+        }).chain(this.dist, this.rev, Tone.Destination);
+
+        this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination);
+
+        this.am = new Tone.AMOscillator("E3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
+    
+        this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
     }
 
-    clickStart() {
-        Tone.start();
-        this.player.start(0);
+    clickStartAudio() {
+        this.player.start(Tone.now());
+    }
+
+    clickFatOsc() {
+        this.fatOsc.start(Tone.now());
+    }
+
+    clickAMOsc() {
+        this.am.start(Tone.now());
+    }
+
+    clickFMOsc() {
+        this.fm.start(Tone.now());
     }
 
     clickDistort() {
@@ -44,14 +76,36 @@ class Child2 extends React.Component {
         this.setState({ isDistorted: false });
     }
 
+    clickReverb() {
+        this.rev.decay = 10;
+        this.setState({ isReverbOn: true });
+    }
+
+    clickNoReverb() {
+        this.rev.decay = 1;
+        this.setState({ isReverbOn: true });
+    }
+
     render() {
         const { isLoaded } = this.state;
         console.log(this.state);
 
         return (
             <div className="Child2" >
-                <button disabled={!isLoaded} onClick={this.clickStart}>
-                    start
+                <button disabled={!isLoaded} onClick={this.clickStartAudio}>
+                    start playback
+                </button>
+
+                <button disabled={!isLoaded} onClick={this.clickFatOsc}>
+                    start fat osc
+                </button>
+
+                <button disabled={!isLoaded} onClick={this.clickAMOsc}>
+                    start am osc
+                </button>
+
+                <button disabled={!isLoaded} onClick={this.clickFMOsc}>
+                    start fm osc
                 </button>
 
                 <button disabled={!isLoaded} onClick={this.clickDistort}>
@@ -60,6 +114,14 @@ class Child2 extends React.Component {
 
                 <button disabled={!isLoaded} onClick={this.clickNoDistort}>
                     no distort
+                </button>
+
+                <button disabled={!isLoaded} onClick={this.clickReverb}>
+                    reverb
+                </button>
+
+                <button disabled={!isLoaded} onClick={this.clickNoReverb}>
+                    no reverb
                 </button>
 
             </div>
