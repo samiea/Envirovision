@@ -4,6 +4,8 @@ const noiseSpeed = 0.01;
 const noiseHeight = 20;
 const num_clouds = 3;
 const num_bubbles = 30;
+const smogWidth = 40;
+const smogHeight = 20;
 const cloud_ellipses = [
     { x: 0, y: 20, rx: 70, ry: 40 },
     { x: 25, y: -3, rx: 50, ry: 28 },
@@ -63,6 +65,7 @@ const cloud_ellipses = [
 let noiseY;
 let clouds = [];
 let bubbles = [];
+let smogClouds = [];
 
 export function setupLandscape(p) {
     for (let i = 0; i < 3; i++) { // initialize the clouds
@@ -76,6 +79,7 @@ export function setupLandscape(p) {
             p.random(10, 30)
         );
     }
+    smogClouds[0] = new SmogCloud(p);
 
     noiseY = (p.height * 3) / 4; // y-noise for waves
 };
@@ -88,6 +92,7 @@ export function drawLandscape(p, temperatureData, currentDate) { // this loops e
     makeWaves(p);
     p.noStroke();
     makeBubbles();
+    smogClouds[0].display();
 }
 
 function makeClouds() { // create the clouds and call their moethods
@@ -146,6 +151,52 @@ function Bubble(p, xstart, yspeed, size) { // class for bubble objects
         this.x += p.cos(p.radians(this.degree)); // base x-shifts on cosine waves
         this.degree += p.random(0.0, 1.0);
     };
+}
+
+function SmogCloud(p) {
+    this.x = p.random(0, p.width);
+    this.y = p.random(0, 200);
+    this.width = 40;
+    this.height = 20;
+    this.smogBubbles = [];
+    for(let x = 0; x < 15; x++) {
+        this.smogBubbles[x] = new SmogBubble(p, this.x, this.y, this.width, this.height);
+    }
+
+    this.display = function() {
+        console.log("Displaying smog cloud");
+        p.noStroke();
+        p.fill(0);
+        p.beginShape();
+        for(let x = 0; x < this.smogBubbles.length; x++) {
+            p.ellipse(
+                this.x + this.smogBubbles[x].x,
+                this.y + this.smogBubbles[x].y,
+                this.smogBubbles[x].rx,
+                this.smogBubbles[x].ry
+            );
+            p.curveVertex(
+                this.x + this.smogBubbles[x].x,
+                this.y + this.smogBubbles[x].y
+            );
+        }
+        p.curveVertex(p.width, p.height);
+        p.endShape(p.CLOSE);
+    }
+
+    this.move = function() {
+        //update all smogbubble positions
+    }
+     
+}
+
+function SmogBubble(p, x, y, xlimit, ylimit) {
+    this.xVelocity = p.random(5, 15);
+    this.yVelocity = p.random(5, 15);
+    this.xOffset = p.random((xlimit/2)*-1, xlimit/2);
+    this.yOffset = p.random((ylimit/2)*-1, ylimit/2);
+    this.rx = p.random(10, 70);
+    this.ry = p.random(10, 70);
 }
 
 function Cloud(p, key) { // class for cloud objects
