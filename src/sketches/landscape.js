@@ -70,7 +70,7 @@ export function setupLandscape(p) {
     }
 
     for (let i = 0; i < 30; i++) { // initialize the bubbles
-        bubbles[i] = new Bubble(p, 
+        bubbles[i] = new Bubble(p,
             p.random(0, p.width),
             p.random(-1.5, -1),
             p.random(10, 30)
@@ -82,8 +82,7 @@ export function setupLandscape(p) {
 
 
 export function drawLandscape(p, temperatureData, currentDate) { // this loops everything inside body
-    p.background(231, 181, 137);
-    drawSun(p, temperatureData, currentDate);
+  
     makeClouds();
     makeWaves(p);
     p.noStroke();

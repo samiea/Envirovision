@@ -39,13 +39,14 @@ class App extends React.Component {
     }
 
     render() {
-      
+        
         return (
             <div id="App" className="App-container">
                 <OWVisualization
                     currentDate={this.state.currentDate}
                     temperatureData={this.state.temperatureData} // need to pass data into children via props
                     microGrowth2050 = {this.state.microGrowth2050}
+                    macroGrowth2050={this.state.macroGrowth2050}
                 />
                 {/* <button id="play-button">Play</button> */}
             </div>
