@@ -10,9 +10,12 @@
     "axios": "^0.20.0",
     "cors": "^2.8.5",
     "d3": "^6.2.0",
+    "p5": "^1.1.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-p5-wrapper": "^2.3.0",
     "react-scripts": "3.4.3",
+    "tone": "^14.7.58",
     "topojson": "^3.0.2"
   },
   "scripts": {
