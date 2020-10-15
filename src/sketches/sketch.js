@@ -8,6 +8,7 @@ export default function sketch(p) {
     let currentDate = null;
 
     p.setup = () => {
+        p.frameRate(30);
         p.createCanvas(p.windowWidth, p.windowHeight); // adjust to window width and height
         setupLandscape(p);
         setupDrops(p,microGrowth2050);
