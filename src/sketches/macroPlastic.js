@@ -4,7 +4,7 @@ let canvas;
 var macro_plastic = []
 var macro_Size = 20;
 
-var const_start_height = 550
+var const_start_height = 700
 
 class Plastic{
 

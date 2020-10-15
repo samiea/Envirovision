@@ -21,7 +21,7 @@ export default function sketch(p) {
 
     p.draw = () => {
 
-        drawSky(p, carbonData)
+        drawSky(p, carbonData, currentDate);
         drawSun(p, temperatureData, currentDate);
 
         drawLandscape(p, temperatureData, currentDate);
@@ -35,6 +35,6 @@ export default function sketch(p) {
         microGrowth2050 = newProps.microGrowth2050;
         macroGrowth2050 = newProps.macroGrowth2050;
         carbonData = newProps.carbonData;
-        
+
     }
 }

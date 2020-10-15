@@ -4,7 +4,7 @@ let canvas;
 var drops = []
 var micro_Size = 5;
 
-var const_start_height = 550
+var const_start_height = 700
 
 class Drop{
 
