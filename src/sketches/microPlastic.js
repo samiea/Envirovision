@@ -55,7 +55,7 @@ export function drawDots(p,microGrowth2050,current_date) {
   }
   if (microGrowth2050 != null){
 
-     var newSize = -1*(microGrowth2050[(currentDate -2000)*5][1]-367)
+     var newSize = -1*(microGrowth2050[(currentDate -1950)][1]-367)
      newSize = newSize *2 +200
      //add drops
      if (newSize>drops.length){

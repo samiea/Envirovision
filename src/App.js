@@ -39,7 +39,7 @@ class App extends React.Component {
     }
 
     render() {
-        
+
         return (
             <div id="App" className="App-container">
                 <OWVisualization
@@ -92,8 +92,8 @@ class App extends React.Component {
         let formatDateIntoYear = d3.timeFormat("%Y");
         let formatDate = d3.timeFormat("%d %B %Y"); // DD MM YY https://github.com/d3/d3-time-format
 
-        let startDate = new Date("2004-11-01"); // subject to change
-        let endDate = new Date("2017-04-01"); // subject to change
+        let startDate = new Date("1950-11-01"); // subject to change
+        let endDate = new Date("2020-10-15"); // subject to change
 
         let margin = {top:50, right:50, bottom:0, left:75};
         let width = window.innerWidth; // - margin.left - margin.right;

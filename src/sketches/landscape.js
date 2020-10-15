@@ -1,4 +1,4 @@
-import { drawSun } from './sun';
+
 
 const noiseSpeed = 0.01;
 const noiseHeight = 20;
@@ -88,7 +88,7 @@ export function setupLandscape(p) {
 
 
 export function drawLandscape(p, temperatureData, currentDate) { // this loops everything inside body
-  
+
     makeClouds();
     makeWaves(p);
     p.noStroke();
@@ -160,10 +160,16 @@ function Bubble(p, xstart, yspeed, size) { // class for bubble objects
         this.degree += p.random(0.0, 1.0);
     };
 }
+///Smog cloud
+////
+
+
+
+
 
 function SmogCloud(p) {
     this.xVelocity = p.random(-2, 2); //cloud movement velocity
-    this.x = p.random(50, p.width); 
+    this.x = p.random(50, p.width);
     this.y = p.random(50, 200);
     this.width = p.random(100, 300);
     this.height = p.random(50, 100);
@@ -195,12 +201,12 @@ function SmogCloud(p) {
                 this.y + this.smogBubbles[x].yOffset
             );
         }
-        
+
         p.endShape(p.CLOSE);
     }
 
     this.move = function() {
-        
+
         for(let x = 0; x < this.smogBubbles.length; x++) {
             if(Math.abs(this.smogBubbles[x].xOffset) > this.width/2 - 10) {
                 this.smogBubbles[x].xVelocity *= -1;
@@ -219,7 +225,7 @@ function SmogCloud(p) {
             this.smogBubbles[x].yOffset += this.smogBubbles[x].yVelocity;
 
             this.smogBubbles[x].rx += this.smogBubbles[x].rxVelocity;
-            this.smogBubbles[x].ry += this.smogBubbles[x].ryVelocity;    
+            this.smogBubbles[x].ry += this.smogBubbles[x].ryVelocity;
         }
 
         if(this.x > p.width) {
@@ -230,7 +236,7 @@ function SmogCloud(p) {
         }
         this.x += this.xVelocity;
     }
-     
+
 }
 
 function SmogBubble(p, xlimit, ylimit) {

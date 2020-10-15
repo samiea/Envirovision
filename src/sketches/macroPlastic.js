@@ -54,7 +54,7 @@ export function drawPlastic(p,macroGrowth2050,current_date) {
 
 
 
-     var newSize = -1*(macroGrowth2050[(currentDate -2000)*5][1]-367)
+     var newSize = -1*(macroGrowth2050[(currentDate -1950)][1]-367)
      newSize = newSize *5 +200
      console.log(newSize);
      //add drops
