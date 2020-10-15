@@ -17,7 +17,8 @@ class Child1 extends React.Component {
                 temperatureData={this.props.temperatureData}
                 currentDate={this.props.currentDate}
                 microGrowth2050={this.props.microGrowth2050}
-                macroGrowth2050={this.props.macroGrowth2050}>
+                macroGrowth2050={this.props.macroGrowth2050}
+                carbonData={this.props.carbonData}>
             </P5Wrapper>
             //<P5Wrapper sketch={wave}></P5Wrapper>
         );

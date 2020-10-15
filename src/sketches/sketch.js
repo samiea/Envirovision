@@ -35,5 +35,6 @@ export default function sketch(p) {
         microGrowth2050 = newProps.microGrowth2050;
         macroGrowth2050 = newProps.macroGrowth2050;
         carbonData = newProps.carbonData;
+        
     }
 }

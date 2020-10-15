@@ -47,6 +47,7 @@ class App extends React.Component {
                     temperatureData={this.state.temperatureData} // need to pass data into children via props
                     microGrowth2050 = {this.state.microGrowth2050}
                     macroGrowth2050={this.state.macroGrowth2050}
+                    carbonData={this.state.carbonData}
                 />
                 {/* <button id="play-button">Play</button> */}
             </div>
