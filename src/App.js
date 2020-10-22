@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import OWVisualization from './OWVisualization' // import both children
+import OWSonification from './OWSonification'
 import axios from 'axios'; // used for API stuff
 
 // below imports are for static files to avoid 429 errors from requests while testing
@@ -45,6 +46,11 @@ class App extends React.Component {
                 <OWVisualization
                     currentDate={this.state.currentDate}
                     temperatureData={this.state.temperatureData} // need to pass data into children via props
+                    microGrowth2050 = {this.state.microGrowth2050}
+                />
+                <OWSonification
+                    currentDate={this.state.currentDate}
+                    temperatureData={this.state.temperatureData}
                     microGrowth2050 = {this.state.microGrowth2050}
                 />
                 {/* <button id="play-button">Play</button> */}
