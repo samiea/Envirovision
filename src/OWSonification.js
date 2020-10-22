@@ -140,7 +140,7 @@ class Child2 extends React.Component {
             anchor.download = "recording.webm";
             anchor.href = url;
             anchor.click();
-        }, 10000);
+        }, 20000);
     }
 
     getNewData() {
