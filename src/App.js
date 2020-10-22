@@ -8,10 +8,8 @@ import carbonJSON from './static/carbon.json'
 import methaneJSON from './static/methane.json'
 import nitrousJSON from './static/nitrous.json'
 import temperatureJSON from './static/temperature.json'
-
-//get plastic //repeat for others
-import macroGrowth2050 from './plastic_pollution/macroGrowth2050.json'
-import microGrowth2050 from './plastic_pollution/microGrowth2050.json'
+import macroGrowth2050 from './static/plastic_pollution/macroGrowth2050.json'
+import microGrowth2050 from './static/plastic_pollution/microGrowth2050.json'
 
 import * as d3 from 'd3';
 // import {sliderBottom} from 'd3-simple-slider';
@@ -29,11 +27,11 @@ class App extends React.Component {
             nitrousData: nitrousJSON.nitrous,
             temperatureData: temperatureJSON.result,
 
-            //get plastic //repeat for others
+            //get plastic and repeat for others
             macroGrowth2050: macroGrowth2050.macroGrowth2050,
             microGrowth2050: microGrowth2050.microGrowth2050,
 
-            currentDate: new Date("2004-11-01"), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+            currentDate: new Date("1950-11-01"), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             dataIsLoaded: false
         };
     }
@@ -48,21 +46,19 @@ class App extends React.Component {
                     microGrowth2050 = {this.state.microGrowth2050}
                     macroGrowth2050={this.state.macroGrowth2050}
                     carbonData={this.state.carbonData}
-                />
-                {/* <button id="play-button">Play</button> */}
+                    methaneData={this.state.methaneData} />
             </div>
         );
     }
 
     componentDidMount() { // this is called when the page is initially loaded/mounted
-        console.log("Parent Mounted");
+        // console.log("Parent Mounted");
         // this.loadData(); // comment this out if using static files; loadData() will make API requests
         this.createSlider(d3.select(".App-container"));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) { // when re-render occurs, componentDidUpdate() is called
-        console.log("Parent Updated");
-
+        // console.log("Parent Updated");
     }
 
     loadData() {
@@ -94,7 +90,7 @@ class App extends React.Component {
         let formatDate = d3.timeFormat("%d %B %Y"); // DD MM YY https://github.com/d3/d3-time-format
 
         let startDate = new Date("1950-11-01"); // subject to change
-        let endDate = new Date("2020-10-15"); // subject to change
+        let endDate = new Date(); // subject to change (no params = current date)
 
         let margin = {top:50, right:50, bottom:0, left:75};
         let width = window.innerWidth; // - margin.left - margin.right;
@@ -224,7 +220,6 @@ class App extends React.Component {
                 .text(formatDate(h));
         }
     }
-
 }
 
 export default App;
