@@ -66,7 +66,7 @@ export function drawMicroPlasticDots(p, microGrowth2050, current_date) {
         //remove drops
         if (newSize < drops.length) {
             var diff = drops.length - newSize;
-            drops.length = diff;
+            drops = drops.splice(diff);
         }
     }
 }

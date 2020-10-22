@@ -114,7 +114,7 @@ export function drawMethaneBubbles(p, methaneData, currentDate) { // create the 
 
         if (NEW_SIZE < bubbles.length) {
             let diff = bubbles.length - NEW_SIZE;
-            bubbles.length = diff;
+            bubbles = bubbles.splice(diff);
         }
     }
     else {
@@ -127,6 +127,9 @@ export function drawMethaneBubbles(p, methaneData, currentDate) { // create the 
         // update bubble here (could be < lower bound or > upper bound)
         if (date >= currentDate) {
             bubbles = bubbles.splice(0, INIT_NUM_BUBBLES);
+            for (let i = 0; i < INIT_NUM_BUBBLES; i++) {
+                bubbles[i].setSpeed(p.random(-1.5, -1));
+            }
         }
     }
     
