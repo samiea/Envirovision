@@ -66,8 +66,9 @@ let noiseY;
 let clouds = [];
 let bubbles = [];
 let smogClouds = [];
+let temp = false;
 
-export function setupLandscape(p) {
+export function setupLandscape(p, nitrousData, currentDate) {
     for (let i = 0; i < 3; i++) { // initialize the clouds
         clouds[i] = new Cloud(p, num_clouds - i);
     }
@@ -80,21 +81,26 @@ export function setupLandscape(p) {
         );
     }
     for(let i = 0; i < 4; i++ ) {
-        smogClouds[i] = new SmogCloud(p);
+        smogClouds[i] = new SmogCloud(p, nitrousData, currentDate);
     }
 
     noiseY = (p.height * 3) / 4; // y-noise for waves
+
 };
 
 
-export function drawLandscape(p, temperatureData, currentDate) { // this loops everything inside body
+export function drawLandscape(p, temperatureData, nitrousData, currentDate) { // this loops everything inside body
     p.background(231, 181, 137);
     drawSun(p, temperatureData, currentDate);
     makeClouds();
     makeWaves(p);
     p.noStroke();
     makeBubbles();
-    makeSmog();
+    makeSmog(nitrousData, currentDate);
+    if(nitrousData != null && !temp) {
+        console.log(nitrousData);
+        temp = true;
+    }
 }
 
 function makeClouds() { // create the clouds and call their moethods
@@ -104,10 +110,10 @@ function makeClouds() { // create the clouds and call their moethods
     }
 }
 
-function makeSmog() {
+function makeSmog(nitrousData, currentDate) {
     for (var i = 0; i < smogClouds.length; i++) {
         smogClouds[i].move();
-        smogClouds[i].display();
+        smogClouds[i].display(nitrousData[33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()].averageUnc * 10);
     }
 }
 
@@ -162,38 +168,41 @@ function Bubble(p, xstart, yspeed, size) { // class for bubble objects
     };
 }
 
-function SmogCloud(p) {
+function SmogCloud(p, nitrousData, currentDate) {
+    this.currData = nitrousData[33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()].average;
+
     this.xVelocity = p.random(-2, 2); //cloud movement velocity
     this.x = p.random(50, p.width); 
     this.y = p.random(50, 200);
-    this.width = p.random(100, 300);
-    this.height = p.random(50, 100);
+    this.width = p.random(100 + this.currData/10, 300 + this.currData/10);
+    this.height = p.random(50 + this.currData/10, 100 + this.currData/10);
     this.smogBubbles = [];
-    this.opacity = p.random(50,200);
-    for(let x = 0; x < 25; x++) {
-        this.smogBubbles[x] = new SmogBubble(p, this.width, this.height);
+    this.opacity = p.random(70 + this.currData/10, 200 + this.currData/10);
+    for(let x = 0; x < 50; x++) {
+        this.smogBubbles[x] = new SmogBubble(p, this.width - 20, this.height - 20);
     }
 
-    this.display = function() {
+    this.display = function(newCurrData) {
+        this.currData += newCurrData;
         console.log("Displaying smog cloud");
         p.noStroke();
         let cloudColor = p.color(100);
-        cloudColor.setAlpha(this.opacity);
+        cloudColor.setAlpha(this.opacity + this.currData/10);
         p.fill(cloudColor);
-        p.ellipse(this.x, this.y, this.width, this.height);
+        p.ellipse(this.x, this.y, this.width + this.currData/10, this.height + this.currData/10);
         p.beginShape();
         for(let x = 0; x < this.smogBubbles.length; x++) {
             cloudColor.setAlpha(this.smogBubbles[x].opacity);
             p.fill(cloudColor);
             p.ellipse(
-                this.x + this.smogBubbles[x].xOffset,
-                this.y + this.smogBubbles[x].yOffset,
-                this.smogBubbles[x].rx,
-                this.smogBubbles[x].ry
+                this.x + this.smogBubbles[x].xOffset + this.currData/10,
+                this.y + this.smogBubbles[x].yOffset + this.currData/10,
+                this.smogBubbles[x].rx + this.currData/10,
+                this.smogBubbles[x].ry + this.currData/10
             );
             p.curveVertex(
-                this.x + this.smogBubbles[x].xOffset,
-                this.y + this.smogBubbles[x].yOffset
+                this.x + this.smogBubbles[x].xOffset + this.currData/10,
+                this.y + this.smogBubbles[x].yOffset + this.currData/10
             );
         }
         
@@ -240,8 +249,8 @@ function SmogBubble(p, xlimit, ylimit) {
     this.yVelocity = p.random(0.03, 0.07);
     this.xOffset = p.random((xlimit/2)*(-1), xlimit/2);
     this.yOffset = p.random((ylimit/2)*(-1), ylimit/2);
-    this.rx = p.random(70, 150);
-    this.ry = p.random(70, 150);
+    this.rx = p.random(40, 100);
+    this.ry = p.random(40, 100);
 
     this.rxVelocity = p.random(0.01, 0.01);
     this.ryVelocity = p.random(0.01, 0.02);
