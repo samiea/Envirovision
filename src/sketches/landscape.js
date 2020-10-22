@@ -80,7 +80,7 @@ export function setupLandscape(p, nitrousData, currentDate) {
             p.random(10, 30)
         );
     }
-    for(let i = 0; i < 4; i++ ) {
+    for(let i = 0; i < nitrousData[33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()].average/50; i++ ) {
         smogClouds[i] = new SmogCloud(p, nitrousData, currentDate);
     }
 
@@ -113,7 +113,7 @@ function makeClouds() { // create the clouds and call their moethods
 function makeSmog(nitrousData, currentDate) {
     for (var i = 0; i < smogClouds.length; i++) {
         smogClouds[i].move();
-        smogClouds[i].display(nitrousData[33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()].averageUnc * 10);
+        smogClouds[i].display(nitrousData[33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()].averageUnc * 10, currentDate);
     }
 }
 
@@ -169,6 +169,7 @@ function Bubble(p, xstart, yspeed, size) { // class for bubble objects
 }
 
 function SmogCloud(p, nitrousData, currentDate) {
+    this.currentDate = currentDate;
     this.currData = nitrousData[33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()].average;
 
     this.xVelocity = p.random(-2, 2); //cloud movement velocity
@@ -182,27 +183,33 @@ function SmogCloud(p, nitrousData, currentDate) {
         this.smogBubbles[x] = new SmogBubble(p, this.width - 20, this.height - 20);
     }
 
-    this.display = function(newCurrData) {
-        this.currData += newCurrData;
+    this.display = function(newCurrData, currentDate) {
+        if(currentDate != this.currentDate) {
+            this.currentDate = currentDate;
+            this.currData += newCurrData;
+            this.width += newCurrData;
+            this.height += newCurrData;
+        }
+
         console.log("Displaying smog cloud");
         p.noStroke();
         let cloudColor = p.color(100);
         cloudColor.setAlpha(this.opacity + this.currData/10);
         p.fill(cloudColor);
-        p.ellipse(this.x, this.y, this.width + this.currData/10, this.height + this.currData/10);
+        p.ellipse(this.x, this.y, this.width, this.height);
         p.beginShape();
         for(let x = 0; x < this.smogBubbles.length; x++) {
             cloudColor.setAlpha(this.smogBubbles[x].opacity);
             p.fill(cloudColor);
             p.ellipse(
-                this.x + this.smogBubbles[x].xOffset + this.currData/10,
-                this.y + this.smogBubbles[x].yOffset + this.currData/10,
-                this.smogBubbles[x].rx + this.currData/10,
-                this.smogBubbles[x].ry + this.currData/10
+                this.x + this.smogBubbles[x].xOffset,
+                this.y + this.smogBubbles[x].yOffset,
+                this.smogBubbles[x].rx + this.currData/5,
+                this.smogBubbles[x].ry + this.currData/5
             );
             p.curveVertex(
-                this.x + this.smogBubbles[x].xOffset + this.currData/10,
-                this.y + this.smogBubbles[x].yOffset + this.currData/10
+                this.x + this.smogBubbles[x].xOffset,
+                this.y + this.smogBubbles[x].yOffset
             );
         }
         
