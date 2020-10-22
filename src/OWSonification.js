@@ -1,6 +1,6 @@
 import React from "react";
 import * as Tone from "tone";
-import ori from "./sounds/oriMainTheme.m4a"
+import bubbles from "./sounds/bubbles.wav";
 import "./Child2.css";
 
 /*
@@ -30,8 +30,9 @@ class Child2 extends React.Component {
             distortionLevel: 0,
             reverbLevel: 0,
             //Frequencies
-            bassIndex: 0,
+            freqIndex: 0,
             bassFreqs: [65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47], //C2-B2
+            trebleFreqs: [523.25, 554.37, 587.33, 622.25, 659.25, 698.46, 739.99, 783.99, 830.61, 880.00, 932.33, 987.77], //C5-B5
             intervals: [0, 4, 7, 9], //unison, third, fifth, sixth
             //All audio on/off
             audioState: false,
@@ -47,9 +48,6 @@ class Child2 extends React.Component {
         //Binding functions
         this.initialize = this.initialize.bind(this);
         this.startAudio = this.startAudio.bind(this);
-        this.togglePlayback = this.togglePlayback.bind(this);
-        this.toggleFatOsc = this.toggleFatOsc.bind(this);
-        this.toggleAMOsc = this.toggleAMOsc.bind(this);
         this.getNewData = this.getNewData.bind(this);
 
         //Effects
@@ -58,13 +56,13 @@ class Child2 extends React.Component {
         this.rev = new Tone.Reverb(1).toDestination();
 
         //Sound sources
-        this.buffer = new Tone.ToneAudioBuffer(ori, () => {
-            console.log("Loading successful!");
-        }, () => {
-            console.log("ERROR LOADING SOUND!");
-        });
+        this.buffer = new Tone.ToneAudioBuffer();
+        this.buffer.debug = true;
+        this.buffer.load(bubbles);
 
         this.player = new Tone.Player(this.buffer, () => {
+            console.log("Player ready!");
+            this.setState({ isLoaded: true });
             this.initialize();
         }).chain(this.dist, this.rev, Tone.Destination);
 
@@ -78,26 +76,32 @@ class Child2 extends React.Component {
     initialize() {
         //set state and start Tone
         this.getNewData();
-        console.log("Player ready!");
-        this.setState({ isLoaded: true });
         Tone.start();
+        Tone.Transport.start();
 
         //set volume
-        this.player.volume = -100;
-        this.fatOsc.volume = -100;
-        this.am.volume = -100;
+        this.player.volume.value = -100;
+        this.fatOsc.volume.value = -100;
+        this.am.volume.value = -100;
 
         //set frequency
-        this.fatOsc.frequency.rampTo(this.state.bassFreqs[this.state.bassIndex] / 4);
-        this.am.frequency.rampTo(this.state.bassFreqs[this.state.bassIndex] / 4);
+        this.fatOsc.frequency.rampTo(this.state.bassFreqs[this.state.freqIndex]);
+        this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + 7]);
     }
 
     startAudio() {
         this.getNewData();
-        this.rev.decay = 10; //TODO: what's controlling reverb?
+        this.rev.decay = 12; //TODO: what's controlling reverb?
 
-        this.fatOsc.frequency.rampTo(this.state.bassFreqs[this.state.bassIndex]);
-        
+        Tone.Transport.scheduleRepeat((time) => {
+            var intervalIndex = Math.floor(Math.random() * 4);
+            console.log(intervalIndex);
+            this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.intervals[intervalIndex]]);
+        }, "4hz", Tone.now());
+
+        this.fatOsc.frequency.rampTo(this.state.bassFreqs[this.state.freqIndex]);
+        this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + 7]);
+
         if (this.state.audioState === false) {
             this.player.start(Tone.now());
             this.fatOsc.start(Tone.now());
@@ -121,54 +125,6 @@ class Child2 extends React.Component {
         }
     }
 
-    togglePlayback() {
-        this.getNewData();
-        //TODO: play bubble sounds with set reverb
-
-        if (this.state.playbackState === false) {
-            this.player.volume.rampTo(0);
-
-            this.setState({ playbackState: true });
-        }
-        else if (this.state.playbackState === true) {
-            this.player.volume.rampTo(-100);
-
-            this.setState({ playbackState: false });
-        }
-    }
-
-    toggleFatOsc() {
-        this.getNewData();
-        
-        if (this.state.fatOscState === false) {
-            this.fatOsc.volume.rampTo(-12);
-
-            this.setState({ fatOscState: true });
-        }
-        else if (this.state.playbackState === true) {
-            this.fatOsc.volume.rampTo(-100);
-
-            this.setState({ fatOscState: false });
-        }
-    }
-
-    toggleAMOsc() {
-        this.getNewData();
-
-        this.am.frequency.rampTo(this.state.bassFreqs[(this.state.bassIndex + Math.floor(Math.random() * 10) + 1) % 11] * 2);
-
-        if (this.state.playbackState === false) {
-            this.am.volume.rampTo(-12);
-
-            this.setState({ amOscState: true });
-        }
-        else if (this.state.playbackState === true) {
-            this.am.volume.rampTo(-100);
-
-            this.setState({ amOscState: false });
-        }
-    }
-
     getNewData() {
         //get current date
         var currDate = this.props.currentDate.getFullYear();
@@ -182,12 +138,13 @@ class Child2 extends React.Component {
         index = Math.floor(frequency) % 11;
         console.log("Index:");
         console.log(index);
-        this.setState({ bassIndex: index });
+        this.setState({ freqIndex: index });
 
         //calculate index for microplastics data
         index = (currDate - 2000) * 5;
 
         //map from 90 to 620 to //TODO: VALUES??// using same formula as above
+
     }
 
     render() {
@@ -200,17 +157,6 @@ class Child2 extends React.Component {
                     audio on/off
                 </button>
 
-                <button disabled={!isLoaded} onClick={this.togglePlayback}>
-                    pb
-                </button>
-
-                <button disabled={!isLoaded} onClick={this.toggleFatOsc}>
-                    fat osc
-                </button>
-
-                <button disabled={!isLoaded} onClick={this.toggleAMOsc}>
-                    am osc
-                </button>
             </div>
         );
     }
