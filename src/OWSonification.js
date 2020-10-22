@@ -49,28 +49,33 @@ class Child2 extends React.Component {
         this.initialize = this.initialize.bind(this);
         this.startAudio = this.startAudio.bind(this);
         this.getNewData = this.getNewData.bind(this);
+        this.record = this.record.bind(this);
 
         //Effects
         this.dist = new Tone.Distortion(0).toDestination();
 
         this.rev = new Tone.Reverb(1).toDestination();
 
+        //Recorder
+        this.recorder = new Tone.Recorder();
+
         //Sound sources
         this.buffer = new Tone.ToneAudioBuffer();
-        this.buffer.debug = true;
+        //this.buffer.debug = true;
         this.buffer.load(bubbles);
 
         this.player = new Tone.Player(this.buffer, () => {
             console.log("Player ready!");
             this.setState({ isLoaded: true });
+            this.player.loop = true;
             this.initialize();
-        }).chain(this.dist, this.rev, Tone.Destination);
+        }).chain(this.dist, this.rev, Tone.Destination, this.recorder);
 
-        this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination);
+        this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination, this.recorder);
 
-        this.am = new Tone.AMOscillator("E3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
+        this.am = new Tone.AMOscillator("E3", "sine", "square").chain(this.dist, this.rev, Tone.Destination, this.recorder);
     
-        this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
+        this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination, this.recorder);
     }
 
     initialize() {
@@ -108,8 +113,8 @@ class Child2 extends React.Component {
             this.am.start(Tone.now());
 
             this.player.volume.rampTo(0);
-            this.fatOsc.volume.rampTo(-12);
-            this.am.volume.rampTo(-12);
+            this.fatOsc.volume.rampTo(-16);
+            this.am.volume.rampTo(-16);
             this.setState({ audioState: true });
         }
         else if (this.state.audioState === true) {
@@ -123,6 +128,19 @@ class Child2 extends React.Component {
 
             this.setState({ audioState: false });
         }
+    }
+
+    record() {
+        this.recorder.start();
+
+        setTimeout(async () => {
+            const recording = await this.recorder.stop();
+            const url = URL.createObjectURL(recording);
+            const anchor = document.createElement("a");
+            anchor.download = "recording.webm";
+            anchor.href = url;
+            anchor.click();
+        }, 10000);
     }
 
     getNewData() {
@@ -144,7 +162,7 @@ class Child2 extends React.Component {
         index = (currDate - 2000) * 5;
 
         //map from 90 to 620 to //TODO: VALUES??// using same formula as above
-
+        
     }
 
     render() {
@@ -155,6 +173,10 @@ class Child2 extends React.Component {
             <div className="Child2" >
                 <button disabled={!isLoaded} onClick={this.startAudio}>
                     audio on/off
+                </button>
+
+                <button disabled={!isLoaded} onClick={this.record}>
+                    record
                 </button>
 
             </div>
