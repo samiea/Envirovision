@@ -49,7 +49,6 @@ class Child2 extends React.Component {
         this.initialize = this.initialize.bind(this);
         this.startAudio = this.startAudio.bind(this);
         this.getNewData = this.getNewData.bind(this);
-        this.record = this.record.bind(this);
 
         //Effects
         this.dist = new Tone.Distortion(0).toDestination();
@@ -57,7 +56,7 @@ class Child2 extends React.Component {
         this.rev = new Tone.Reverb(1).toDestination();
 
         //Recorder
-        this.recorder = new Tone.Recorder();
+        //this.recorder = new Tone.Recorder();
 
         //Sound sources
         this.buffer = new Tone.ToneAudioBuffer();
@@ -69,13 +68,13 @@ class Child2 extends React.Component {
             this.setState({ isLoaded: true });
             this.player.loop = true;
             this.initialize();
-        }).chain(this.dist, this.rev, Tone.Destination, this.recorder);
+        }).chain(this.dist, this.rev, Tone.Destination);
 
-        this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination, this.recorder);
+        this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination);
 
-        this.am = new Tone.AMOscillator("E3", "sine", "square").chain(this.dist, this.rev, Tone.Destination, this.recorder);
+        this.am = new Tone.AMOscillator("E3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
     
-        this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination, this.recorder);
+        this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
     }
 
     initialize() {
@@ -130,19 +129,6 @@ class Child2 extends React.Component {
         }
     }
 
-    record() {
-        this.recorder.start();
-
-        setTimeout(async () => {
-            const recording = await this.recorder.stop();
-            const url = URL.createObjectURL(recording);
-            const anchor = document.createElement("a");
-            anchor.download = "recording.webm";
-            anchor.href = url;
-            anchor.click();
-        }, 20000);
-    }
-
     getNewData() {
         //get current date
         var currDate = this.props.currentDate.getFullYear();
@@ -173,10 +159,6 @@ class Child2 extends React.Component {
             <div className="Child2" >
                 <button disabled={!isLoaded} onClick={this.startAudio}>
                     audio on/off
-                </button>
-
-                <button disabled={!isLoaded} onClick={this.record}>
-                    record
                 </button>
 
             </div>
