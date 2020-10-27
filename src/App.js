@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import OWVisualization from './OWVisualization' // import both children
+import OWSonification from './OWSonification'
 import axios from 'axios'; // used for API stuff
 
 // below imports are for static files to avoid 429 errors from requests while testing
@@ -46,7 +47,14 @@ class App extends React.Component {
                     microGrowth2050 = {this.state.microGrowth2050}
                     macroGrowth2050={this.state.macroGrowth2050}
                     carbonData={this.state.carbonData}
-                    methaneData={this.state.methaneData} />
+                    methaneData={this.state.methaneData}
+                />
+                <OWSonification
+                    currentDate={this.state.currentDate}
+                    temperatureData={this.state.temperatureData}
+                    microGrowth2050 = {this.state.microGrowth2050}
+                />
+                {/* <button id="play-button">Play</button> */}
             </div>
         );
     }
