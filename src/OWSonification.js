@@ -9,12 +9,13 @@ import "./Child2.css";
  * - Four layers of audio:
  *   - Playback:
  *      - Ocean
- *      - Bubble sounds (randomized from an array of samples)
+ *      - Bubble sounds
  *   - Fat Oscillator:
  *      - Sun
  *      - Bass note
  *   - AM Oscillator:
  *      - Microplastics
+ *      - Interval quality
  *   - FM Oscillator:
  *      - Empty for now; another tool
  */
@@ -33,7 +34,9 @@ class Child2 extends React.Component {
             freqIndex: 0,
             bassFreqs: [65.41, 69.30, 73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47], //C2-B2
             trebleFreqs: [523.25, 554.37, 587.33, 622.25, 659.25, 698.46, 739.99, 783.99, 830.61, 880.00, 932.33, 987.77], //C5-B5
-            intervals: [0, 4, 7, 9], //unison, third, fifth, sixth
+            consonantIntervals: [0, 4, 7, 9], //unison, maj third, perf fifth, maj sixth
+            dissonantIntervals: [1, 2, 3, 5, 6, 8, 10, 11], //min second, maj second, min third, perf fourth, tritone, min sixth, min seventh, maj seventh
+            consonanceProbability: 100,
             //All audio on/off
             audioState: false,
             //Audio layer solo states
@@ -54,9 +57,6 @@ class Child2 extends React.Component {
         this.dist = new Tone.Distortion(0).toDestination();
 
         this.rev = new Tone.Reverb(1).toDestination();
-
-        //Recorder
-        //this.recorder = new Tone.Recorder();
 
         //Sound sources
         this.buffer = new Tone.ToneAudioBuffer();
@@ -95,12 +95,29 @@ class Child2 extends React.Component {
 
     startAudio() {
         this.getNewData();
-        this.rev.decay = 12; //TODO: what's controlling reverb?
+        this.rev.decay = 12;
 
         Tone.Transport.scheduleRepeat((time) => {
-            var intervalIndex = Math.floor(Math.random() * 4);
-            console.log(intervalIndex);
-            this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.intervals[intervalIndex]]);
+            this.getNewData();
+            console.log("Starting repeating event...");
+            //Use microplastics data to determine probability of consonance or dissonance, then randomly select from the consonant or dissonant interval arrays
+            
+            //this.state.consonanceProbability goes from 0 to 100
+            console.log("Consonance probability:");
+            console.log(this.state.consonanceProbability);
+            var rand = Math.random() * 100; //get random number between 0 and 100
+            
+            if (rand < this.state.consonanceProbability) {
+                console.log("Consonant interval!");
+                var intervalIndex = Math.floor(Math.random() * 4);
+                this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.consonantIntervals[intervalIndex]]);
+            }
+            else {
+                console.log("Dissonant interval!");
+                var intervalIndex = Math.floor(Math.random() * 8);
+                this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.dissonantIntervals[intervalIndex]]);
+            }
+
         }, "4hz", Tone.now());
 
         this.fatOsc.frequency.rampTo(this.state.bassFreqs[this.state.freqIndex]);
@@ -138,17 +155,18 @@ class Child2 extends React.Component {
         index = Math.round(index);
 
         //map from -1 - 1 to 0 - 10 using (value - x1) * (y2 - x2) / (y1 - x1) + x2
-        var frequency = (this.props.temperatureData[index].station + 1) * (10 - 0) / (1 + 1) + 10;
+        var frequency = (this.props.temperatureData[index].station + 1) * (10 - 0) / (1 + 1);
         index = Math.floor(frequency) % 11;
         console.log("Index:");
         console.log(index);
         this.setState({ freqIndex: index });
 
         //calculate index for microplastics data
-        index = (currDate - 2000) * 5;
+        index = (currDate - 1950);
 
-        //map from 90 to 620 to //TODO: VALUES??// using same formula as above
-        
+        //map from 90 to 620 to 0 to 100 using same formula as above
+        var cp = (this.props.microGrowth2050[index][1] - 90) * (100 - 0) / (620 + 90);
+        this.setState({ consonanceProbability: cp });        
     }
 
     render() {
