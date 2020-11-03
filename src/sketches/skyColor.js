@@ -3,24 +3,29 @@
 export function drawSky(p, carbonData, currentDate) {
     var currentYear = currentDate.getFullYear();
     //underData
-    if (currentYear < 2010) {
-        var yearIdex = currentYear - 1950;
-        //constants for changing color
-        var rGap = 0.3;
-        var gGap = 3;
-        var bGap = 1.9;
-        //
-        var rIndex = 38 - ((rGap * yearIdex) | 0);
-        var gIndex = 238 - ((gGap * yearIdex) | 0);
-        var bIndex = 228 - ((bGap * yearIdex) | 0);
+    var yearIdex = currentYear - 1950;
+    //constants for changing color
+    var rGap = 0.3;
+    var gGap = 3;
+    var bGap = 1.9;
+    //
+    var rIndex = 38 - ((rGap * yearIdex) | 0);
+    var gIndex = 238 - ((gGap * yearIdex) | 0);
+    var bIndex = 228 - ((bGap * yearIdex) | 0);
 
-        p.background(rIndex, gIndex, bIndex);
-    }
-    //over data
-    else if (currentYear > 2019) {
-        //original color choice
-        p.background(231, 181, 137);
-    }
+    p.background(rIndex, gIndex, bIndex);
+
+    // if (currentYear < 2010) {
+           // code body moved outside (above) statement block
+    // }
+    // //over data
+    // else {
+    //     //original color choice
+    //     p.background(231, 181, 137);
+    // }
+
+
+
     /* warnings
     else {
         //there are 10 year in the carbon data

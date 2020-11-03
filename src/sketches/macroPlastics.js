@@ -5,7 +5,7 @@ let newHeight = 0;
 
 class GarbagePile {
     constructor(p) {
-        var bubbleHeight = p.height/2
+        var bubbleHeight = p.height / 1.85
         this.xVelocity = p.random(-2, 2); //cloud movement velocity
         this.x = p.random(50, p.width);
         this.y = bubbleHeight;

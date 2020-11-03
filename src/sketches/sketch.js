@@ -25,6 +25,7 @@ export default function sketch(p) {
     };
 
     p.draw = () => {
+        p.clear();
         drawSky(p, carbonData, currentDate);
         drawSun(p, temperatureData, currentDate);
 

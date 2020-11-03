@@ -79,7 +79,7 @@ export function drawLandscape(p,currentDate) { // this loops everything inside b
       newHeight = 0
     }
     drawClouds();
-    drawWaves(p, newHeight);
+    drawWaves(p);
     p.noStroke();
 }
 
@@ -91,9 +91,9 @@ function drawClouds() { // create the clouds and call their moethods
 }
 
 function drawWaves(p) { // create the waves
-    createWave((0-newHeight), { r: 194, g: 247, b: 254 });
-    createWave((65-newHeight), { r: 84, g: 182, b: 282 });
-    createWave((80-newHeight), { r: 112, g: 219, b: 245 });
+    createWave((0 - newHeight), { r: 194, g: 247, b: 254 });
+    createWave((65 - newHeight), { r: 84, g: 182, b: 282 });
+    createWave((80 - newHeight), { r: 112, g: 219, b: 245 });
 
     function createWave(offsetY, rgb) {
         p.noFill();
@@ -146,7 +146,7 @@ class Cloud { // class for cloud objects
                 this.x = p.width - 1200 * num_clouds; // reset cloud to this position
             }
 
-            this.y = (p.height / 2 - 15)-newHeight ; // update Yposition
+            this.y = (p.height / 2 - 15) - newHeight ; // update Yposition
         };
     }
 }

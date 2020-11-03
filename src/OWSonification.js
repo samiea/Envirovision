@@ -64,7 +64,7 @@ class Child2 extends React.Component {
         this.buffer.load(bubbles);
 
         this.player = new Tone.Player(this.buffer, () => {
-            console.log("Player ready!");
+            // console.log("Player ready!");
             this.setState({ isLoaded: true });
             this.player.loop = true;
             this.initialize();
@@ -99,7 +99,7 @@ class Child2 extends React.Component {
 
         Tone.Transport.scheduleRepeat((time) => {
             var intervalIndex = Math.floor(Math.random() * 4);
-            console.log(intervalIndex);
+            // console.log(intervalIndex);
             this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.intervals[intervalIndex]]);
         }, "4hz", Tone.now());
 
@@ -140,8 +140,8 @@ class Child2 extends React.Component {
         //map from -1 - 1 to 0 - 10 using (value - x1) * (y2 - x2) / (y1 - x1) + x2
         var frequency = (this.props.temperatureData[index].station + 1) * (10 - 0) / (1 + 1) + 10;
         index = Math.floor(frequency) % 11;
-        console.log("Index:");
-        console.log(index);
+        // console.log("Index:");
+        // console.log(index);
         this.setState({ freqIndex: index });
 
         //calculate index for microplastics data
@@ -153,7 +153,7 @@ class Child2 extends React.Component {
 
     render() {
         const { isLoaded } = this.state;
-        console.log(this.state);
+        // console.log(this.state);
 
         return (
             <div className="Child2" >
@@ -166,11 +166,11 @@ class Child2 extends React.Component {
     }
 
     componentDidMount() {
-        console.log("Child2 Mounted");
+        // console.log("Child2 Mounted");
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("Child2 Updated");
+        // console.log("Child2 Updated");
     }
 }
 
