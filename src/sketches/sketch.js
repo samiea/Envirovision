@@ -8,7 +8,7 @@ import { drawSky } from "./skyColor";
 
 export default function sketch(p) {
     let temperatureData = null;
-    let microGrowth2050 = null; 
+    let microGrowth2050 = null;
     let macroGrowth2050 = null;
     let currentDate = null;
     let carbonData = null;
@@ -25,10 +25,11 @@ export default function sketch(p) {
     };
 
     p.draw = () => {
+        p.clear();
         drawSky(p, carbonData, currentDate);
         drawSun(p, temperatureData, currentDate);
 
-        drawLandscape(p);
+        drawLandscape(p,currentDate);
         drawSmogClouds(p);
         drawMethaneBubbles(p, methaneData, currentDate);
         drawMicroPlasticDots(p, microGrowth2050, currentDate);

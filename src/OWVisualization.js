@@ -43,7 +43,7 @@ class Child1 extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log("Child Updated");
+        // console.log("New date: " + this.props.currentDate);
     }
 }
 

@@ -64,7 +64,7 @@ class Child2 extends React.Component {
         this.buffer.load(bubbles);
 
         this.player = new Tone.Player(this.buffer, () => {
-            console.log("Player ready!");
+            // console.log("Player ready!");
             this.setState({ isLoaded: true });
             this.player.loop = true;
             this.initialize();
@@ -106,15 +106,17 @@ class Child2 extends React.Component {
             console.log("Consonance probability:");
             console.log(this.state.consonanceProbability);
             var rand = Math.random() * 100; //get random number between 0 and 100
-            
+
+            var intervalIndex = 0;
+
             if (rand < this.state.consonanceProbability) {
                 console.log("Consonant interval!");
-                var intervalIndex = Math.floor(Math.random() * 4);
+                intervalIndex = Math.floor(Math.random() * 4);
                 this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.consonantIntervals[intervalIndex]]);
             }
             else {
                 console.log("Dissonant interval!");
-                var intervalIndex = Math.floor(Math.random() * 8);
+                intervalIndex = Math.floor(Math.random() * 8);
                 this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.dissonantIntervals[intervalIndex]]);
             }
 
@@ -157,8 +159,8 @@ class Child2 extends React.Component {
         //map from -1 - 1 to 0 - 10 using (value - x1) * (y2 - x2) / (y1 - x1) + x2
         var frequency = (this.props.temperatureData[index].station + 1) * (10 - 0) / (1 + 1);
         index = Math.floor(frequency) % 11;
-        console.log("Index:");
-        console.log(index);
+        // console.log("Index:");
+        // console.log(index);
         this.setState({ freqIndex: index });
 
         //calculate index for microplastics data
@@ -171,7 +173,7 @@ class Child2 extends React.Component {
 
     render() {
         const { isLoaded } = this.state;
-        console.log(this.state);
+        // console.log(this.state);
 
         return (
             <div className="Child2" >
@@ -184,11 +186,11 @@ class Child2 extends React.Component {
     }
 
     componentDidMount() {
-        console.log("Child2 Mounted");
+        // console.log("Child2 Mounted");
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("Child2 Updated");
+        // console.log("Child2 Updated");
     }
 }
 

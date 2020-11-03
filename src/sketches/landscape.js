@@ -59,6 +59,8 @@ const cloud_ellipses = [
 ];
 let noiseY;
 let clouds = [];
+//new height to add to the height of the wave to indicate see level rise
+let newHeight = 0;
 
 export function setupLandscape(p) {
     for (let i = 0; i < 3; i++) { // initialize the clouds
@@ -69,7 +71,13 @@ export function setupLandscape(p) {
 };
 
 
-export function drawLandscape(p) { // this loops everything inside body
+export function drawLandscape(p,currentDate) { // this loops everything inside body
+    //we wil add a new height to the starting height to make our landscape rise and fall with the date
+    var currentYear = currentDate.getFullYear();
+    newHeight = currentYear - 1980;
+    if (newHeight<0){
+      newHeight = 0
+    }
     drawClouds();
     drawWaves(p);
     p.noStroke();
@@ -83,9 +91,9 @@ function drawClouds() { // create the clouds and call their moethods
 }
 
 function drawWaves(p) { // create the waves
-    createWave(0, { r: 194, g: 247, b: 254 });
-    createWave(65, { r: 84, g: 182, b: 282 });
-    createWave(80, { r: 112, g: 219, b: 245 });
+    createWave((0 - newHeight), { r: 194, g: 247, b: 254 });
+    createWave((65 - newHeight), { r: 84, g: 182, b: 282 });
+    createWave((80 - newHeight), { r: 112, g: 219, b: 245 });
 
     function createWave(offsetY, rgb) {
         p.noFill();
@@ -108,8 +116,8 @@ function drawWaves(p) { // create the waves
 class Cloud { // class for cloud objects
     constructor(p, key) {
         this.x = (p.width - 1200 * key); // initial x position
-        this.y = p.height / 2 - 15; // initial y position
-    
+        this.y = (p.height / 2 - 15); // initial y position
+
         this.display = function () {
             p.stroke(255); // white stroke
             p.strokeWeight(1);
@@ -130,13 +138,15 @@ class Cloud { // class for cloud objects
             p.curveVertex(p.width, p.height);
             p.endShape(p.CLOSE); // end shape for area under ellipses
         };
-    
+
         this.move = function () {
             this.x += 0.2; // cloud movement speed
-    
+
             if (this.x >= p.width) {
                 this.x = p.width - 1200 * num_clouds; // reset cloud to this position
             }
+
+            this.y = (p.height / 2 - 15) - newHeight ; // update Yposition
         };
     }
 }

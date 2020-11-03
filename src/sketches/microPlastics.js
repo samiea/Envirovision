@@ -1,6 +1,7 @@
 //these are gonna be the variables for our garbage collection
 var drops = [];
 var micro_Size = 5;
+let newHeight = 0;
 
 class Drop {
     constructor(p) {
@@ -26,7 +27,7 @@ class Drop {
         this.y = this.y + this.speed * this.gravity;
 
         if (this.y > p.height) {
-            this.y = this.START_HEIGHT;
+            this.y = this.START_HEIGHT-newHeight;
             this.gravity = 0;
         }
     }
@@ -48,6 +49,10 @@ export function drawMicroPlasticDots(p, microGrowth2050, current_date) {
     //p.background(230, 230, 250);
     //console.log(microGrowth2050);
     //console.log(current_date);
+    newHeight = currentDate - 1980;
+    if (newHeight<0){
+      newHeight = 0
+    }
 
     for (var i = 0; i < drops.length; i++) {
         drops[i].update(p);
