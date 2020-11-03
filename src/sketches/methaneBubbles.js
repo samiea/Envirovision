@@ -1,13 +1,14 @@
 const INIT_NUM_BUBBLES = 30; // always starts with 30 bubbles
 let bubbles = []; // holds Bubble objects
 
+let newHeight = 0;
 /**
  * Class for bubbles that float up from seabed on display
  */
 class Bubble {
     /**
      * Constructor for bubbles
-     * 
+     *
      * @param {*} p p5 ptr
      * @param {*} xstart Starting x-position
      * @param {*} yspeed Speed of bubble rising to top
@@ -35,15 +36,15 @@ class Bubble {
         this.move = function () {
             this.x += p.cos(p.radians(this.degree)); // base x-shifts on cosine waves
             this.y += this.yspeed; // bubble movement speed
-            if (this.y < p.height * 0.63) {
-                this.y = p.height * 1.2;
+            if (this.y < (p.height * 0.63)-newHeight) {
+                this.y = (p.height * 1.2)-newHeight;
             }
             this.degree += p.random(0.0, 1.0);
         };
 
         /**
          * Set bubble speed corresponding to data
-         * 
+         *
          * @param {*} new_speed Re-initialize bubble speed
          */
         this.setSpeed = function (new_speed) {
@@ -54,7 +55,7 @@ class Bubble {
 
 /**
  * Set up methane bubbles on canvas
- * 
+ *
  * @param {*} p p5 ptr
  */
 export function setupMethaneBubbles(p, methaneData) {
@@ -62,7 +63,7 @@ export function setupMethaneBubbles(p, methaneData) {
     // const AVG_START = methaneData.arr[0].average;
     // const AVG_END = methaneData.arr[methaneData.arr.length - 1].average;
     // const AVG_DIFF = AVG_END - AVG_START; // diff btwn curr avg and start avg
-    
+
     for (let i = 0; i < INIT_NUM_BUBBLES; i++) { // initialize the bubbles
         bubbles[i] = new Bubble(p,
             p.random(0, p.width),
@@ -75,13 +76,17 @@ export function setupMethaneBubbles(p, methaneData) {
 
 /**
  * Draw methane bubbles on sketch
- * 
+ *
  * @param {*} p p5 ptr
  * @param {*} methaneData Object containing map and arr
  * @param {*} currentDate Current date stored in state
  */
 export function drawMethaneBubbles(p, methaneData, currentDate) { // create the bubbles and call their methods
     // make more bubbles and modify speed
+    newHeight = currentDate.getFullYear() - 1980;
+    if (newHeight<0){
+      newHeight = 0
+    }
 
     let yyyy = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(currentDate);
     let mm = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(currentDate);
@@ -132,7 +137,5 @@ export function drawMethaneBubbles(p, methaneData, currentDate) { // create the 
             }
         }
     }
-    
+
 }
-
-
