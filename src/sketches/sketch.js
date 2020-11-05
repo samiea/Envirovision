@@ -5,6 +5,7 @@ import { setupMacroPlastics, drawMacroPlastics } from "./macroPlastics";
 import { setupMethaneBubbles, drawMethaneBubbles } from "./methaneBubbles";
 import { setupSmogClouds, drawSmogClouds } from "./smogClouds";
 import { drawSky } from "./skyColor";
+import { drawLegend } from "./legend";
 
 export default function sketch(p) {
     let temperatureData = null;
@@ -13,6 +14,8 @@ export default function sketch(p) {
     let currentDate = null;
     let carbonData = null;
     let methaneData = null;
+
+    let showLegend = false;
 
     p.setup = () => {
         p.frameRate(30);
@@ -34,6 +37,11 @@ export default function sketch(p) {
         drawMethaneBubbles(p, methaneData, currentDate);
         drawMicroPlasticDots(p, microGrowth2050, currentDate);
         drawMacroPlastics(p, macroGrowth2050, currentDate);
+
+        if(showLegend) {
+            p.noFill();
+            drawLegend(p);
+        }
     };
 
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
@@ -43,5 +51,11 @@ export default function sketch(p) {
         macroGrowth2050 = newProps.macroGrowth2050;
         carbonData = newProps.carbonData;
         methaneData = newProps.methaneData;
+    };
+
+    p.mouseClicked = () => {
+        if(p.mouseX < p.width && p.mouseX > 0 && p.mouseY < p.height && p.mouseY > 0){
+            showLegend = !showLegend;
+        }
     };
 }
