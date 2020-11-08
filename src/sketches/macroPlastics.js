@@ -30,7 +30,6 @@ class GarbagePile {
             this.garbageColor.setAlpha(this.opacity);
             p.fill(this.garbageColor)
             //p.ellipse(this.x, this.y, this.width, this.height);
-            p.beginShape();
             for (let x = 0; x < this.garbageBubbles.length; x++) {
 
                 p.ellipse(
@@ -44,8 +43,6 @@ class GarbagePile {
                     this.y + this.garbageBubbles[x].yOffset - newHeight
                 );
             }
-
-            p.endShape(p.CLOSE);
         };
 
         this.move = function () {

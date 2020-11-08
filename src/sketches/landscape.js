@@ -91,26 +91,39 @@ function drawClouds() { // create the clouds and call their moethods
 }
 
 function drawWaves(p) { // create the waves
-    createWave((0 - newHeight), { r: 194, g: 247, b: 254 });
-    createWave((65 - newHeight), { r: 84, g: 182, b: 282 });
-    createWave((80 - newHeight), { r: 112, g: 219, b: 245 });
+    createWave(p, (0 - newHeight), { r: 194, g: 247, b: 254 }, 2);
+    createWave(p, (65 - newHeight), { r: 84, g: 182, b: 282 }, 2);
+    createWave(p, (80 - newHeight), { r: 112, g: 219, b: 245 }, 2);
+}
 
-    function createWave(offsetY, rgb) {
-        p.noFill();
-        p.stroke(rgb.r, rgb.g, rgb.b); // draw wave
-        p.strokeWeight(p.height / 2);
-        p.beginShape(); // create shape for area under waves
-        p.curveVertex(0, p.height / 2);
-        for (let i = 0; i < p.width; i += 50) {
-            let y =
+export function drawSeaboard(p) { // create the landscape
+    createWave(p, (180), { r: 250, g: 219, b: 97 }, 1);
+}
+
+/**
+ * Create wave
+ * 
+ * @param {*} offsetY Vertical offset of wave
+ * @param {*} rgb Wave color
+ * @param {*} dim Dimension (1D or 2D)
+ */
+function createWave(p, offsetY, rgb, dim) {
+    p.noFill();
+    p.stroke(rgb.r, rgb.g, rgb.b); // draw wave
+    p.strokeWeight(p.height / 2);
+    p.beginShape(); // create shape for area under waves
+    p.curveVertex(0, p.height / 2);
+    for (let i = 0; i < p.width; i += 50) {
+        let y =
+            dim === 1 ?
+            p.map(p.noise(i), 0, 1, 200, 300) + noiseY + offsetY :
                 p.noise(p.frameCount * noiseSpeed + i) * noiseHeight +
                 noiseY +
                 offsetY; // redraw y-coordinates for waves
-            p.curveVertex(i, y);
-        }
-        p.curveVertex(p.width, p.height / 2);
-        p.endShape(p.LINES); // end shape for area under waves
+        p.curveVertex(i, y);
     }
+    p.curveVertex(p.width, p.height / 2);
+    p.endShape(p.LINES); // end shape for area under waves
 }
 
 class Cloud { // class for cloud objects

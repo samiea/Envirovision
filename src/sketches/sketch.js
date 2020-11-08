@@ -1,11 +1,12 @@
 import { drawSun } from "./sun";
-import { setupLandscape, drawLandscape } from "./landscape";
+import { setupLandscape, drawLandscape, drawSeaboard } from "./landscape";
 import { setupMicroPlasticDrops, drawMicroPlasticDots } from "./microPlastics";
 import { setupMacroPlastics, drawMacroPlastics } from "./macroPlastics";
 import { setupMethaneBubbles, drawMethaneBubbles } from "./methaneBubbles";
 import { setupSmogClouds, drawSmogClouds } from "./smogClouds";
 import { drawSky } from "./skyColor";
-import { drawLegend } from "./legend";
+import { drawLegend, drawAllLegends } from "./legend";
+import { hoveredBubbleData } from "./methaneBubbles";
 
 export default function sketch(p) {
     let temperatureData = null;
@@ -35,14 +36,27 @@ export default function sketch(p) {
         drawLandscape(p,currentDate);
         drawSmogClouds(p);
         drawMethaneBubbles(p, methaneData, currentDate);
+        drawSeaboard(p);
         drawMicroPlasticDots(p, microGrowth2050, currentDate);
         drawMacroPlastics(p, macroGrowth2050, currentDate);
 
-        if(showLegend) {
+        if (hoveredBubbleData.mouseOver) {
+            const text = "The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.";
+            const value = hoveredBubbleData.value ? `Value: ${hoveredBubbleData.value}` : `[No Value For Current Date]`;
             p.noFill();
-            drawLegend(p);
+            drawLegend(p, text, value);
         }
+
+        // if (showLegend) { // commented this for demo/testing purposes
+        //     p.noFill();
+        //     drawAllLegends(p);
+        // }
     };
+
+    p.windowResized = () => {
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+        p.redraw();
+    }
 
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
         temperatureData = newProps.temperatureData;

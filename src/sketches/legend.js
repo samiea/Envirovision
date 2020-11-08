@@ -1,6 +1,6 @@
 import { black, white } from "color-name";
 
-export function drawLegend(p) {
+export function drawAllLegends(p) {
     let fillColor = p.color(255, 255, 255);
     fillColor.setAlpha(200);
     p.noStroke();
@@ -33,6 +33,48 @@ export function drawLegend(p) {
     p.text("Macroplastics\nThe large brown and grey shapes on the ocean surface represent macroplastics, larger plastic objects polluting the oceans.\nThey"
     +" increase and decrease in number based on macroplastic levels in the oceans.", 200, 700);
     p.text("Bubbles\nThe bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.", 200, 800);
+
+    p.noStroke();
+}
+
+export function drawLegend(p, text, value) {
+    const maxWidth = window.screen.availWidth - (window.outerWidth - window.innerWidth);
+    const width_ratio = p.windowWidth / maxWidth;
+    
+    const strokeWeight = 5; // font boldness
+    const bottomPadding = 3;
+    const maxChars = 66;
+    const numTextWraps = 1 + Math.ceil(text.length / maxChars); // add 1 for value representation
+    
+    const textSize = 20 * width_ratio; // scales with window width
+    const textBoxWidth = 625 * width_ratio; // scales with window width
+    const textBoxHeight = strokeWeight * numTextWraps + textSize * numTextWraps + bottomPadding; // scales with window height
+    
+    const leftMargin = p.mouseX + textBoxWidth + 20 > p.windowWidth ? -textBoxWidth - 20 : 20; // check if text box would go beyond window width
+
+    const fillColor = p.color(255, 255, 255);
+
+    const wrappedText = text.replace( // wrap text around 66 chars maximum
+        /(?![^\n]{1,66}$)([^\n]{1,66})\s/g, '$1\n'
+    );
+    
+    fillColor.setAlpha(200);
+    p.noStroke();
+    p.fill(fillColor);
+    p.rect(leftMargin + p.mouseX, p.mouseY, textBoxWidth, textBoxHeight);
+
+    p.noFill();
+    p.stroke(black);
+    p.strokeWeight(strokeWeight);
+    p.rect(leftMargin + p.mouseX, p.mouseY, textBoxWidth, textBoxHeight);
+
+    p.fill(0);
+    p.strokeWeight(0.5);
+    p.textAlign(p.LEFT);
+    
+    p.textSize(textSize);
+    p.text(wrappedText, leftMargin + strokeWeight + p.mouseX, p.mouseY + textSize);
+    p.text(value, leftMargin + strokeWeight + p.mouseX, p.mouseY + (bottomPadding + textSize) * numTextWraps)
 
     p.noStroke();
 }

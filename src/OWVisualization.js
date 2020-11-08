@@ -30,7 +30,7 @@ class Child1 extends React.Component {
             this.props.methaneData.forEach(e => { // look over methane data
                 let yyyy = e.date.substring(0, 4);
                 let mm = e.date.substring(5, e.date.length).padStart(2, '0');
-                let dd = "01"
+                let dd = "01";
     
                 let date = `${yyyy}-${mm}-${dd}`;
                 this.methaneMap.set(date, e.average); // map date to average
