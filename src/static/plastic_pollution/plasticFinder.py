@@ -1,5 +1,7 @@
 import json
+
 # data scraped from https://ourworldindata.org/plastic-pollution
+
 def parser(fname):
     column = 0
     finalArray = []

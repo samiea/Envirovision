@@ -4,15 +4,18 @@ let newHeight = 0;
 
 
 class GarbagePile {
-    constructor(p) {
+    constructor(p,moreHeight) {
         var bubbleHeight = p.height / 1.85
-        this.xVelocity = p.random(-2, 2); //cloud movement velocity
+        this.xVelocity = p.random(-0.5, 0.5); //cloud movement velocity
         this.x = p.random(50, p.width);
-        this.y = bubbleHeight;
+        this.y = bubbleHeight - moreHeight;
         this.width = p.random(100, 300);
         this.height = p.random(50, 100);
         this.garbageBubbles = [];
+        //make the garbage hard to see through
         this.opacity = p.random(400, 500);
+
+        //various reds and greens and browns
         this.rcolor = p.random(129,160);
         this.gcolor = p.random(80,105);
         this.bcolor = p.random(70,110);
@@ -46,10 +49,11 @@ class GarbagePile {
         };
 
         this.move = function () {
+
             for (let x = 0; x < this.garbageBubbles.length; x++) {
-                if (Math.abs(this.garbageBubbles[x].xOffset) > this.width / 2 - 10) {
+                /*if (Math.abs(this.garbageBubbles[x].xOffset) > this.width / 2 - 10) {
                     this.Bubbles[x].xVelocity *= -1;
-                }
+                }*/
                 if (Math.abs(this.garbageBubbles[x].yOffset) > this.height / 2 - 10) {
                     this.garbageBubbles[x].yVelocity *= -1;
                 }
@@ -87,47 +91,16 @@ class GarbageBubble {
         this.rx = p.random(25, 40);
         this.ry = p.random(25, 40);
 
-        this.rxVelocity = p.random(0.01, 0.01);
+        this.rxVelocity = p.random(-0.01, 0.01);
         this.ryVelocity = p.random(0.01, 0.02);
 
 
-        //let color = p.color(rcolor,gcolor,bcolor);
-        //this.garbageColor = color
-        //this.garbageColor.setAlpha(this.opacity);
-        //p.fill(this.garbageColor);
+
     }
 }
 
-/*export function setupSmogClouds(p) {
-    for (let i = 0; i < 4; i++) {
-        smogClouds[i] = new SmogCloud(p);
-    }
-}
-export function drawSmogClouds(p) {
-    for (var i = 0; i < smogClouds.length; i++) {
-        smogClouds[i].move();
-        smogClouds[i].display();
-    }
-}*/
 
-/*class Plastic {
-    constructor(p, index) {
-        this.START_HEIGHT = p.height * 0.56;
-        var ending_height = this.START_HEIGHT - index / 15;
-        // var width = this.START_HEIGHT + index / 10;
-        this.x = p.random(/*width*//* 0, p.width);
-        this.y = p.random(this.START_HEIGHT, ending_height);
-        this.color = p.random(0, 255);
-        this.size = p.random(12, 20);
-    }
-    show(p) {
-        p.noStroke();
-        p.fill(this.color);
-        p.ellipse(this.x, this.y, this.size, this.size);
-        basicGarbage(this.x, this.y, this.size, this.size);
-    }
-}
-*/
+
 export function setupMacroPlastics(p) {
     //
     //set up plastic
@@ -153,18 +126,21 @@ export function drawMacroPlastics(p, macroGrowth2050, current_date) {
 
     for (var i = 0; i < macro_plastic.length; i++) {
         macro_plastic[i].display(p);
+        macro_plastic[i].move(p);
     }
 
     if (macroGrowth2050 != null) {
         var newSize = -1 * (macroGrowth2050[currentDate - 1950][1] - 367);
 
-        newSize = (newSize/5)| + 5;
 
-        // console.log(newSize);
+
+        newSize = Math.round(newSize/4) + 5;
+        newHeight = Math.round(newSize*1.25)
+
         //add drops
         if (newSize > macro_plastic.length) {
             for (var j = macro_plastic.length; j < newSize; j++) {
-                macro_plastic[j] = new GarbagePile(p);
+                macro_plastic[j] = new GarbagePile(p,newHeight);
             }
         }
         //remove drops
