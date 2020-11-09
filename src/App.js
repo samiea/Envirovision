@@ -11,6 +11,8 @@ import nitrousJSON from './static/nitrous.json'
 import temperatureJSON from './static/temperature.json'
 import macroGrowth2050 from './static/plastic_pollution/macroGrowth2050.json'
 import microGrowth2050 from './static/plastic_pollution/microGrowth2050.json'
+import seaLevelRise from './static/seaLevelRise/seaLevelRise.json'
+
 
 import * as d3 from 'd3';
 // import {sliderBottom} from 'd3-simple-slider';
@@ -32,6 +34,9 @@ class App extends React.Component {
             macroGrowth2050: macroGrowth2050.macroGrowth2050,
             microGrowth2050: microGrowth2050.microGrowth2050,
 
+            //sea seaLevelRise
+            seaLevelRise: seaLevelRise.seaLevelRise,
+
             currentDate: new Date("1950-11-01"), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             dataIsLoaded: false
         };
@@ -48,6 +53,7 @@ class App extends React.Component {
                     macroGrowth2050={this.state.macroGrowth2050}
                     carbonData={this.state.carbonData}
                     methaneData={this.state.methaneData}
+                    seaLevelRise={this.state.seaLevelRise}
                 />
                 <OWSonification
                     currentDate={this.state.currentDate}

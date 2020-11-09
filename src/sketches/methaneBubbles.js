@@ -98,12 +98,28 @@ export function setupMethaneBubbles(p, methaneData) {
  * @param {*} methaneData Object containing map and arr
  * @param {*} currentDate Current date stored in state
  */
-export function drawMethaneBubbles(p, methaneData, currentDate) { // create the bubbles and call their methods
-    // make more bubbles and modify speed
-    newHeight = currentDate.getFullYear() - 1980;
-    if (newHeight<0){
+export function drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise) { // create the bubbles and call their methods
+
+    //we wil add a new height to the starting height to make our landscape rise and fall
+    // with the date and sea seaLevelRise data
+
+    var currentYear = currentDate.getFullYear();
+    var index = currentYear - 1880;
+
+    if (index<0){
       newHeight = 0
     }
+    if (currentYear>2013)
+    {
+      newHeight = seaLevelRise[(2013-1880)][1]*3+((currentYear-2014))/3
+    }
+    else{
+      newHeight = seaLevelRise[index][1]*3
+    }
+
+
+
+    // make more bubbles and modify speed
 
     let yyyy = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(currentDate);
     let mm = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(currentDate);
@@ -116,7 +132,7 @@ export function drawMethaneBubbles(p, methaneData, currentDate) { // create the 
         // check if mouse is hovering over bubble
         // if not, move normally
         // otherwise, compare current mouse position with initially selected bubble position
-        if (!hoveredBubbleData.mouseOver) { 
+        if (!hoveredBubbleData.mouseOver) {
             bubbles[i].move();
         }
         else if (p.dist(p.mouseX, p.mouseY, hoveredBubble.x, hoveredBubble.y) > hoveredBubble.size) {
@@ -153,7 +169,7 @@ export function drawMethaneBubbles(p, methaneData, currentDate) { // create the 
     else {
         // set to null if no data available
         hoveredBubbleData.value = null;
-        
+
         let new_yyyy = DATE_START.substring(0, 4);
         let new_mm = DATE_START.substring(5, DATE_START.length).padStart(2, '0');
         let new_dd = "01"

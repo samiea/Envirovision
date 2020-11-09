@@ -15,6 +15,7 @@ export default function sketch(p) {
     let currentDate = null;
     let carbonData = null;
     let methaneData = null;
+    let seaLevelRise = null;
 
     let showLegend = false;
 
@@ -33,12 +34,12 @@ export default function sketch(p) {
         drawSky(p, carbonData, currentDate);
         drawSun(p, temperatureData, currentDate);
 
-        drawLandscape(p,currentDate);
+        drawLandscape(p,currentDate, seaLevelRise);
         drawSmogClouds(p);
-        drawMethaneBubbles(p, methaneData, currentDate);
+        drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise);
         drawSeaboard(p);
-        drawMicroPlasticDots(p, microGrowth2050, currentDate);
-        drawMacroPlastics(p, macroGrowth2050, currentDate);
+        drawMicroPlasticDots(p, microGrowth2050, currentDate, seaLevelRise);
+        drawMacroPlastics(p, macroGrowth2050, currentDate, seaLevelRise);
 
         if (hoveredBubbleData.mouseOver) {
             const text = "The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.";
@@ -65,6 +66,7 @@ export default function sketch(p) {
         macroGrowth2050 = newProps.macroGrowth2050;
         carbonData = newProps.carbonData;
         methaneData = newProps.methaneData;
+        seaLevelRise = newProps.seaLevelRise;
     };
 
     p.mouseClicked = () => {

@@ -71,13 +71,25 @@ export function setupLandscape(p) {
 };
 
 
-export function drawLandscape(p,currentDate) { // this loops everything inside body
-    //we wil add a new height to the starting height to make our landscape rise and fall with the date
+export function drawLandscape(p,currentDate,seaLevelRise) { // this loops everything inside body
+    //we wil add a new height to the starting height to make our landscape rise and fall
+    // with the date and sea seaLevelRise data
+
     var currentYear = currentDate.getFullYear();
-    newHeight = currentYear - 1980;
-    if (newHeight<0){
+    var index = currentYear - 1880;
+
+    if (index<0){
       newHeight = 0
     }
+    if (currentYear>2013)
+    {
+      newHeight = seaLevelRise[(2013-1880)][1]*3+((currentYear-2014))/3
+    }
+    else{
+      newHeight = seaLevelRise[index][1]*3
+    }
+
+
     drawClouds();
     drawWaves(p);
     p.noStroke();
@@ -102,7 +114,7 @@ export function drawSeaboard(p) { // create the landscape
 
 /**
  * Create wave
- * 
+ *
  * @param {*} offsetY Vertical offset of wave
  * @param {*} rgb Wave color
  * @param {*} dim Dimension (1D or 2D)

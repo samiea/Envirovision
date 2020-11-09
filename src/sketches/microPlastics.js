@@ -42,17 +42,27 @@ export function setupMicroPlasticDrops(p) {
     }
 }
 
-export function drawMicroPlasticDots(p, microGrowth2050, current_date) {
+export function drawMicroPlasticDots(p, microGrowth2050, current_date, seaLevelRise) {
+  //we wil add a new height to the starting height to make our landscape rise and fall
+  // with the date and sea seaLevelRise data
+
+  var currentDate = current_date.getFullYear();
+  var index = currentDate - 1880;
+
+  if (index<0){
+    newHeight = 0
+  }
+  if (currentDate>2013)
+  {
+    newHeight = seaLevelRise[(2013-1880)][1]*3+((currentDate-2014))/3
+  }
+  else{
+    newHeight = seaLevelRise[index][1]*3
+  }
+
+
     //calc microplastic
     //
-    var currentDate = current_date.getFullYear();
-    //p.background(230, 230, 250);
-    //console.log(microGrowth2050);
-    //console.log(current_date);
-    newHeight = currentDate - 1980;
-    if (newHeight<0){
-      newHeight = 0
-    }
 
     for (var i = 0; i < drops.length; i++) {
         drops[i].update(p);

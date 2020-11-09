@@ -14,9 +14,9 @@ function calcSun(temperatureData, current_date) {
         //get current date based on scroller
         //get year
         var currentDate = current_date.getFullYear();
-        if (currentDate === 2020) {
+        /*if (currentDate === 2020) {
             currentDate = 2015;
-        }
+        }*/
         var index = ((currentDate - 1880) * temperatureData.length) / 140 - 100;
 
         var i = Math.round(index);
