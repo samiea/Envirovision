@@ -120,6 +120,9 @@ class Child2 extends React.Component {
                 this.am.frequency.rampTo(this.state.trebleFreqs[this.state.freqIndex + this.state.dissonantIntervals[intervalIndex]]);
             }
 
+            //Change bass frequency to match
+            this.fatOsc.frequency.rampTo(this.state.bassFreqs[this.state.freqIndex]);
+
         }, "4hz", Tone.now());
 
         this.fatOsc.frequency.rampTo(this.state.bassFreqs[this.state.freqIndex]);
