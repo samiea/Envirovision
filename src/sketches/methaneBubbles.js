@@ -117,8 +117,6 @@ export function drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise) { 
       newHeight = seaLevelRise[index][1]*3
     }
 
-
-
     // make more bubbles and modify speed
 
     let yyyy = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(currentDate);
