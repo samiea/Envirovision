@@ -1,7 +1,7 @@
 import { drawSun } from "./sun";
 import { setupLandscape, drawLandscape, drawSeaboard } from "./landscape";
 import { setupMicroPlasticDrops, drawMicroPlasticDots } from "./microPlastics";
-import { setupMacroPlastics, drawMacroPlastics } from "./macroPlastics";
+import { setupMacroPlastics, drawMacroPlastics, hoveredMacroPlasticData } from "./macroPlastics";
 import { setupMethaneBubbles, drawMethaneBubbles } from "./methaneBubbles";
 import { setupSmogClouds, drawSmogClouds } from "./smogClouds";
 import { drawSky } from "./skyColor";
@@ -44,6 +44,12 @@ export default function sketch(p) {
         if (hoveredBubbleData.mouseOver) {
             const text = "The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.";
             const value = hoveredBubbleData.value ? `Value: ${hoveredBubbleData.value}` : `[No Value For Current Date]`;
+            p.noFill();
+            drawLegend(p, text, value);
+        }
+        if (hoveredMacroPlasticData.mouseOver) {
+            const text = "The piles or circles on top the ocean represent macroplastic, and increase and decrease in number accordingly.";
+            const value = hoveredMacroPlasticData.value ? `Value: ${hoveredMacroPlasticData.value}` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }

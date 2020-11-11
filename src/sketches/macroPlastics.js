@@ -1,6 +1,11 @@
 //these are gonna be the variables for our garbage collection
 var macro_plastic = [];
+
+export let hoveredMacroPlasticData = { mouseOver: false, value: null };
+let hoveredMacroPlastic = null;
 let newHeight = 0;
+
+
 
 
 class GarbagePile {
@@ -15,6 +20,7 @@ class GarbagePile {
         //make the garbage hard to see through
         this.opacity = p.random(400, 500);
 
+        this.size = this.width - this.height;
         //various reds and greens and browns
         this.rcolor = p.random(129,160);
         this.gcolor = p.random(80,105);
@@ -32,6 +38,11 @@ class GarbagePile {
             this.garbageColor = color
             this.garbageColor.setAlpha(this.opacity);
             p.fill(this.garbageColor)
+
+            if (hoveredMacroPlasticData.mouseOver) {
+                p.fill(225, 225, 0, 70)
+                p.ellipse(this.x, this.y, 50);
+            }
             //p.ellipse(this.x, this.y, this.width, this.height);
             for (let x = 0; x < this.garbageBubbles.length; x++) {
 
@@ -70,6 +81,12 @@ class GarbagePile {
                 this.garbageBubbles[x].rx += this.garbageBubbles[x].rxVelocity;
                 this.garbageBubbles[x].ry += this.garbageBubbles[x].ryVelocity;
             }
+            // check if mouse is pressed and within range of bubble
+            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < 20) {
+                hoveredMacroPlasticData.mouseOver = true;
+                hoveredMacroPlastic = this;
+
+            }
 
             if (this.x > p.width) {
                 this.x = 50;
@@ -82,6 +99,7 @@ class GarbagePile {
 }
 
 class GarbageBubble {
+
     constructor(p, xlimit, ylimit) {
         this.opacity = p.random(150, 200);
         this.xVelocity = p.random(0.03, 0.07);
@@ -90,6 +108,8 @@ class GarbageBubble {
         this.yOffset = p.random((ylimit / 8) * -1, ylimit / 8);
         this.rx = p.random(25, 40);
         this.ry = p.random(25, 40);
+
+
 
         this.rxVelocity = p.random(-0.01, 0.01);
         this.ryVelocity = p.random(0.01, 0.02);
@@ -132,15 +152,24 @@ export function drawMacroPlastics(p, macroGrowth2050, current_date, seaLevelRise
     //calc amount of microplastic
 
     for (var i = 0; i < macro_plastic.length; i++) {
+
+        if (!hoveredMacroPlasticData.mouseOver) {
+
+          macro_plastic[i].move(p);
+        }
+        else if (p.dist(p.mouseX, p.mouseY, hoveredMacroPlastic.x, hoveredMacroPlastic.y) > hoveredMacroPlastic.size) {
+            hoveredMacroPlasticData.mouseOver = false;
+        }
         macro_plastic[i].display(p);
-        macro_plastic[i].move(p);
+
+
     }
 
     if (macroGrowth2050 != null) {
         var newSize = -1 * (macroGrowth2050[currentDate - 1950][1] - 367);
 
 
-
+        hoveredMacroPlasticData.value = newSize;
         newSize = Math.round(newSize/4) + 5;
         newHeight = Math.round(newSize*1.25)
 
