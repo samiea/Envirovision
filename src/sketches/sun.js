@@ -1,6 +1,64 @@
 //var yvalues;
 //var size_index = 0;
+export let hoveredSunData = { mouseOver: false, value: null };
 var currentY_value = 0;
+let hoveredSun = null;
+let sunObject = null;
+
+class Sun {
+    /**
+     * Constructor for bubbles
+     *
+     * @param {*} p p5 ptr
+     */
+    constructor(p) { // class for bubble objects
+
+        /**
+         * Display bubble on sketch
+         */
+        this.display = function () {
+          //console.log(currentY_value);
+          p.fill(232, 152, 98);
+
+          p.ellipse(
+              p.width / 2,
+              p.height / 2,
+              //yvalues[size_index] * 50,
+              //yvalues[size_index] * 50
+              currentY_value * 100,
+              currentY_value * 100
+          );
+            if (hoveredSunData.mouseOver) {
+                p.fill(225, 225, 0, 70)
+                p.ellipse(this.x, this.y, currentY_value+10);
+            }
+
+        };
+
+        /**
+         * Behavior for bubble movement
+         */
+        this.move = function () {
+
+            // check if mouse is pressed and within range of bubble
+
+            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < currentY_value) {
+                hoveredSunData.mouseOver = true;
+                hoveredSun = this;
+            }
+
+
+        };
+
+
+    }
+}
+
+export function setUpSun(p, temperatureData, current_date) {
+
+  calcSun(temperatureData, current_date);
+  sunObject = new Sun(p)
+}
 
 export function drawSun(p, temperatureData, current_date) {
     calcSun(temperatureData, current_date);
@@ -27,6 +85,7 @@ function calcSun(temperatureData, current_date) {
         //console.log(i);
         // console.log(average);
         currentY_value = average / 50 + 2;
+        hoveredSunData.value = currentY_value;
         //yvalues[i] = average + 1;
         /*for (let i = 0; i < temperatureData.length / 8; i++) {
             var average = parseFloat(temperatureData[i * 8].station); // + parseFloat(temperatureData[i * 8].land)) / 2);
@@ -43,16 +102,14 @@ function calcSun(temperatureData, current_date) {
 
 function createSun(p, temperatureData) {
     if (temperatureData != null) {
-        //console.log(currentY_value);
-        p.fill(232, 152, 98);
 
-        p.ellipse(
-            p.width / 2,
-            p.height / 2,
-            //yvalues[size_index] * 50,
-            //yvalues[size_index] * 50
-            currentY_value * 100,
-            currentY_value * 100
-        );
+      if (!hoveredSunData.mouseOver) {
+          sunObject.move();
+      }
+      else if (p.dist(p.mouseX, p.mouseY, hoveredSun.x, hoveredSun.y) > hoveredSun.size) {
+          hoveredSunData.mouseOver = false;
+      }
+        sunObject.display();
+
     }
 }
