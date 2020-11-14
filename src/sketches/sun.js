@@ -12,7 +12,9 @@ class Sun {
      * @param {*} p p5 ptr
      */
     constructor(p) { // class for bubble objects
-
+        this.x = p.width / 2
+        this.y = p.height / 2
+        this.size = currentY_value * 100
         /**
          * Display bubble on sketch
          */
@@ -21,8 +23,8 @@ class Sun {
           p.fill(232, 152, 98);
 
           p.ellipse(
-              p.width / 2,
-              p.height / 2,
+              this.x,
+              this.y,
               //yvalues[size_index] * 50,
               //yvalues[size_index] * 50
               currentY_value * 100,
@@ -30,7 +32,7 @@ class Sun {
           );
             if (hoveredSunData.mouseOver) {
                 p.fill(225, 225, 0, 70)
-                p.ellipse(this.x, this.y, currentY_value+10);
+                p.ellipse(this.x, this.y, currentY_value*100);
             }
 
         };
@@ -39,18 +41,13 @@ class Sun {
          * Behavior for bubble movement
          */
         this.move = function () {
-
             // check if mouse is pressed and within range of bubble
-
-            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < currentY_value) {
+            //console.log(this.x);
+            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size) {
                 hoveredSunData.mouseOver = true;
                 hoveredSun = this;
             }
-
-
         };
-
-
     }
 }
 

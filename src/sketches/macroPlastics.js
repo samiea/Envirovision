@@ -5,9 +5,6 @@ export let hoveredMacroPlasticData = { mouseOver: false, value: null };
 let hoveredMacroPlastic = null;
 let newHeight = 0;
 
-
-
-
 class GarbagePile {
     constructor(p,moreHeight) {
         var bubbleHeight = p.height / 1.85
@@ -109,13 +106,8 @@ class GarbageBubble {
         this.rx = p.random(25, 40);
         this.ry = p.random(25, 40);
 
-
-
         this.rxVelocity = p.random(-0.01, 0.01);
         this.ryVelocity = p.random(0.01, 0.02);
-
-
-
     }
 }
 
