@@ -1,6 +1,6 @@
 import { setUpSun, drawSun, hoveredSunData } from "./sun";
 import { setupLandscape, drawLandscape, drawSeaboard } from "./landscape";
-import { setupMicroPlasticDrops, drawMicroPlasticDots } from "./microPlastics";
+import { setupMicroPlasticDrops, drawMicroPlasticDots, hoveredMicroPlasticData } from "./microPlastics";
 import { setupMacroPlastics, drawMacroPlastics, hoveredMacroPlasticData } from "./macroPlastics";
 import { setupMethaneBubbles, drawMethaneBubbles } from "./methaneBubbles";
 import { setupSmogClouds, drawSmogClouds } from "./smogClouds";
@@ -57,6 +57,12 @@ export default function sketch(p) {
         if (hoveredSunData.mouseOver) {
             const text = "The sun and ocean grow and change color with the tempature of the planet.";
             const value = hoveredSunData.value ? `Value: ${hoveredSunData.value}` : `[No Value For Current Date]`;
+            p.noFill();
+            drawLegend(p, text, value);
+        }
+        if (hoveredMicroPlasticData.mouseOver) {
+            const text = "The white dots or circles falling from top the ocean represent microplastic, and increase and decrease in number accordingly.";
+            const value = hoveredMicroPlasticData.value ? `Value: ${hoveredMicroPlasticData.value}` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }
