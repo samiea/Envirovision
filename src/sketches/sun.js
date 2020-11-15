@@ -27,7 +27,7 @@ class Sun {
               this.y,
               //yvalues[size_index] * 50,
               //yvalues[size_index] * 50
-              currentY_value * 100,
+
               currentY_value * 100
           );
             if (hoveredSunData.mouseOver) {
@@ -43,9 +43,13 @@ class Sun {
         this.move = function () {
             // check if mouse is pressed and within range of bubble
             //console.log(this.x);
-            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size) {
+            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size ) {
+              //get the sun above the ocean
+              if (p.mouseY<(p.height/2)){
                 hoveredSunData.mouseOver = true;
                 hoveredSun = this;
+              }
+
             }
         };
     }
@@ -102,6 +106,10 @@ function createSun(p, temperatureData) {
 
       if (!hoveredSunData.mouseOver) {
           sunObject.move();
+      }
+      else if (p.mouseY>(p.height/2)){
+        hoveredSunData.mouseOver = false;
+
       }
       else if (p.dist(p.mouseX, p.mouseY, hoveredSun.x, hoveredSun.y) > hoveredSun.size) {
           hoveredSunData.mouseOver = false;

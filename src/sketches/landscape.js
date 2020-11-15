@@ -71,7 +71,7 @@ export function setupLandscape(p) {
 };
 
 
-export function drawLandscape(p,currentDate,seaLevelRise) { // this loops everything inside body
+export function drawLandscape(p,currentDate,seaLevelRise,temperatureData) { // this loops everything inside body
     //we wil add a new height to the starting height to make our landscape rise and fall
     // with the date and sea seaLevelRise data
 
@@ -91,7 +91,7 @@ export function drawLandscape(p,currentDate,seaLevelRise) { // this loops everyt
 
 
     drawClouds();
-    drawWaves(p,currentDate);
+    drawWaves(p,currentDate,temperatureData);
     p.noStroke();
 }
 
@@ -102,21 +102,21 @@ function drawClouds() { // create the clouds and call their moethods
     }
 }
 
-function drawWaves(p,currentDate) { // create the waves
+function drawWaves(p,currentDate,temperatureData) { // create the waves
 
     var startColor = { r: 194, g: 247, b: 254 }
     var endColor = {r: 116, g:199, b:145 }
-    var color = calcWaveColor(p,currentDate, startColor,endColor)
+    var color = calcWaveColor(p,currentDate, startColor,endColor,temperatureData)
     createWave(p, (0 - newHeight), color , 2);
 
     var startColor = { r: 84, g: 182, b: 282 }
     var endColor = {r: 109, g:163, b:103 }
-    var color = calcWaveColor(p,currentDate,startColor,endColor)
+    var color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
     createWave(p, (65 - newHeight), color, 2);
 
     var startColor = { r: 112, g: 219, b: 245 }
     var endColor = {r: 50, g:189, b:34 }
-    var color = calcWaveColor(p,currentDate,startColor,endColor)
+    var color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
     createWave(p, (80 - newHeight), color, 2);
 }
 
@@ -188,70 +188,33 @@ class Cloud { // class for cloud objects
     }
 }
 
-export function calcWaveColor(p, currentDate ,startColor, endColor) {
-
-    //return endColor
+export function calcWaveColor(p, currentDate ,startColor, endColor, temperatureData ) {
 
     var currentYear = currentDate.getFullYear();
-    //underData
-    var yearIdex = currentYear - 1950;
-    //constants for changing color
 
-    var color_2010_r = startColor.r*0.75
-    var color_2010_g = startColor.g*0.75
-    var color_2010_b = startColor.b*0.75
+    var index = ((currentYear - 1880) * temperatureData.length) / 140 - 100;
 
-    var rGap = (color_2010_r-endColor.r)/ 70;
-    var gGap = (color_2010_g-endColor.g)/ 70;
-    var bGap = (color_2010_b-endColor.b)/ 70;
-
-    //no data yet
-    if (currentYear < 2010) {
-
-           // code body moved outside (above) statement block
-           var rIndex = startColor.r - ((rGap * yearIdex) | 0);
-           var gIndex = startColor.g - ((gGap * yearIdex) | 0);
-           var bIndex = startColor.b - ((bGap * yearIdex) | 0);
-
-           return {r:rIndex, g:gIndex, b:bIndex}
+    var i = Math.round(index);
+    var average = 0;
+    for (var count = 0; count < 100; count++) {
+        average = average + parseFloat(temperatureData[i + count].station);
     }
+    //console.log(i);
+    //smallest is 0 largest is 115
+    average = average + 3
+
+    var rGap = (startColor.r-endColor.r)/ 115;
+    var gGap = (startColor.g-endColor.g)/ 115;
+    var bGap = (startColor.b-endColor.b)/ 115;
+
+     // code body moved outside (above) statement block
+     var rIndex = startColor.r - ((rGap * average) | 0);
+     var gIndex = startColor.g - ((gGap * average) | 0);
+     var bIndex = startColor.b - ((bGap * average) | 0);
+
+     return {r:rIndex, g:gIndex, b:bIndex}
+
 
     return endColor
-    /*
-    //first index is 0 =, year 2010, trend 387
-    //last index is 3900, year 2020, trend 412
-    else if (currentYear!=2020) {
-
-        //initial colors
-        var rIndex = START_SKY_r -  ((rGap * 60) | 0);
-        var gIndex = START_SKY_g - ((gGap * 60) | 0);
-        var bIndex = START_SKY_g - ((bGap * 60) | 0);
-
-        //find new jump of index
-        var rJump = (rIndex - END_SKY_r)/(412-387)
-        var gJump = (gIndex - END_SKY_g)/(412-387)
-        var bJump = (bIndex - END_SKY_b)/(412-387)
-        //there are 10 year in the carbon data
-        //get the index gap of carbon data
-        var yearGap = 390;
-        var monthGap = yearGap / 12;
-        var year_index = currentYear - 2010;
-        var month_index = currentDate.getMonth()-1;
-
-        var current_index = yearGap * year_index + month_index * monthGap;
-        current_index = current_index | 0;
-
-        // var average = 0;
-        //console.log(carbonData);
-        var carbon = (carbonData[current_index].trend-387)
-        rIndex = rIndex-carbon*rJump
-        gIndex = gIndex-carbon*gJump
-        bIndex = bIndex-carbon*bJump
-
-        p.background(rIndex, gIndex, bIndex);
-    }
-    else{
-        p.background(15,26,155)
-    }
-    */
+    
 }

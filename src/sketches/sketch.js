@@ -35,7 +35,7 @@ export default function sketch(p) {
         drawSky(p, carbonData, currentDate);
         drawSun(p, temperatureData, currentDate);
 
-        drawLandscape(p,currentDate, seaLevelRise);
+        drawLandscape(p,currentDate, seaLevelRise,temperatureData);
         drawSmogClouds(p);
         drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise);
         drawSeaboard(p);
