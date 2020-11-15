@@ -1,4 +1,4 @@
-import { drawSun } from "./sun";
+import { setUpSun, drawSun, hoveredSunData } from "./sun";
 import { setupLandscape, drawLandscape, drawSeaboard } from "./landscape";
 import { setupMicroPlasticDrops, drawMicroPlasticDots } from "./microPlastics";
 import { setupMacroPlastics, drawMacroPlastics, hoveredMacroPlasticData } from "./macroPlastics";
@@ -23,6 +23,7 @@ export default function sketch(p) {
         p.frameRate(30);
         p.createCanvas(p.windowWidth, p.windowHeight); // adjust to window width and height
         setupLandscape(p);
+        setUpSun(p,temperatureData, currentDate);
         setupSmogClouds(p);
         setupMethaneBubbles(p, methaneData);
         setupMicroPlasticDrops(p);
@@ -53,7 +54,12 @@ export default function sketch(p) {
             p.noFill();
             drawLegend(p, text, value);
         }
-
+        if (hoveredSunData.mouseOver) {
+            const text = "The sun and ocean grow and change color with the tempature of the planet.";
+            const value = hoveredSunData.value ? `Value: ${hoveredSunData.value}` : `[No Value For Current Date]`;
+            p.noFill();
+            drawLegend(p, text, value);
+        }
         // if (showLegend) { // commented this for demo/testing purposes
         //     p.noFill();
         //     drawAllLegends(p);
