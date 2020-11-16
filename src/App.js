@@ -58,7 +58,11 @@ class App extends React.Component {
                 <OWSonification
                     currentDate={this.state.currentDate}
                     temperatureData={this.state.temperatureData}
-                    microGrowth2050 = {this.state.microGrowth2050}
+                    microGrowth2050={this.state.microGrowth2050}
+                    macroGrowth2050={this.state.macroGrowth2050}
+                    carbonData={this.state.carbonData}
+                    methaneData={this.state.methaneData}
+                    seaLevelRise={this.state.seaLevelRise}
                 />
                 {/* <button id="play-button">Play</button> */}
             </div>
