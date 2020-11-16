@@ -104,8 +104,8 @@ class Child2 extends React.Component {
         //index: MICROPLASTICS
         index = currDate - 1950;
 
-        //map from 90 to 620 to 0 to 100 using same formula as above
-        var cp = (this.props.microGrowth2050[index][1] - 90) * (100 - 0) / (620 + 90);
+        //map from 90 to 620 to 100 to 0 using same formula as above
+        var cp = (this.props.microGrowth2050[index][1] - 90) * (0 - 100) / (620 + 90) + 100;
         this.setState({ consonanceProbability: cp });        
 
         //index: MACROPLASTICS
@@ -182,7 +182,7 @@ class Child2 extends React.Component {
             this.dist.distortion = this.state.distortionLevel;
             this.dist.wet.rampTo(this.state.distortionLevel);
 
-        }, "4hz", Tone.now());
+        }, "1hz", Tone.now());
 
         if (this.state.audioState === false) {
             this.player.start(Tone.now());
@@ -191,7 +191,7 @@ class Child2 extends React.Component {
 
             this.player.volume.rampTo(0);
             this.fatOsc.volume.rampTo(-16);
-            this.am.volume.rampTo(-16);
+            this.am.volume.rampTo(-24);
             this.setState({ audioState: true });
         }
         else if (this.state.audioState === true) {
