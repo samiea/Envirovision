@@ -90,15 +90,15 @@ export function drawLandscape(p,currentDate,seaLevelRise,temperatureData) { // t
     }
 
 
-    drawClouds();
+    drawClouds(currentYear);
     drawWaves(p,currentDate,temperatureData);
     p.noStroke();
 }
 
-function drawClouds() { // create the clouds and call their moethods
+function drawClouds(currentYear) { // create the clouds and call their moethods
     for (var i = 0; i < num_clouds; i++) {
         clouds[i].move();
-        clouds[i].display();
+        clouds[i].display(currentYear);
     }
 }
 
@@ -155,9 +155,8 @@ class Cloud { // class for cloud objects
         this.x = (p.width - 1200 * key); // initial x position
         this.y = (p.height / 2 - 15); // initial y position
 
-        this.display = function () {
-            p.stroke(255); // white stroke
-            p.strokeWeight(1);
+        this.display = function (currentYear) {
+
             p.fill(255);
             p.beginShape(); // create shape for area under ellipses
             for (let i = 0; i < cloud_ellipses.length; i++) {
@@ -216,5 +215,5 @@ export function calcWaveColor(p, currentDate ,startColor, endColor, temperatureD
 
 
     return endColor
-    
+
 }

@@ -44,25 +44,25 @@ export default function sketch(p) {
 
         if (hoveredBubbleData.mouseOver) {
             const text = "The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.";
-            const value = hoveredBubbleData.value ? `Value: ${hoveredBubbleData.value}` : `[No Value For Current Date]`;
+            const value = hoveredBubbleData.value ? `Value: ${hoveredBubbleData.value} ppb` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }
         if (hoveredMacroPlasticData.mouseOver) {
             const text = "The piles or circles on top the ocean represent macroplastic, and increase and decrease in number accordingly.";
-            const value = hoveredMacroPlasticData.value ? `Value: ${hoveredMacroPlasticData.value}` : `[No Value For Current Date]`;
+            const value = hoveredMacroPlasticData.value ? `Value: ${hoveredMacroPlasticData.value} tons` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }
         if (hoveredSunData.mouseOver) {
             const text = "The sun and ocean grow and change color with the tempature of the planet.";
-            const value = hoveredSunData.value ? `Value: ${hoveredSunData.value}` : `[No Value For Current Date]`;
+            const value = hoveredSunData.value ? `Value: ${hoveredSunData.value} degree C` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }
         if (hoveredMicroPlasticData.mouseOver) {
             const text = "The white dots or circles falling from top the ocean represent microplastic, and increase and decrease in number accordingly.";
-            const value = hoveredMicroPlasticData.value ? `Value: ${hoveredMicroPlasticData.value}` : `[No Value For Current Date]`;
+            const value = hoveredMicroPlasticData.value ? `Value: ${hoveredMicroPlasticData.value} tons` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }
