@@ -54,6 +54,7 @@ class App extends React.Component {
                     carbonData={this.state.carbonData}
                     methaneData={this.state.methaneData}
                     seaLevelRise={this.state.seaLevelRise}
+                    nitrousData={this.state.nitrousData}
                 />
                 <OWSonification
                     currentDate={this.state.currentDate}

@@ -16,8 +16,10 @@ export default function sketch(p) {
     let carbonData = null;
     let methaneData = null;
     let seaLevelRise = null;
+    let nitrousData = null;
 
     let showLegend = false;
+
 
     p.setup = () => {
         p.frameRate(30);
@@ -28,6 +30,7 @@ export default function sketch(p) {
         setupMethaneBubbles(p, methaneData);
         setupMicroPlasticDrops(p);
         setupMacroPlastics(p);
+
     };
 
     p.draw = () => {
@@ -36,7 +39,7 @@ export default function sketch(p) {
         drawSun(p, temperatureData, currentDate);
 
         drawLandscape(p,currentDate, seaLevelRise,temperatureData);
-        drawSmogClouds(p);
+        drawSmogClouds(p, nitrousData, currentDate);
         drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise);
         drawSeaboard(p);
         drawMicroPlasticDots(p, microGrowth2050, currentDate, seaLevelRise);
@@ -85,6 +88,7 @@ export default function sketch(p) {
         carbonData = newProps.carbonData;
         methaneData = newProps.methaneData;
         seaLevelRise = newProps.seaLevelRise;
+        nitrousData = newProps.nitrousData;
     };
 
     p.mouseClicked = () => {

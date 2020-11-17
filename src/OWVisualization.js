@@ -20,6 +20,7 @@ class Child1 extends React.Component {
                 macroGrowth2050={this.props.macroGrowth2050}
                 seaLevelRise={this.props.seaLevelRise}
                 carbonData={this.props.carbonData}
+                nitrousData={this.props.nitrousData}
                 methaneData={{"map": this.methaneMap, "arr": this.props.methaneData}}>
 
             </P5Wrapper>
