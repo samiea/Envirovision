@@ -91,10 +91,22 @@ export function drawMicroPlasticDots(p, microGrowth2050, current_date, seaLevelR
     }
 
     if (microGrowth2050 != null) {
+
         var newSize = -1 * (microGrowth2050[currentDate - 1950][1] - 367);
+
+        if (currentDate>1971){
+          var num = newSize*(590000/78)
+          hoveredMicroPlasticData.value = num.toFixed(2)
+        }
+        else {
+          var num = (currentDate - 1950)*100
+          hoveredMicroPlasticData.value = num.toFixed(2)
+        }
+
+        //console.log(newSize*(590000/78));
         newSize = newSize * 2 + 200;
         //add drops
-        hoveredMicroPlasticData.value = newSize;
+
 
         if (newSize > drops.length) {
             for (var j = drops.length; j < newSize; j++) {
