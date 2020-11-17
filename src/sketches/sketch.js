@@ -3,7 +3,7 @@ import { setupLandscape, drawLandscape, drawSeaboard } from "./landscape";
 import { setupMicroPlasticDrops, drawMicroPlasticDots, hoveredMicroPlasticData } from "./microPlastics";
 import { setupMacroPlastics, drawMacroPlastics, hoveredMacroPlasticData } from "./macroPlastics";
 import { setupMethaneBubbles, drawMethaneBubbles } from "./methaneBubbles";
-import { setupSmogClouds, drawSmogClouds } from "./smogClouds";
+import { setupSmogClouds, drawSmogClouds, hoveredSmogData } from "./smogClouds";
 import { drawSky } from "./skyColor";
 import { drawLegend, drawAllLegends } from "./legend";
 import { hoveredBubbleData } from "./methaneBubbles";
@@ -66,6 +66,12 @@ export default function sketch(p) {
         if (hoveredMicroPlasticData.mouseOver) {
             const text = "The white dots or circles falling from top the ocean represent microplastic, and increase and decrease in number accordingly.";
             const value = hoveredMicroPlasticData.value ? `Value: ${hoveredMicroPlasticData.value} tons` : `[No Value For Current Date]`;
+            p.noFill();
+            drawLegend(p, text, value);
+        }
+        if (hoveredSmogData.mouseOver) {
+            const text = "The smog clouds represent the nitrous oxide in the atmosphere.";
+            const value = hoveredSmogData.value ? `Value: ${hoveredSmogData.value} ppb` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }

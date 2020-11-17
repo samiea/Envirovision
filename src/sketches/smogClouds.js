@@ -3,6 +3,9 @@ let originalData = null;
 const initial_clouds = 4;
 let extra_clouds = 0;
 
+export let hoveredSmogData = { mouseOver: false, value: null };
+let hoveredSmog = null;
+
 class SmogCloud {
     constructor(p) {
         this.todayData = null;
@@ -15,7 +18,7 @@ class SmogCloud {
         this.smogBubbles = [];
         this.opacity = p.random(50, 200);
         this.addlimit = 0;
-        
+
         for (let x = 0; x < 25; x++) {
             this.smogBubbles[x] = new SmogBubble(p, this.width, this.height);
         }
@@ -36,7 +39,9 @@ class SmogCloud {
 
                 this.width += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10
                 this.height += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10
-
+                if (hoveredSmogData.mouseOver) {
+                    p.fill(225, 225, 0, 70)
+                }
                 p.ellipse(this.x, this.y, this.width, this.height);
                 p.beginShape();
                 for (let x = 0; x < this.smogBubbles.length; x++) {
@@ -46,18 +51,11 @@ class SmogCloud {
                     this.smogBubbles[x].ry += (this.todayData.average - this.oldData.average)* 10
 
                     //this.smogBubbles[x].rxVelocity += (this.todayData.average - this.oldData.average)
-                    //this.smogBubbles[x].ryVelocity += (this.todayData.average - this.oldData.average) 
-
-                    p.ellipse(
-                        this.x + this.smogBubbles[x].xOffset,
-                        this.y + this.smogBubbles[x].yOffset,
-                        this.smogBubbles[x].rx,
-                        this.smogBubbles[x].ry
-                    );
-                    p.curveVertex(
-                        this.x + this.smogBubbles[x].xOffset,
-                        this.y + this.smogBubbles[x].yOffset
-                    );
+                    //this.smogBubbles[x].ryVelocity += (this.todayData.average - this.oldData.average)
+                    if (hoveredSmogData.mouseOver) {
+                        p.fill(225, 225, 0, 70)
+                    }
+                    this.smogBubbles[x].display(this.x,this.y)
                 }
             }
             p.endShape(p.CLOSE);
@@ -85,6 +83,8 @@ class SmogCloud {
 
                     this.smogBubbles[x].rx += this.smogBubbles[x].rxVelocity;
                     this.smogBubbles[x].ry += this.smogBubbles[x].ryVelocity;
+
+                    this.smogBubbles[x].move()
                 }
             }
             if (this.x > p.width + 50) {
@@ -109,14 +109,41 @@ class SmogBubble {
 
         this.rxVelocity = p.random(0.1, 0.5);
         this.ryVelocity = p.random(0.1, 0.5);
+
+        this.size = this.rx
+        this.x = 0
+        this.y = 0
+
+    this.display = function (x,y) {
+      this.x = x + this.xOffset
+      this.y = y + this.yOffset
+      p.ellipse(
+          x + this.xOffset,
+          y + this.yOffset,
+          this.rx,
+          this.ry
+      );
+      p.curveVertex(
+          x + this.xOffset,
+          y + this.yOffset
+      );
     }
+    this.move = function(){// check if mouse is pressed and within range of bubble
+      //console.log(this.size);
+      if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size) {
+          hoveredSmogData.mouseOver = true;
+          hoveredSmog = this;
+
+      }
+    }
+  }
 }
 
 export function setupSmogClouds(p, nitrousData, currentDate) {
     for (let i = 0; i < initial_clouds; i++) {
         smogClouds[i] = new SmogCloud(p, nitrousData, currentDate);
     }
-    
+
 }
 
 export function drawSmogClouds(p, nitrousData, currentDate) {
@@ -124,10 +151,11 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
 
         if(originalData == null && nitrousData != null) {
             originalData = nitrousData[0];
+
         }
         else if(nitrousData != undefined && currIndex > 0 && currIndex < nitrousData.length) {
             let diff = Math.round(((nitrousData[currIndex].average - originalData.average)/10)) - extra_clouds;
-            console.log(diff);
+            //console.log(diff);
 
             if(diff > 0) {
                 for(let x = 0 ; x < diff; x++) {
@@ -143,19 +171,37 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
         }
 
         if(currIndex >= 0) {
+            //console.log(nitrousData[currIndex]);
+            hoveredSmogData.value = nitrousData[currIndex].average
             for (var i = 0; i < smogClouds.length; i++) {
-                smogClouds[i].move();
+              if (!hoveredSmogData.mouseOver) {
+
+                smogClouds[i].move(p);
+              }
+              else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size) {
+                  hoveredSmogData.mouseOver = false;
+              }
+
                 smogClouds[i].display(nitrousData[currIndex]);
             }
         }
         else {
+            hoveredSmogData.value = nitrousData[0].average
+
             for(var i = 0; i < smogClouds.length; i++) {
-                smogClouds[i].move();
+              if (!hoveredSmogData.mouseOver) {
+
+                smogClouds[i].move(p);
+              }
+              else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size) {
+                  hoveredSmogData.mouseOver = false;
+              }
+
                 smogClouds[i].display(nitrousData[0]);
             }
         }
 
-    
+
 }
 
 //nitrousData[;

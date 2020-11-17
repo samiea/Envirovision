@@ -147,7 +147,7 @@ export function drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise) { 
         const NEW_SIZE = parseInt(AVG_DIFF + INIT_NUM_BUBBLES);
 
         // update current data value
-        console.log(AVG_CURRENT);
+        //console.log(AVG_CURRENT);
         hoveredBubbleData.value = AVG_CURRENT;
 
         if (NEW_SIZE > bubbles.length) {
