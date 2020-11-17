@@ -153,6 +153,7 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
             originalData = nitrousData[0];
 
         }
+
         else if(nitrousData != undefined && currIndex > 0 && currIndex < nitrousData.length) {
             let diff = Math.round(((nitrousData[currIndex].average - originalData.average)/10)) - extra_clouds;
             //console.log(diff);
@@ -170,9 +171,15 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
             }
         }
 
-        if(currIndex >= 0) {
+        if(currIndex >= 0 ) {
+          if (currIndex < nitrousData.length){
             //console.log(nitrousData[currIndex]);
             hoveredSmogData.value = nitrousData[currIndex].average
+          }
+          else {
+            hoveredSmogData.value = nitrousData[nitrousData.length-1].average
+          }
+
             for (var i = 0; i < smogClouds.length; i++) {
               if (!hoveredSmogData.mouseOver) {
 

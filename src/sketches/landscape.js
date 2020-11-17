@@ -156,8 +156,9 @@ class Cloud { // class for cloud objects
         this.y = (p.height / 2 - 15); // initial y position
 
         this.display = function (currentYear) {
-
-            p.fill(255);
+            var color = 255-((currentYear-1950))*2
+            //console.log(color);
+            p.fill(color);
             p.beginShape(); // create shape for area under ellipses
             for (let i = 0; i < cloud_ellipses.length; i++) {
                 p.ellipse( // create ellipses that form clouds
