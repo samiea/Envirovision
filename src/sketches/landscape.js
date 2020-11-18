@@ -214,7 +214,4 @@ export function calcWaveColor(p, currentDate ,startColor, endColor, temperatureD
 
      return {r:rIndex, g:gIndex, b:bIndex}
 
-
-    return endColor
-
 }

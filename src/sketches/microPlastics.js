@@ -1,9 +1,11 @@
+import { hoveredMacroPlasticData } from "./macroPlastics";
+
 //these are gonna be the variables for our garbage collection
 var drops = [];
 var micro_Size = 5;
 let newHeight = 0;
 export let hoveredMicroPlasticData = { mouseOver: false, value: null };
-let hoveredMicroPlastic = null;
+// let hoveredMicroPlastic = null;
 
 class Drop {
     constructor(p) {
@@ -24,8 +26,9 @@ class Drop {
             this.size
         );
 
-        if (hoveredMicroPlasticData.mouseOver) {
+        if (hoveredMacroPlasticData.mouseOver) {
             p.fill(225, 225, 0, 70)
+            p.ellipse(this.x, this.y, this.size + 10);
         }
     }
 
@@ -39,11 +42,11 @@ class Drop {
             this.gravity = 0;
         }
 
-        if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size+5) {
-            hoveredMicroPlasticData.mouseOver = true;
-            hoveredMicroPlastic = this;
+        // if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size+5) {
+        //     hoveredMicroPlasticData.mouseOver = true;
+        //     hoveredMicroPlastic = this;
 
-        }
+        // }
     }
 }
 
@@ -80,12 +83,12 @@ export function drawMicroPlasticDots(p, microGrowth2050, current_date, seaLevelR
 
     for (var i = 0; i < drops.length; i++) {
 
-      if (!hoveredMicroPlasticData.mouseOver) {
+      if (!hoveredMacroPlasticData.mouseOver) {
         drops[i].update(p);
       }
-      else if (p.dist(p.mouseX, p.mouseY, hoveredMicroPlastic.x, hoveredMicroPlastic.y) > hoveredMicroPlastic.size+5) {
-          hoveredMicroPlasticData.mouseOver = false;
-      }
+    //   else if (p.dist(p.mouseX, p.mouseY, hoveredMicroPlastic.x, hoveredMicroPlastic.y) > hoveredMicroPlastic.size+5) {
+    //       hoveredMicroPlasticData.mouseOver = false;
+    //   }
         drops[i].show(p);
 
     }

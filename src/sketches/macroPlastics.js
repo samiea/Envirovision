@@ -38,6 +38,7 @@ class GarbagePile {
 
             if (hoveredMacroPlasticData.mouseOver) {
                 p.fill(225, 225, 0, 70)
+                // p.ellipse(this.x, this.y, size + 10);
             }
             //p.ellipse(this.x, this.y, this.width, this.height);
             for (let x = 0; x < this.garbageBubbles.length; x++) {

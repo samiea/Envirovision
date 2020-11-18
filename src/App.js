@@ -226,6 +226,7 @@ class App extends React.Component {
             .attr("x", x)
             .attr("y", 10)
             .attr("text-anchor", "middle") // center text on tick
+            .attr("class", "track-text")
             .text((d) => formatDateIntoYear(d)); // write formatted date as text
 
         function update(h) { // update position and text of label according to slider scale

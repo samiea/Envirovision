@@ -24,6 +24,7 @@ export default function sketch(p) {
     p.setup = () => {
         p.frameRate(30);
         p.createCanvas(p.windowWidth, p.windowHeight); // adjust to window width and height
+        document.getElementById("defaultCanvas0").style.display = 'block';
         setupLandscape(p);
         setUpSun(p,temperatureData, currentDate);
         setupSmogClouds(p);
@@ -51,25 +52,27 @@ export default function sketch(p) {
             p.noFill();
             drawLegend(p, text, value);
         }
-        if (hoveredMacroPlasticData.mouseOver) {
-            const text = "The piles or circles on top the ocean represent macroplastic, and increase and decrease in number accordingly.";
-            const value = hoveredMacroPlasticData.value ? `Value: ${hoveredMacroPlasticData.value} tons` : `[No Value For Current Date]`;
+        else if (hoveredMacroPlasticData.mouseOver) {
+            const text = "The piles or circles on top the ocean represent macroplastic, and increase and decrease in number accordingly.\n" 
+            + (hoveredMacroPlasticData.value ? `Macroplastic value: ${hoveredMacroPlasticData.value} tons\n`: `[No Value For Current Date]\n`)
+                + "The white dots or circles falling from top the ocean represent microplastic, and increase and decrease in number accordingly.\n"
+                    + (hoveredMicroPlasticData.value ? `Microplastic value: ${hoveredMicroPlasticData.value} tons` : `[No Value For Current Date]`);
             p.noFill();
-            drawLegend(p, text, value);
+            drawLegend(p, text, " ");
         }
-        if (hoveredSunData.mouseOver) {
+        else if (hoveredSunData.mouseOver) {
             const text = "The sun and ocean grow and change color with the tempature of the planet.";
             const value = hoveredSunData.value ? `Value: ${hoveredSunData.value} degree C` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }
-        if (hoveredMicroPlasticData.mouseOver) {
+        else if (hoveredMicroPlasticData.mouseOver) {
             const text = "The white dots or circles falling from top the ocean represent microplastic, and increase and decrease in number accordingly.";
             const value = hoveredMicroPlasticData.value ? `Value: ${hoveredMicroPlasticData.value} tons` : `[No Value For Current Date]`;
             p.noFill();
             drawLegend(p, text, value);
         }
-        if (hoveredSmogData.mouseOver) {
+        else if (hoveredSmogData.mouseOver) {
             const text = "The smog clouds represent the nitrous oxide in the atmosphere.";
             const value = hoveredSmogData.value ? `Value: ${hoveredSmogData.value} ppb` : `[No Value For Current Date]`;
             p.noFill();
@@ -84,6 +87,7 @@ export default function sketch(p) {
     p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
         p.redraw();
+        document.getElementById("defaultCanvas0").style.display = 'block';
     }
 
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
@@ -98,7 +102,7 @@ export default function sketch(p) {
     };
 
     p.mouseClicked = () => {
-        if(p.mouseX < p.width && p.mouseX > 0 && p.mouseY < p.height && p.mouseY > 0){
+        if (p.mouseX < p.width && p.mouseX > 0 && p.mouseY < p.height && p.mouseY > 0){
             showLegend = !showLegend;
         }
     };
