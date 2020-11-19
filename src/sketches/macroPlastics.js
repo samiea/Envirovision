@@ -5,9 +5,6 @@ export let hoveredMacroPlasticData = { mouseOver: false, value: null };
 let hoveredMacroPlastic = null;
 let newHeight = 0;
 
-
-
-
 class GarbagePile {
     constructor(p,moreHeight) {
         var bubbleHeight = p.height / 1.85
@@ -41,21 +38,12 @@ class GarbagePile {
 
             if (hoveredMacroPlasticData.mouseOver) {
                 p.fill(225, 225, 0, 70)
-                p.ellipse(this.x, this.y, 50);
+                // p.ellipse(this.x, this.y, size + 10);
             }
             //p.ellipse(this.x, this.y, this.width, this.height);
             for (let x = 0; x < this.garbageBubbles.length; x++) {
 
-                p.ellipse(
-                    this.x + this.garbageBubbles[x].xOffset ,
-                    this.y + this.garbageBubbles[x].yOffset - newHeight,
-                    this.garbageBubbles[x].rx,
-                    this.garbageBubbles[x].ry
-                );
-                p.curveVertex(
-                    this.x + this.garbageBubbles[x].xOffset,
-                    this.y + this.garbageBubbles[x].yOffset - newHeight
-                );
+                this.garbageBubbles[x].display(this.x,this.y)
             }
         };
 
@@ -80,13 +68,10 @@ class GarbagePile {
 
                 this.garbageBubbles[x].rx += this.garbageBubbles[x].rxVelocity;
                 this.garbageBubbles[x].ry += this.garbageBubbles[x].ryVelocity;
-            }
-            // check if mouse is pressed and within range of bubble
-            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < 20) {
-                hoveredMacroPlasticData.mouseOver = true;
-                hoveredMacroPlastic = this;
 
+                this.garbageBubbles[x].move()
             }
+
 
             if (this.x > p.width) {
                 this.x = 50;
@@ -108,15 +93,37 @@ class GarbageBubble {
         this.yOffset = p.random((ylimit / 8) * -1, ylimit / 8);
         this.rx = p.random(25, 40);
         this.ry = p.random(25, 40);
-
-
-
+        this.size = this.rx
         this.rxVelocity = p.random(-0.01, 0.01);
-        this.ryVelocity = p.random(0.01, 0.02);
+        this.ryVelocity = p.random(0.00, 0.01);
 
+        this.display = function(x,y){
+          this.x = x + this.xOffset
+          this.y = y + this.yOffset - newHeight
 
+          p.ellipse(
+              x + this.xOffset ,
+              y + this.yOffset - newHeight,
+              this.rx,
+              this.ry
+          );
+          p.curveVertex(
+              x + this.xOffset,
+              y + this.yOffset - newHeight
+          );
 
+        }
+
+        this.move = function(){// check if mouse is pressed and within range of bubble
+
+          if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size) {
+              hoveredMacroPlasticData.mouseOver = true;
+              hoveredMacroPlastic = this;
+
+          }
+        }
     }
+
 }
 
 
@@ -167,9 +174,18 @@ export function drawMacroPlastics(p, macroGrowth2050, current_date, seaLevelRise
 
     if (macroGrowth2050 != null) {
         var newSize = -1 * (macroGrowth2050[currentDate - 1950][1] - 367);
+        //calculate the actual data from the value
+        //console.log(newSize);
+        if (currentDate>1963){
+          var num = newSize*(1180000/103)
+          hoveredMacroPlasticData.value = num.toFixed(2)
+        }
+        else {
+          var num = (currentDate - 1950)*100
+          hoveredMacroPlasticData.value = num.toFixed(2)
+        }
 
 
-        hoveredMacroPlasticData.value = newSize;
         newSize = Math.round(newSize/4) + 5;
         newHeight = Math.round(newSize*1.25)
 

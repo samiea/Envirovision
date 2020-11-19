@@ -43,7 +43,7 @@ class App extends React.Component {
     }
 
     render() {
-
+        
         return (
             <div id="App" className="App-container">
                 <OWVisualization
@@ -54,6 +54,7 @@ class App extends React.Component {
                     carbonData={this.state.carbonData}
                     methaneData={this.state.methaneData}
                     seaLevelRise={this.state.seaLevelRise}
+                    nitrousData={this.state.nitrousData}
                 />
                 <OWSonification
                     currentDate={this.state.currentDate}
@@ -225,6 +226,7 @@ class App extends React.Component {
             .attr("x", x)
             .attr("y", 10)
             .attr("text-anchor", "middle") // center text on tick
+            .attr("class", "track-text")
             .text((d) => formatDateIntoYear(d)); // write formatted date as text
 
         function update(h) { // update position and text of label according to slider scale

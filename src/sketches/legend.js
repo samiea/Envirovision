@@ -73,8 +73,11 @@ export function drawLegend(p, text, value) {
     p.textAlign(p.LEFT);
     
     p.textSize(textSize);
-    p.text(wrappedText, leftMargin + strokeWeight + p.mouseX, p.mouseY + textSize);
-    p.text(value, leftMargin + strokeWeight + p.mouseX, p.mouseY + (bottomPadding + textSize) * numTextWraps)
+
+    if (value) {
+        p.text(wrappedText, leftMargin + strokeWeight + p.mouseX, p.mouseY + textSize);
+        p.text(value, leftMargin + strokeWeight + p.mouseX, p.mouseY + (bottomPadding + textSize) * numTextWraps)
+    }
 
     p.noStroke();
 }
