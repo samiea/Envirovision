@@ -146,8 +146,4 @@ function changeSunColor(p, currentDate ,startColor, endColor, temperatureData ) 
      var bIndex = startColor.b - ((bGap * average) | 0);
 
      return {r:rIndex, g:gIndex, b:bIndex}
-
-
-    return endColor
-
 }

@@ -18,6 +18,8 @@ import * as d3 from 'd3';
 // import {sliderBottom} from 'd3-simple-slider';
 // end testing-related import block
 
+export const startingYear = 1950;
+
 class App extends React.Component {
     // you can create class-scope fields in here like in Java
     constructor(props) {
@@ -37,7 +39,7 @@ class App extends React.Component {
             //sea seaLevelRise
             seaLevelRise: seaLevelRise.seaLevelRise,
 
-            currentDate: new Date("1950-11-01"), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+            currentDate: new Date(`${startingYear}-11-01`), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             dataIsLoaded: false
         };
     }

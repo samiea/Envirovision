@@ -109,14 +109,14 @@ function drawWaves(p,currentDate,temperatureData) { // create the waves
     var color = calcWaveColor(p,currentDate, startColor,endColor,temperatureData)
     createWave(p, (0 - newHeight), color , 2);
 
-    var startColor = { r: 84, g: 182, b: 282 }
-    var endColor = {r: 109, g:163, b:103 }
-    var color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
+    startColor = { r: 84, g: 182, b: 282 }
+    endColor = {r: 109, g:163, b:103 }
+    color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
     createWave(p, (65 - newHeight), color, 2);
 
-    var startColor = { r: 112, g: 219, b: 245 }
-    var endColor = {r: 50, g:189, b:34 }
-    var color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
+    startColor = { r: 112, g: 219, b: 245 }
+    endColor = {r: 50, g:189, b:34 }
+    color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
     createWave(p, (80 - newHeight), color, 2);
 }
 

@@ -1,11 +1,10 @@
 import React from "react";
 import * as Tone from "tone";
 import bubbles from "./sounds/bubbles.wav";
-import "./Child2.css";
-
-class Child2 extends React.Component {
+import "./OWSonification.css";
+class OWSonification extends React.Component {
     constructor(props) {
-        super(props);
+        super();
         
         //Setting state
         this.state = { 
@@ -48,34 +47,6 @@ class Child2 extends React.Component {
         this.startAudio = this.startAudio.bind(this);
         this.getNewData = this.getNewData.bind(this);
         this.recordAudio = this.recordAudio.bind(this);
-
-        //Effects
-        this.dist = new Tone.Distortion(0).toDestination();
-
-        this.rev = new Tone.Reverb(1).toDestination();
-
-        //Sound sources
-        this.buffer = new Tone.ToneAudioBuffer();
-        //this.buffer.debug = true;
-        this.buffer.load(bubbles);
-
-        this.player = new Tone.Player(this.buffer, () => {
-            // console.log("Player ready!");
-            this.setState({ isLoaded: true });
-            this.player.loop = true;
-            this.initialize();
-        }).chain(this.dist, this.rev, Tone.Destination);
-
-        this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination);
-
-        this.am = new Tone.AMOscillator("E3", "square", "sine").chain(this.dist, this.rev, Tone.Destination);
-    
-        this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
-
-        if (this.state.chromeFlag === 1) {
-            this.rec = new Tone.Recorder();
-            Tone.Destination.connect(this.rec);
-        }
     }
 
     initialize() {
@@ -125,13 +96,13 @@ class Child2 extends React.Component {
         this.setState({ amHarm: aH });
 
         //index: CARBON
-        var yearGap = 390;
-        var monthGap = yearGap / 12;
-        var year_index = currDate - 2010;
-        var month_index = this.props.currentDate.getMonth() - 1;
+        // var yearGap = 390;
+        // var monthGap = yearGap / 12;
+        // var year_index = currDate - 2010;
+        // var month_index = this.props.currentDate.getMonth() - 1;
 
-        var current_index = yearGap * year_index + month_index * monthGap;
-        current_index = current_index | 0;
+        // var current_index = yearGap * year_index + month_index * monthGap;
+        // current_index = current_index | 0;
 
         //map from 387 to 413 to 0.0 to 1.0 using same formula as above
         var distLevel = (this.props.carbonData[currDate - 1880].trend - 387) / (413 - 387);
@@ -234,7 +205,7 @@ class Child2 extends React.Component {
         // console.log(this.state);
 
         return (
-            <div className="Child2" >
+            <div className="OWSonification" >
                 <button disabled={!isLoaded} onClick={this.startAudio}>
                     audio on/off
                 </button>
@@ -247,13 +218,39 @@ class Child2 extends React.Component {
     }
 
     componentDidMount() {
-        // console.log("Child2 Mounted");
+        //Effects
+        this.dist = new Tone.Distortion(0).toDestination();
+
+        this.rev = new Tone.Reverb(1).toDestination();
+
+        //Sound sources
+        this.buffer = new Tone.ToneAudioBuffer();
+        //this.buffer.debug = true;
+        this.buffer.load(bubbles);
+
+        this.player = new Tone.Player(this.buffer, () => {
+            // console.log("Player ready!");
+            this.setState({ isLoaded: true });
+            this.player.loop = true;
+            this.initialize();
+        }).chain(this.dist, this.rev, Tone.Destination);
+
+        this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination);
+
+        this.am = new Tone.AMOscillator("E3", "square", "sine").chain(this.dist, this.rev, Tone.Destination);
+    
+        this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
+
+        if (this.state.chromeFlag === 1) {
+            this.rec = new Tone.Recorder();
+            Tone.Destination.connect(this.rec);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log("Child2 Updated");
+        // console.log("OWSonification Updated");
     }
 }
 
-export default Child2
+export default OWSonification
 

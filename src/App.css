@@ -1,3 +1,5 @@
+/* app css classes */
+
 .App-container {
     margin: 0px;
     padding: 0px;
@@ -7,21 +9,17 @@
     background-color: white;
 }
 
-.App-container .ticks {
-  font-size: 10px;
-}
+/* slider css classes */
 
+.App-container .ticks {
+    font-size: 10px;
+}
+  
 .App-container
 .track,
 .track-inset,
 .track-overlay {
     stroke-linecap: round;
-}
-
-.Child2 {
-    position: fixed;
-    top: 10px;
-    right: 10px;
 }
 
 .slider-svg {

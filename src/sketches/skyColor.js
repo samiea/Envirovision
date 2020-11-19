@@ -24,25 +24,26 @@ export function drawSky(p, carbonData, currentDate) {
     var gGap = (color_2010_g-END_SKY_g)/ 70;
     var bGap = (color_2010_b-END_SKY_b)/ 70;
 
-    //no data yet
-    if (currentYear < 2010) {
+    var rIndex, gIndex, bIndex;
+    
+    if (currentYear <= 2010) {
 
            // code body moved outside (above) statement block
-           var rIndex = START_SKY_r - ((rGap * yearIdex) | 0);
-           var gIndex = START_SKY_g - ((gGap * yearIdex) | 0);
-           var bIndex = START_SKY_b - ((bGap * yearIdex) | 0);
+           rIndex = START_SKY_r - ((rGap * yearIdex) | 0);
+           gIndex = START_SKY_g - ((gGap * yearIdex) | 0);
+           bIndex = START_SKY_b - ((bGap * yearIdex) | 0);
 
            p.background(rIndex, gIndex, bIndex);
     }
 
     //first index is 0 =, year 2010, trend 387
     //last index is 3900, year 2020, trend 412
-    else if (currentYear!=2020) {
+    else if (currentYear!==2020) {
 
         //initial colors
-        var rIndex = START_SKY_r -  ((rGap * 60) | 0);
-        var gIndex = START_SKY_g - ((gGap * 60) | 0);
-        var bIndex = START_SKY_g - ((bGap * 60) | 0);
+        rIndex = START_SKY_r -  ((rGap * 60) | 0);
+        gIndex = START_SKY_g - ((gGap * 60) | 0);
+        bIndex = START_SKY_g - ((bGap * 60) | 0);
 
         //find new jump of index
         var rJump = (rIndex - END_SKY_r)/(412-387)

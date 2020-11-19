@@ -5,10 +5,11 @@ import { setupMacroPlastics, drawMacroPlastics, hoveredMacroPlasticData } from "
 import { setupMethaneBubbles, drawMethaneBubbles } from "./methaneBubbles";
 import { setupSmogClouds, drawSmogClouds, hoveredSmogData } from "./smogClouds";
 import { drawSky } from "./skyColor";
-import { drawLegend, drawAllLegends } from "./legend";
+import { drawLegend, drawGuide } from "./legend";
 import { hoveredBubbleData } from "./methaneBubbles";
 
 export default function sketch(p) {
+    let showLegend = true;
     let temperatureData = null;
     let microGrowth2050 = null;
     let macroGrowth2050 = null;
@@ -17,9 +18,6 @@ export default function sketch(p) {
     let methaneData = null;
     let seaLevelRise = null;
     let nitrousData = null;
-
-    let showLegend = false;
-
 
     p.setup = () => {
         p.frameRate(30);
@@ -31,8 +29,14 @@ export default function sketch(p) {
         setupMethaneBubbles(p, methaneData);
         setupMicroPlasticDrops(p);
         setupMacroPlastics(p);
-
+        let button = p.createButton('show guide');
+        button.position(p.width - 269, 12);
+        button.mousePressed(showGuide);
     };
+
+    function showGuide() {
+        showLegend = !showLegend;
+    }
 
     p.draw = () => {
         p.clear();
@@ -78,10 +82,11 @@ export default function sketch(p) {
             p.noFill();
             drawLegend(p, text, value);
         }
-        // if (showLegend) { // commented this for demo/testing purposes
-        //     p.noFill();
-        //     drawAllLegends(p);
-        // }
+
+        if (showLegend) { // commented this for demo/testing purposes
+            p.noFill();
+            drawGuide(p);
+        }
     };
 
     p.windowResized = () => {
@@ -103,7 +108,7 @@ export default function sketch(p) {
 
     p.mouseClicked = () => {
         if (p.mouseX < p.width && p.mouseX > 0 && p.mouseY < p.height && p.mouseY > 0){
-            showLegend = !showLegend;
+            showLegend = false;
         }
     };
 }

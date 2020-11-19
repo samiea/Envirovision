@@ -26,12 +26,12 @@ class SmogCloud {
         this.display = function (todayData) {
             this.oldData = this.todayData
             this.todayData = todayData;
-            if(this.todayData == undefined) {
+            if(this.todayData === undefined) {
                 this.todayData = this.oldData;
             }
             // console.log("Displaying smog cloud");
 
-            if(this.oldData != undefined) {
+            if(this.oldData) {
                 p.noStroke();
                 let cloudColor = p.color(100);
                 cloudColor.setAlpha(this.opacity);
@@ -62,7 +62,7 @@ class SmogCloud {
         };
 
         this.move = function () {
-            if(this.oldData != undefined) {
+            if(this.oldData) {
                 this.addlimit += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10;
                 for (let x = 0; x < this.smogBubbles.length; x++) {
                     if (Math.abs(this.smogBubbles[x].xOffset) > this.width / 2 - 10 + this.addLimit) {
@@ -154,7 +154,7 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
 
         }
 
-        else if(nitrousData != undefined && currIndex > 0 && currIndex < nitrousData.length) {
+        else if(nitrousData && currIndex > 0 && currIndex < nitrousData.length) {
             let diff = Math.round(((nitrousData[currIndex].average - originalData.average)/10)) - extra_clouds;
             //console.log(diff);
 
@@ -195,16 +195,16 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
         else {
             hoveredSmogData.value = nitrousData[0].average
 
-            for(var i = 0; i < smogClouds.length; i++) {
+            for(var j = 0; j < smogClouds.length; j++) {
               if (!hoveredSmogData.mouseOver) {
 
-                smogClouds[i].move(p);
+                smogClouds[j].move(p);
               }
               else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size) {
                   hoveredSmogData.mouseOver = false;
               }
 
-                smogClouds[i].display(nitrousData[0]);
+                smogClouds[j].display(nitrousData[0]);
             }
         }
 

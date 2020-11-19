@@ -1,9 +1,9 @@
 import React from 'react'
-import './Child1.css'
+import './OWVisualization.css'
 import P5Wrapper from 'react-p5-wrapper';
 import sketch from './sketches/sketch';
 
-class Child1 extends React.Component {
+class OWVisualization extends React.Component {
     constructor(props) {
         super();
         this.methaneMap = new Map();
@@ -50,4 +50,4 @@ class Child1 extends React.Component {
     }
 }
 
-export default Child1
+export default OWVisualization;

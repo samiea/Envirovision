@@ -176,12 +176,13 @@ export function drawMacroPlastics(p, macroGrowth2050, current_date, seaLevelRise
         var newSize = -1 * (macroGrowth2050[currentDate - 1950][1] - 367);
         //calculate the actual data from the value
         //console.log(newSize);
+        var num;
         if (currentDate>1963){
-          var num = newSize*(1180000/103)
+          num = newSize*(1180000/103)
           hoveredMacroPlasticData.value = num.toFixed(2)
         }
         else {
-          var num = (currentDate - 1950)*100
+          num = (currentDate - 1950)*100
           hoveredMacroPlasticData.value = num.toFixed(2)
         }
 
