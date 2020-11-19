@@ -9,7 +9,7 @@ let hoveredSmog = null;
 class SmogCloud {
     constructor(p, todayData, initial) {
         let diff = 0;
-        if(todayData == undefined || initial == undefined) {
+        if(!todayData || !initial) {
             this.todayData = undefined;
             this.oldData = undefined
         }
@@ -151,7 +151,7 @@ class SmogBubble {
 }
 
 export function setupSmogClouds(p, nitrousData, currentDate) {
-    if(nitrousData == undefined) {
+    if(!nitrousData) {
         for (let i = 0; i < initial_clouds; i++) {
             smogClouds[i] = new SmogCloud(p, null, null);
         }
