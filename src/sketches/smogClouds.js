@@ -181,11 +181,16 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
                 for(let x = 0 ; x < diff; x++) {
                     smogClouds[smogClouds.length] = new SmogCloud(p, nitrousData[currIndex], originalData);
                     extra_clouds++;
+                    console.log("Extra cloud created");
                 }
             }
-            else if(diff < 0) {
-                let slice = smogClouds.length - 1 + diff;
-                extra_clouds -= smogClouds.length - 1 - slice;
+            else if(diff < 0 && extra_clouds > 0) {
+                console.log("Diff: "+diff);
+                let slice = smogClouds.length + diff;
+                extra_clouds -= (smogClouds.length - slice);
+                console.log("Extra clouds: "+ extra_clouds);
+                console.log("Length "+ smogClouds.length);
+                console.log("Slice " + slice)
                 smogClouds = smogClouds.slice(0, slice);
             }
         }
