@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "70c7e3b784a629c7f74e730f5f1640ca",
+    "revision": "f98ab6d39d0883d2fd278d2688628116",
     "url": "/Ocean-Weather-Visualization/index.html"
   },
   {
-    "revision": "a90c3bbf38c767a8a596",
+    "revision": "dcce5acb3a3dd01ee9ac",
     "url": "/Ocean-Weather-Visualization/static/css/main.ff320066.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Ocean-Weather-Visualization/static/js/2.3e5b46ca.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a90c3bbf38c767a8a596",
-    "url": "/Ocean-Weather-Visualization/static/js/main.bf720330.chunk.js"
+    "revision": "dcce5acb3a3dd01ee9ac",
+    "url": "/Ocean-Weather-Visualization/static/js/main.217ac76f.chunk.js"
   },
   {
     "revision": "597ce559dfcba739143d",
