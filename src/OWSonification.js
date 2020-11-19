@@ -37,13 +37,17 @@ class Child2 extends React.Component {
             
             //Updating
             updateCount: 0,
-            dataUpdateCount: 0
+            dataUpdateCount: 0,
+
+            //Using Chrome? Change this between browsers
+            chromeFlag: 0
         };
 
         //Binding functions
         this.initialize = this.initialize.bind(this);
         this.startAudio = this.startAudio.bind(this);
         this.getNewData = this.getNewData.bind(this);
+        this.recordAudio = this.recordAudio.bind(this);
 
         //Effects
         this.dist = new Tone.Distortion(0).toDestination();
@@ -67,6 +71,11 @@ class Child2 extends React.Component {
         this.am = new Tone.AMOscillator("E3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
     
         this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
+
+        if (this.state.chromeFlag === 1) {
+            this.rec = new Tone.Recorder();
+            Tone.Destination.connect(this.rec);
+        }
     }
 
     initialize() {
@@ -207,6 +216,19 @@ class Child2 extends React.Component {
         }
     }
 
+    recordAudio() {
+        this.rec.start();
+
+        setTimeout(async () => {
+            const recording = await this.rec.stop();
+            const url = URL.createObjectURL(recording);
+            const anchor = document.createElement("a");
+            anchor.download = "recording.webm";
+            anchor.href = url;
+            anchor.click();
+        }, 20000);
+    }
+
     render() {
         const { isLoaded } = this.state;
         // console.log(this.state);
@@ -217,6 +239,9 @@ class Child2 extends React.Component {
                     audio on/off
                 </button>
 
+                <button disabled={!this.state.chromeFlag} onClick={this.recordAudio}>
+                    record audio
+                </button>
             </div>
         );
     }
