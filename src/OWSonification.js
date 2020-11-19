@@ -68,7 +68,7 @@ class Child2 extends React.Component {
 
         this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination);
 
-        this.am = new Tone.AMOscillator("E3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
+        this.am = new Tone.AMOscillator("E3", "square", "sine").chain(this.dist, this.rev, Tone.Destination);
     
         this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
 
