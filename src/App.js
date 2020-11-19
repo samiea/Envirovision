@@ -161,7 +161,7 @@ class App extends React.Component {
                             playButton.text("Play");
                         }
                         self.setState({ currentDate: x.invert(currentValue) }); // ref parent constructor and communicate with child
-                    }, 100); // loops for about 20 seconds going from month to month (or longer)
+                    }, 200); // loops for about 20 seconds going from month to month (or longer)
                     button.text("Pause"); // when play button is selected, change text to 'pause'
                 }
             });

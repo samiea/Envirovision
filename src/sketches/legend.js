@@ -46,7 +46,7 @@ export function drawGuide(p) {
     const topPadding = 80;
     const bottomPadding = 150;
     
-    const textSize = 20 * width_ratio; // scales with window width
+    const textSize = 26 * width_ratio; // scales with window width
     const textBoxWidth = p.width - rightPadding - leftPadding; // scales with window width
     const textBoxHeight = p.height - topPadding - bottomPadding; // scales with window height
     
@@ -68,17 +68,15 @@ export function drawGuide(p) {
     
     p.textSize(textSize);
 
-    createText("Interact with moving objects on the visualization to display value representation of pollutants corresponding with the current period in time");
-    createText("Sky Color: The color of the sky is based off carbon dioxide data, darkening as CO2 levels in the atmosphere increase.", 50);
-    createText("Ocean Color: The color of the ocean is based off ocean pollution data, darkening as levels in the ocean increase.", 100);
-    createText("Sun Size: The sun increases and decreases in size based on global temperature averages - larger means hotter, smaller means cooler.", 150);
-    createText("Smog: The grey smog clouds increase and decrease in density, size, and number based off of nitrous oxide levels in the atmosphere.", 200);
-    createText("Ocean Level: The sea level rises or descends based off sea level data", 250);
-    createText("Microplastics: The small white dots drifting downward through the ocean represent microplastics, tiny plastic particulates polluting the oceans. They"+
-        " increase and decrease in number based on microplastic levels in the oceans.", 300);
-    createText("Macroplastics: The large brown and grey shapes on the ocean surface represent macroplastics, larger plastic objects polluting the oceans. They"
-        +" increase and decrease in number based on macroplastic levels in the oceans.", 375);
-    createText("Bubbles: The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.", 450);
+    createText("Interact with moving objects on the visualization to display value representation of pollutants corresponding with the current period in time. Ensure that window is fully maximized and refresh the page if any manually performed resizing occurs for optimal experience"
+        + "\n\nSky Color: The color of the sky is based off carbon dioxide data, darkening as CO2 levels in the atmosphere increase."
+        + "\n\nOcean Color: The color of the ocean is based off ocean pollution data, darkening as levels in the ocean increase."
+        + "\n\nSun Size: The sun increases and decreases in size based on global temperature averages - larger means hotter, smaller means cooler."
+        + "\n\nSmog: The grey smog clouds increase and decrease in density, size, and number based off of nitrous oxide levels in the atmosphere."
+        + "\n\nOcean Level: The sea level rises or descends based off sea level data"
+        + "\n\nMicroplastics: The small white dots drifting downward through the ocean represent microplastics, tiny plastic particulates polluting the oceans. They increase and decrease in number based on microplastic levels in the oceans."
+        + "\n\nMacroplastics: The large brown and grey shapes on the ocean surface represent macroplastics, larger plastic objects polluting the oceans. They increase and decrease in number based on macroplastic levels in the oceans."
+        + "\n\nBubbles: The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.");
 
     p.noStroke();
 

@@ -30,8 +30,11 @@ export default function sketch(p) {
         setupMicroPlasticDrops(p);
         setupMacroPlastics(p);
         let button = p.createButton('show guide');
-        button.position(p.width - 269, 12);
         button.mousePressed(showGuide);
+        button.style('position', 'fixed');
+        button.style('top', '12px');
+        button.style('right', '186px');
+
     };
 
     function showGuide() {
@@ -50,7 +53,11 @@ export default function sketch(p) {
         drawMicroPlasticDots(p, microGrowth2050, currentDate, seaLevelRise);
         drawMacroPlastics(p, macroGrowth2050, currentDate, seaLevelRise);
 
-        if (hoveredBubbleData.mouseOver) {
+        if (showLegend) { // commented this for demo/testing purposes
+            p.noFill();
+            drawGuide(p);
+        }
+        else if (hoveredBubbleData.mouseOver) {
             const text = "The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.";
             const value = hoveredBubbleData.value ? `Value: ${hoveredBubbleData.value} ppb` : `[No Value For Current Date]`;
             p.noFill();
@@ -82,11 +89,7 @@ export default function sketch(p) {
             p.noFill();
             drawLegend(p, text, value);
         }
-
-        if (showLegend) { // commented this for demo/testing purposes
-            p.noFill();
-            drawGuide(p);
-        }
+        
     };
 
     p.windowResized = () => {
