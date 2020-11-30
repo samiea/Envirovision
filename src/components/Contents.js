@@ -8,18 +8,10 @@ class Contents extends Component {
 					<div className="inner">
                         <img className="image" src={`${process.env.PUBLIC_URL}/images/pic01.jpg`} alt="" />
 						<div className="content">
-							<h2 className="major">Magna arcu feugiat</h2>
+							<h2 className="major">[artist statement]</h2>
 							<p>
-								Lorem ipsum dolor sit amet, etiam lorem
-								adipiscing elit. Cras turpis ante, nullam sit
-								amet turpis non, sollicitudin posuere urna.
-								Mauris id tellus arcu. Nunc vehicula id nulla
-								dignissim dapibus. Nullam ultrices, neque et
-								faucibus viverra, ex nulla cursus.
+								[project goals]
 							</p>
-							<a href="index.html" className="special">
-								Learn more
-							</a>
 						</div>
 					</div>
 				</section>
@@ -30,17 +22,12 @@ class Contents extends Component {
 							<img src={`${process.env.PUBLIC_URL}/images/pic02.jpg`} alt="" />
 						</a>
 						<div className="content">
-							<h2 className="major">Tempus adipiscing</h2>
+							<h2 className="major">[instructions]</h2>
 							<p>
-								Lorem ipsum dolor sit amet, etiam lorem
-								adipiscing elit. Cras turpis ante, nullam sit
-								amet turpis non, sollicitudin posuere urna.
-								Mauris id tellus arcu. Nunc vehicula id nulla
-								dignissim dapibus. Nullam ultrices, neque et
-								faucibus viverra, ex nulla cursus.
+								[how to use; might replace legend with this]
 							</p>
-							<a href="index.html" className="special">
-								Learn more
+							<a href onClick={scrollToBottom} className="special">
+								[scrolls to bottom of page]
 							</a>
 						</div>
 					</div>
@@ -70,6 +57,12 @@ class Contents extends Component {
 			</section>
 		);
 	}
+}
+
+function scrollToBottom() {
+    document.getElementById('p5-canvas').scrollIntoView({ 
+        behavior: 'smooth' 
+    });
 }
 
 export default Contents;

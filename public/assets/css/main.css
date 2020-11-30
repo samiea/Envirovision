@@ -223,7 +223,8 @@ a.special:not(.button):before {
 	text-rendering: auto;
 	line-height: 1;
 	text-transform: none !important;
-	font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free";
+    transform: rotate(90deg);
 	font-weight: 900;
 }
 

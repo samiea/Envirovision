@@ -5,10 +5,9 @@ class Header extends Component {
         return (
             <section id="banner">
                 <div className="inner">
-                    <h2>This is Solid State</h2>
+                    <h2>[project title]</h2>
                     <p>
-                        Another free + fully responsive site template by{" "}
-                        <a href="http://html5up.net">HTML5 UP</a>
+                        [project motto]
                     </p>
                 </div>
             </section>
