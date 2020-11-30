@@ -20,21 +20,20 @@ export default function sketch(p) {
     let nitrousData = null;
 
     p.setup = () => {
+        const wrapper = document.getElementById("page-wrapper");
         p.frameRate(30);
-        p.createCanvas(p.windowWidth, p.windowHeight); // adjust to window width and height
-        // document.getElementById("defaultCanvas0").style.display = 'block';
+        const canvas = p.createCanvas(wrapper.offsetWidth, p.windowHeight); // adjust to window width and height
+        canvas.id('p5-canvas');
+        document.getElementById('p5-canvas').style.display = 'block';
         setupLandscape(p);
         setUpSun(p,temperatureData, currentDate);
         setupSmogClouds(p);
         setupMethaneBubbles(p, methaneData);
         setupMicroPlasticDrops(p);
         setupMacroPlastics(p);
-        let button = p.createButton('show guide');
-        button.mousePressed(showGuide);
-        button.style('position', 'fixed');
-        button.style('top', '12px');
-        button.style('right', '186px');
 
+        let button = document.getElementById('guide-button');
+        button.onclick = showGuide;
     };
 
     function showGuide() {
@@ -92,11 +91,11 @@ export default function sketch(p) {
         
     };
 
-    p.windowResized = () => {
-        p.resizeCanvas(p.windowWidth, p.windowHeight);
-        p.redraw();
-        document.getElementById("defaultCanvas0").style.display = 'block';
-    }
+    // p.windowResized = () => {
+    //     p.resizeCanvas(p.windowWidth, p.windowHeight);
+    //     p.redraw();
+    //     document.getElementById("p5-canvas").style.display = 'block';
+    // }
 
     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
         temperatureData = newProps.temperatureData;

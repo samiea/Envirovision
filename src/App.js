@@ -17,6 +17,13 @@ import * as d3 from "d3";
 // import {sliderBottom} from 'd3-simple-slider';
 // end testing-related import block
 
+import Header from './components/Header';
+import Contents from "./components/Contents";
+import Features from './components/Features';
+import Footer from './components/Footer';
+
+import P5Wrapper from 'react-p5-wrapper';
+import sketch from './sketches/sketch';
 
 export const startingYear = 1950;
 
@@ -24,7 +31,6 @@ class App extends React.Component {
 	// you can create class-scope fields in here like in Java
 	constructor(props) {
 		super();
-		this.createSlider = this.createSlider.bind(this);
 		this.state = {
 			// you can add new states here
 			// initialize below states to null if not using static data for testing
@@ -49,7 +55,12 @@ class App extends React.Component {
         
 		return (
 			<div id="App" className="App-container">
-
+				<div id="page-wrapper">
+                    <Header />
+                    <Contents />
+                    <Features />
+                    <Footer />
+				</div>
 
 				<OWVisualization
 					currentDate={this.state.currentDate}
@@ -70,6 +81,7 @@ class App extends React.Component {
 					methaneData={this.state.methaneData}
 					seaLevelRise={this.state.seaLevelRise}
 				/>
+
 				{/* <button id="play-button">Play</button> */}
 			</div>
 		);
@@ -79,7 +91,7 @@ class App extends React.Component {
         // this is called when the page is initially loaded/mounted
 		// console.log("Parent Mounted");
 		// this.loadData(); // comment this out if using static files; loadData() will make API requests
-		// this.createSlider(d3.select(".App-container"));
+		this.createSlider(d3.select(".App-container"));
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -142,10 +154,10 @@ class App extends React.Component {
 
 		gRange // we want to add a foreign object embodied in a html element
 			.append("foreignObject") // append the foreign object then set coordinates relative to slider svg body
-			.attr("x", 60)
-			.attr("y", 60)
-			.attr("width", 60) // set width and height of the play button
-			.attr("height", 30)
+			.attr("x", 20)
+			.attr("y", 40)
+			.attr("width", 100) // set width and height of the play button
+			.attr("height", 60)
 			.html(function (d) {
 				// this is the html element we want to append
 				return '<button id="play-button">Play</button>';

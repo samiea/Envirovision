@@ -1,44 +1,5 @@
 import React, { Component } from "react";
-import WindowPortal from "./WindowPortal";
-import App from '../App.js';
-
 class Features extends Component {
-	constructor(props) {
-		super();
-
-		this.state = {
-			counter: 0,
-			showWindowPortal: false,
-        };
-        
-
-		this.toggleWindowPortal = this.toggleWindowPortal.bind(this);
-		this.closeWindowPortal = this.closeWindowPortal.bind(this);
-	}
-
-	componentDidMount() {
-		window.addEventListener("beforeunload", () => {
-			this.closeWindowPortal();
-		});
-
-		window.setInterval(() => {
-			this.setState((state) => ({
-				counter: state.counter + 1,
-			}));
-		}, 1000);
-	}
-
-	toggleWindowPortal() {
-		this.setState((state) => ({
-			...state,
-			showWindowPortal: !state.showWindowPortal,
-		}));
-	}
-
-	closeWindowPortal() {
-		this.setState({ showWindowPortal: false });
-	}
-
 	render() {
 		return (
 			<section id="four" className="wrapper alt style1">
@@ -53,11 +14,7 @@ class Features extends Component {
 					</p>
 					<section className="features">
 						<article>
-							<a
-								href="#index"
-								onClick={this.toggleWindowPortal}
-								className="image"
-							>
+							<a href="index.html" className="image">
 								<img
 									src={`${process.env.PUBLIC_URL}/images/pic04.jpg`}
 									alt=""
@@ -73,15 +30,6 @@ class Features extends Component {
 								Learn more
 							</a>
 						</article>
-						{this.state.showWindowPortal && (
-							<WindowPortal
-								closeWindowPortal={this.closeWindowPortal}
-							>
-                                        <App
-            // urls={"https://global-warming.org/api/co2-api,https://global-warming.org/api/methane-api,https://global-warming.org/api/nitrous-oxide-api,https://global-warming.org/api/temperature-api"}
-        />
-							</WindowPortal>
-						)}
 						<article>
 							<a href="index.html" className="image">
 								<img

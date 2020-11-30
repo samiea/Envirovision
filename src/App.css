@@ -23,10 +23,10 @@
 }
 
 .slider-svg {
-    position: fixed;
+    position: relative;
+    bottom: 200px;
     min-height: 100px;
-    max-height: 150px;
-    bottom: 40px;
+    /* height: 25%; */
     width: 100%;
     background: rgba(255,255,255,0);
 }
@@ -70,8 +70,6 @@
     border: none;
     color: white;
     cursor: pointer;
-    width: 60px;
-    height: 30px;
 }
 
 #play-button:hover {

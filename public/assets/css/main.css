@@ -2986,7 +2986,7 @@ button.large,
 	font-size: 1em;
 }
 
-input[type="submit"].disabled,
+/* input[type="submit"].disabled,
 input[type="submit"]:disabled,
 input[type="reset"].disabled,
 input[type="reset"]:disabled,
@@ -2997,7 +2997,7 @@ button:disabled,
 .button.disabled,
 .button:disabled {
 	opacity: 0.25;
-}
+} */
 
 @media screen and (max-width: 480px) {
 	input[type="submit"],
@@ -3243,7 +3243,10 @@ button:disabled,
 	-moz-transition: -moz-filter 0.25s ease;
 	-webkit-transition: -webkit-filter 0.25s ease;
 	-ms-transition: -ms-filter 0.25s ease;
-	transition: filter 0.25s ease;
+    transition: filter 0.25s ease;
+;
+;
+;
 }
 
 #menu {
@@ -3398,8 +3401,8 @@ body.is-menu-visible #menu .inner {
 #banner .logo {
 	-moz-transition: opacity 2s ease, -moz-transform 1s ease;
 	-webkit-transition: opacity 2s ease, -webkit-transform 1s ease;
-	-ms-transition: opacity 2s ease, -ms-transform 1s ease;
-	transition: opacity 2s ease, transform 1s ease;
+	-ms-transition: opacity 2s ease, -ms-transform 1s	transition: filter 0.25s ease;
+s ease;
 	-moz-transform: translateY(0);
 	-webkit-transform: translateY(0);
 	-ms-transform: translateY(0);
@@ -4159,4 +4162,4 @@ body.is-preload #banner p {
 	#footer .inner {
 		padding: 2em 1.5em 0.1em 1.5em;
 	}
-}
+} 
