@@ -24,7 +24,6 @@ class OWVisualization extends React.Component {
                 methaneData={{"map": this.methaneMap, "arr": this.props.methaneData}}>
 
             </P5Wrapper>
-            //<P5Wrapper sketch={wave}></P5Wrapper>
         );
     }
 

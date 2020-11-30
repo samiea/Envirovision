@@ -22,7 +22,7 @@ export default function sketch(p) {
     p.setup = () => {
         p.frameRate(30);
         p.createCanvas(p.windowWidth, p.windowHeight); // adjust to window width and height
-        document.getElementById("defaultCanvas0").style.display = 'block';
+        // document.getElementById("defaultCanvas0").style.display = 'block';
         setupLandscape(p);
         setUpSun(p,temperatureData, currentDate);
         setupSmogClouds(p);
