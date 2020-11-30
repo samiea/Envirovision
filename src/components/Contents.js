@@ -46,7 +46,7 @@ class Contents extends Component {
 					</div>
 				</section>
 
-				<section id="three" className="wrapper spotlight style3">
+				{/* <section id="three" className="wrapper spotlight style3">
 					<div className="inner">
 						<a href="index.html" className="image">
 							<img src={`${process.env.PUBLIC_URL}/images/pic03.jpg`} alt="" />
@@ -66,7 +66,7 @@ class Contents extends Component {
 							</a>
 						</div>
 					</div>
-				</section>
+				</section> */}
 			</section>
 		);
 	}

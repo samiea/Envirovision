@@ -1,7 +1,6 @@
-import React from 'react'
-import './OWVisualization.css'
-import P5Wrapper from 'react-p5-wrapper';
-import sketch from './sketches/sketch';
+import React from "react";
+import P5Wrapper from "react-p5-wrapper";
+import sketch from "./sketches/sketch";
 
 class OWVisualization extends React.Component {
     constructor(props) {
@@ -10,7 +9,7 @@ class OWVisualization extends React.Component {
     }
 
     render() {
-      //console.log(this.props);
+        //console.log(this.props);
         return (
             <P5Wrapper
                 sketch={sketch}
@@ -21,24 +20,26 @@ class OWVisualization extends React.Component {
                 seaLevelRise={this.props.seaLevelRise}
                 carbonData={this.props.carbonData}
                 nitrousData={this.props.nitrousData}
-                methaneData={{"map": this.methaneMap, "arr": this.props.methaneData}}>
-
-            </P5Wrapper>
+                methaneData={{
+                    map: this.methaneMap,
+                    arr: this.props.methaneData,
+                }}
+            ></P5Wrapper>
         );
     }
 
     componentDidMount() {
         if (this.props.methaneData) {
-            this.props.methaneData.forEach(e => { // look over methane data
+            this.props.methaneData.forEach((e) => {
+                // look over methane data
                 let yyyy = e.date.substring(0, 4);
-                let mm = e.date.substring(5, e.date.length).padStart(2, '0');
+                let mm = e.date.substring(5, e.date.length).padStart(2, "0");
                 let dd = "01";
 
                 let date = `${yyyy}-${mm}-${dd}`;
                 this.methaneMap.set(date, e.average); // map date to average
             });
-        }
-        else {
+        } else {
             console.error(`Methane data ${this.props.methaneData}`);
         }
         // console.log("Child Mounted");

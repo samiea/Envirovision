@@ -166,6 +166,11 @@ export function setupSmogClouds(p, nitrousData, currentDate) {
 }
 
 export function drawSmogClouds(p, nitrousData, currentDate) {
+        if (!nitrousData) {
+            console.error("Nitrous data was not loaded successfully");
+            return null;
+        }
+
         let currIndex = 33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()
 
         if(originalData == null && nitrousData != null) {
