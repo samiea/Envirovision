@@ -35,7 +35,7 @@ export function drawGuide(p) {
     p.textSize(textSize);
 
     createText(
-        "Interact with moving objects on the visualization to display value representation of pollutants corresponding with the current period in time. Ensure that window is fully maximized and refresh the page if any manually performed resizing occurs for optimal experience" +
+        "Interact with moving objects on the visualization to display value representation of pollutants corresponding with the current period in time." +
             "\n\nSky Color: The color of the sky is based off carbon dioxide data, darkening as CO2 levels in the atmosphere increase." +
             "\n\nOcean Color: The color of the ocean is based off ocean pollution data, darkening as levels in the ocean increase." +
             "\n\nSun Size: The sun increases and decreases in size based on global temperature averages - larger means hotter, smaller means cooler." +

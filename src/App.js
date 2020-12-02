@@ -47,7 +47,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div id="App" className="App-container">
+            <div id="app" className="app-container">
                 <div id="page-wrapper">
                     <Header />
                     <Contents />
@@ -84,7 +84,7 @@ class App extends React.Component {
         // this is called when the page is initially loaded/mounted
         // console.log("Parent Mounted");
         // this.loadData(); // comment this out if using static files; loadData() will make API requests
-        this.createSlider(d3.select(".App-container"));
+        this.createSlider(d3.select(".app-container"));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -115,7 +115,7 @@ class App extends React.Component {
     }
 
     createSlider(element) {
-        // parameter is the App-container svg body
+        // parameter is the app-container svg body
         const self = this; // reference constructor
 
         let formatDateIntoYear = d3.timeFormat("%Y");
@@ -134,7 +134,7 @@ class App extends React.Component {
         let sliderRange = element // appends svg on top of .App svg
             .append("div")
             .classed("slider-svg", true) // container class to make iresponsive
-            .attr("id", "App");
+            .attr("id", "slider");
 
         let gRange = sliderRange // gRange is the svg body that will be made responsive
             .append("svg") // append the responsive svg container
@@ -149,7 +149,7 @@ class App extends React.Component {
             .append("foreignObject") // append the foreign object then set coordinates relative to slider svg body
             .attr("x", 20)
             .attr("y", 40)
-            .attr("width", 100) // set width and height of the play button
+            .attr("width", 200) // set width and height of the play button
             .attr("height", 60)
             .html(function (d) {
                 // this is the html element we want to append
@@ -228,6 +228,8 @@ class App extends React.Component {
             .append("text") // append text onto slider which will be our tick representations
             .attr("class", "label") // apply label css properties
             .attr("text-anchor", "middle") // anchor text to middle
+            .attr("font-family", 'Raleway, Helvetica, sans-serif')
+            .attr("font-weight", "700")
             .text(formatDate(startDate)) // display currently selected date in text
             .attr("transform", "translate(0," + -25 + ")"); // shift text to left
 
@@ -261,6 +263,8 @@ class App extends React.Component {
             .attr("x", x)
             .attr("y", 10)
             .attr("text-anchor", "middle") // center text on tick
+            .attr("font-family", 'Raleway, Helvetica, sans-serif')
+            .attr("font-weight", "700")
             .attr("class", "track-text")
             .text((d) => formatDateIntoYear(d)); // write formatted date as text
 

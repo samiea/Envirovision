@@ -206,14 +206,13 @@ class OWSonification extends React.Component {
 
         return (
             <div className="OWSonification" >
-                <button id="guide-button">
-                    show guide
-                </button>
-                <button disabled={!isLoaded} onClick={this.startAudio}>
+                {/* <button id="guide-button">
+                    show/hide guide
+                </button> */}
+                <button id="play-audio-button" disabled={!isLoaded} onClick={this.startAudio}>
                     audio on/off
                 </button>
-
-                <button disabled={!this.state.chromeFlag} onClick={this.recordAudio}>
+                <button id="record-audio-button" disabled={!this.state.chromeFlag} onClick={this.recordAudio}>
                     record audio
                 </button>
             </div>

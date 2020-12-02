@@ -14,12 +14,6 @@ class Footer extends Component {
 							<a href="#index">information@untitled.tld</a>
 						</li>
 					</ul>
-					<ul className="copyright">
-						<li>&copy; Team Winter Is COMING. All rights reserved.</li>
-						<li>
-							Design: <a href="http://html5up.net">HTML5 UP</a>
-						</li>
-					</ul>
 				</div>
 			</section>
 		);
