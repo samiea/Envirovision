@@ -2889,7 +2889,7 @@ button,
 	border-radius: 5px;
 	border: 0;
 	box-shadow: inset 0 0 0 2px rgb(0, 0, 0, .15);
-	color: black !important;
+	color: rgba(0, 0, 0, 0.750) !important;
 	cursor: pointer;
 	display: inline-block;
 	font-family: Raleway, Helvetica, sans-serif;

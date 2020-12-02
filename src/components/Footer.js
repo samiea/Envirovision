@@ -9,6 +9,7 @@ class Footer extends Component {
 					<p>
 						[description of team with four circles (like ones above but a bit smaller) below this text block for our photos with photo captions that detail our names, emails, roles, skills, and whatever else that seems suitable]
 					</p>
+
 					<ul className="contact">
 						<li className="icon solid fa-envelope">
 							<a href="#index">information@untitled.tld</a>

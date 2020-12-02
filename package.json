@@ -15,6 +15,7 @@
     "p5": "^1.1.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^4.1.0",
     "react-p5-wrapper": "^2.3.0",
     "react-scripts": "^4.0.1",
     "tone": "^14.7.58",

@@ -40,8 +40,13 @@ class Contents extends Component {
                                 <br />
                                 <b>Bubbles:</b> The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.
 							</p>
-							<a href onClick={scrollToBottom} className="special">
-								Click to view visualization
+							<a href={"index.html"} onClick={(e) => {
+                                    e.preventDefault()
+                                    document.getElementById('p5-canvas').scrollIntoView({ 
+                                        behavior: 'smooth' 
+                                    })
+                            }} className="special">
+								Click to scroll to visualization
 							</a>
 						</div>
 					</div>
@@ -71,12 +76,6 @@ class Contents extends Component {
 			</section>
 		);
 	}
-}
-
-function scrollToBottom() {
-    document.getElementById('p5-canvas').scrollIntoView({ 
-        behavior: 'smooth' 
-    });
 }
 
 export default Contents;

@@ -74,8 +74,6 @@ class App extends React.Component {
                     methaneData={this.state.methaneData}
                     seaLevelRise={this.state.seaLevelRise}
                 />
-
-                {/* <button id="play-button">Play</button> */}
             </div>
         );
     }
@@ -230,6 +228,7 @@ class App extends React.Component {
             .attr("text-anchor", "middle") // anchor text to middle
             .attr("font-family", 'Raleway, Helvetica, sans-serif')
             .attr("font-weight", "700")
+            .attr("fill", "rgba(0, 0, 0, 0.750)")
             .text(formatDate(startDate)) // display currently selected date in text
             .attr("transform", "translate(0," + -25 + ")"); // shift text to left
 
@@ -265,6 +264,7 @@ class App extends React.Component {
             .attr("text-anchor", "middle") // center text on tick
             .attr("font-family", 'Raleway, Helvetica, sans-serif')
             .attr("font-weight", "700")
+            .attr("fill", "rgba(0, 0, 0, 0.750)")
             .attr("class", "track-text")
             .text((d) => formatDateIntoYear(d)); // write formatted date as text
 

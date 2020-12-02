@@ -34,7 +34,7 @@ class Sun {
             p.ellipse(this.x, this.y, currentY_value * 100);
             if (hoveredSunData.mouseOver) {
                 p.fill(225, 225, 0, 70);
-                p.ellipse(this.x, this.y, currentY_value * 100);
+                p.ellipse(this.x, this.y, this.size + 20);
             }
         };
 

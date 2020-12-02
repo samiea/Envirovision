@@ -24,7 +24,7 @@ class OWVisualization extends React.Component {
                     map: this.methaneMap,
                     arr: this.props.methaneData,
                 }}
-            ></P5Wrapper>
+            />
         );
     }
 

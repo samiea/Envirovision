@@ -1,13 +1,35 @@
 /* app css classes */
 
 /* .app-container {
-    margin: 0px;
-    padding: 0px;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: white;
 } */
+
+/* scroll button css classes */
+
+.scrollTop {
+    position: fixed; 
+    width: 10%;
+    bottom: 20px;
+    right: 20px;
+    height: 10%;
+    z-index: 1000;
+    cursor: pointer;
+    animation: fadeIn 0.3s;
+    transition: opacity 0.4s;
+    opacity: 0.5;
+  }
+  
+  .scrollTop:hover{
+    opacity: 1;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
+    }
+}
 
 /* slider css classes */
 
