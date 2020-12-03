@@ -28,7 +28,7 @@ class SmogCloud {
         this.height = p.random(50 + diff, 100 + diff);
         this.smogBubbles = [];
         this.opacity = p.random(50, 200);
-        this.addlimit = 0;
+        this.addLimit = 0;
 
         for (let x = 0; x < 25; x++) {
             this.smogBubbles[x] = new SmogBubble(p, this.width, this.height, diff, diff);
@@ -74,18 +74,25 @@ class SmogCloud {
 
         this.move = function () {
             if(this.oldData != undefined) {
-                this.addlimit += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10;
+                this.addLimit += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10;
                 for (let x = 0; x < this.smogBubbles.length; x++) {
-                    if (Math.abs(this.smogBubbles[x].xOffset) > this.width / 2 - 10 + this.addLimit) {
+                    if (Math.abs(this.smogBubbles[x].xOffset) > this.width / 2 - 10 + this.addLimit/3) {
                         this.smogBubbles[x].xVelocity *= -1;
+
                     }
-                    if (Math.abs(this.smogBubbles[x].yOffset) > this.height / 2 - 10 + this.addLimit) {
+                    if (Math.abs(this.smogBubbles[x].yOffset) > this.height / 2 - 10 + this.addLimit/3) {
                         this.smogBubbles[x].yVelocity *= -1;
+
                     }
-                    if (this.smogBubbles[x].rx < 70 + this.addlimit || this.smogBubbles[x].rx > 150 + this.addlimit) {
+                    if(Math.abs(this.smogBubbles[x].xOffset) > this.width / 2 + this.addLimit + 10 || Math.abs(this.smogBubbles[x].yOffset) > this.height / 2 + this.addLimit/3 + 10) {
+                        this.smogBubbles[x].xOffset = p.random((this.width / 2 + this.addLimit) * -1, this.width / 2);
+                        this.smogBubbles[x].yOffset = p.random((this.height / 2 + this.addLimit) * -1, this.height / 2);
+ 
+                    }
+                    if (this.smogBubbles[x].rx < 70 + this.addLimit || this.smogBubbles[x].rx > 150 + this.addLimit) {
                         this.smogBubbles[x].rxVelocity *= -1;
                     }
-                    if (this.smogBubbles[x].ry < 70 + this.addlimit || this.smogBubbles[x].ry > 150 + this.addlimit) {
+                    if (this.smogBubbles[x].ry < 70 + this.addLimit || this.smogBubbles[x].ry > 150 + this.addLimit) {
                         this.smogBubbles[x].ryVelocity *= -1;
                     }
 
@@ -111,8 +118,8 @@ class SmogCloud {
 class SmogBubble {
     constructor(p, xlimit, ylimit, wMod, hMod) {
         this.opacity = p.random(50, 200);
-        this.xVelocity = p.random(0.03, 0.07);
-        this.yVelocity = p.random(0.03, 0.07);
+        this.xVelocity = 20;
+        this.yVelocity = 20;
         this.xOffset = p.random((xlimit / 2) * -1, xlimit / 2);
         this.yOffset = p.random((ylimit / 2) * -1, ylimit / 2);
         this.rx = p.random(70 + wMod, 150 + wMod);
