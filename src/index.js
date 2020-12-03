@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
     <React.StrictMode>
         <App
-            // urls={"https://global-warming.org/api/co2-api,https://global-warming.org/api/methane-api,https://global-warming.org/api/nitrous-oxide-api,https://global-warming.org/api/temperature-api"}
+            urls={"https://global-warming.org/api/co2-api,https://global-warming.org/api/methane-api,https://global-warming.org/api/nitrous-oxide-api,https://global-warming.org/api/temperature-api"}
         />
     </React.StrictMode>,
     document.getElementById('root')

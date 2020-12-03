@@ -39,8 +39,6 @@ class OWVisualization extends React.Component {
                 let date = `${yyyy}-${mm}-${dd}`;
                 this.methaneMap.set(date, e.average); // map date to average
             });
-        } else {
-            console.error(`Methane data ${this.props.methaneData}`);
         }
         // console.log("Child Mounted");
     }

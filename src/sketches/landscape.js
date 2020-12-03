@@ -101,39 +101,41 @@ function drawClouds(p, currentYear) {
 }
 
 function drawWaves(p, currentDate, temperatureData) {
-    // create the waves
-    var startColor = { r: 194, g: 247, b: 254 };
-    var endColor = { r: 116, g: 199, b: 145 };
-    var color = calcWaveColor(
-        p,
-        currentDate,
-        startColor,
-        endColor,
-        temperatureData
-    );
-    createWave(p, 10 - newHeight, color, 2); // 0
-
-    startColor = { r: 84, g: 182, b: 282 };
-    endColor = { r: 109, g: 163, b: 103 };
-    color = calcWaveColor(
-        p,
-        currentDate,
-        startColor,
-        endColor,
-        temperatureData
-    );
-    createWave(p, 65 - newHeight, color, 2); // 65
-
-    startColor = { r: 112, g: 219, b: 245 };
-    endColor = { r: 50, g: 189, b: 34 };
-    color = calcWaveColor(
-        p,
-        currentDate,
-        startColor,
-        endColor,
-        temperatureData
-    );
-    createWave(p, 80 - newHeight, color, 2); // 80
+    if (temperatureData) {
+        // create the waves
+        var startColor = { r: 194, g: 247, b: 254 };
+        var endColor = { r: 116, g: 199, b: 145 };
+        var color = calcWaveColor(
+            p,
+            currentDate,
+            startColor,
+            endColor,
+            temperatureData
+        );
+        createWave(p, 10 - newHeight, color, 2); // 0
+    
+        startColor = { r: 84, g: 182, b: 282 };
+        endColor = { r: 109, g: 163, b: 103 };
+        color = calcWaveColor(
+            p,
+            currentDate,
+            startColor,
+            endColor,
+            temperatureData
+        );
+        createWave(p, 65 - newHeight, color, 2); // 65
+    
+        startColor = { r: 112, g: 219, b: 245 };
+        endColor = { r: 50, g: 189, b: 34 };
+        color = calcWaveColor(
+            p,
+            currentDate,
+            startColor,
+            endColor,
+            temperatureData
+        );
+        createWave(p, 80 - newHeight, color, 2); // 80
+    }
 }
 
 export function drawSeaboard(p) {
@@ -210,13 +212,7 @@ class Cloud {
     }
 }
 
-export function calcWaveColor(
-    p,
-    currentDate,
-    startColor,
-    endColor,
-    temperatureData
-) {
+export function calcWaveColor(p, currentDate, startColor, endColor, temperatureData) {
     var currentYear = currentDate.getFullYear();
 
     var index = ((currentYear - 1880) * temperatureData.length) / 140 - 100;

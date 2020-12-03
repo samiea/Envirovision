@@ -4,14 +4,10 @@ import OWVisualization from "./OWVisualization"; // import both children
 import OWSonification from "./OWSonification";
 import axios from "axios"; // used for API stuff
 
-// below imports are for static files to avoid 429 errors from requests while testing
-import carbonJSON from "./static/carbon.json";
-import methaneJSON from "./static/methane.json";
-import nitrousJSON from "./static/nitrous.json";
-import temperatureJSON from "./static/temperature.json";
-import macroGrowth2050 from "./static/plastic_pollution/macroGrowth2050.json";
-import microGrowth2050 from "./static/plastic_pollution/microGrowth2050.json";
-import seaLevelRise from "./static/seaLevelRise/seaLevelRise.json";
+// below imports are for data files to avoid 429 errors from requests while testing
+import macroGrowth2050 from "./data/plastic_pollution/macroGrowth2050.json";
+import microGrowth2050 from "./data/plastic_pollution/microGrowth2050.json";
+import seaLevelRise from "./data/seaLevelRise/seaLevelRise.json";
 
 import * as d3 from "d3";
 import Header from "./components/Header";
@@ -27,11 +23,10 @@ class App extends React.Component {
         super();
         this.state = {
             // you can add new states here
-            // initialize below states to null if not using static data for testing
-            carbonData: carbonJSON.co2,
-            methaneData: methaneJSON.methane,
-            nitrousData: nitrousJSON.nitrous,
-            temperatureData: temperatureJSON.result,
+            carbonData: null,
+            methaneData: null,
+            nitrousData: null,
+            temperatureData: null,
 
             //get plastic and repeat for others
             macroGrowth2050: macroGrowth2050.macroGrowth2050,
@@ -81,7 +76,7 @@ class App extends React.Component {
     componentDidMount() {
         // this is called when the page is initially loaded/mounted
         // console.log("Parent Mounted");
-        // this.loadData(); // comment this out if using static files; loadData() will make API requests
+        this.loadData(); // comment this out if using static files; loadData() will make API requests
         this.createSlider(d3.select(".app-container"));
     }
 

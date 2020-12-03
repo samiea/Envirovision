@@ -72,59 +72,67 @@ class OWSonification extends React.Component {
     getNewData() {
         //get current date
         var currDate = this.props.currentDate.getFullYear();
-        
+
         //index: TEMPERATURE
-        var index = ((currDate - 1880) * this.props.temperatureData.length) / 140 - 100;
-        index = Math.round(index);
+        if (this.props.temperatureData) {
+            var index = ((currDate - 1880) * this.props.temperatureData.length) / 140 - 100;
+            index = Math.round(index);
 
-        //map from -1 - 1 to 0 - 400 using (value - x1) * (y2 - x2) / (y1 - x1) + x2
-        var spread = (this.props.temperatureData[index].station + 1) * (400 - 0) / (1 + 1);
-        this.setState({ fatSpread: spread });
-
-        //index: MICROPLASTICS
-        index = currDate - 1950;
-
-        //map from 90 to 620 to 100 to 0 using same formula as above
-        var cp = (this.props.microGrowth2050[index][1] - 90) * (0 - 100) / (620 + 90) + 100;
-        this.setState({ consonanceProbability: cp });        
-
-        //index: MACROPLASTICS
-        index = currDate - 1950;
-        
-        //map from 90 to 620 to 0.5 to 4.0 using same formula as above
-        var aH = (this.props.macroGrowth2050[index][1] - 90) * (4.0 - 0.5) / (620 - 90) + 0.5;
-        this.setState({ amHarm: aH });
-
-        //index: CARBON
-        // var yearGap = 390;
-        // var monthGap = yearGap / 12;
-        // var year_index = currDate - 2010;
-        // var month_index = this.props.currentDate.getMonth() - 1;
-
-        // var current_index = yearGap * year_index + month_index * monthGap;
-        // current_index = current_index | 0;
-
-        //map from 387 to 413 to 0.0 to 1.0 using same formula as above
-        var distLevel = (this.props.carbonData[currDate - 1880].trend - 387) / (413 - 387);
-        this.setState({ distortionLevel: distLevel });
-
-        //index: SEA LEVEL
-        index = currDate - 1880;
-        
-        //map from 0 to 9 to 0 to 1100 using same formula as above
-        var detune = 0;
-
-        if (index < 0) {
-            detune = 0;
+            //map from -1 - 1 to 0 - 400 using (value - x1) * (y2 - x2) / (y1 - x1) + x2
+            var spread = (this.props.temperatureData[index].station + 1) * (400 - 0) / (1 + 1);
+            this.setState({ fatSpread: spread });
         }
 
-        if (currDate > 2013) {
-            detune = this.props.seaLevelRise[(2013 - 1880)][1] * 1100 / 9;
+        if (this.props.microGrowth2050 && this.props.macroGrowth2050) {
+            //index: MICROPLASTICS
+            index = currDate - 1950;
+    
+            //map from 90 to 620 to 100 to 0 using same formula as above
+            var cp = (this.props.microGrowth2050[index][1] - 90) * (0 - 100) / (620 + 90) + 100;
+            this.setState({ consonanceProbability: cp });        
+    
+            //index: MACROPLASTICS
+            index = currDate - 1950;
+            
+            //map from 90 to 620 to 0.5 to 4.0 using same formula as above
+            var aH = (this.props.macroGrowth2050[index][1] - 90) * (4.0 - 0.5) / (620 - 90) + 0.5;
+            this.setState({ amHarm: aH });
         }
-        else {
-            detune = this.props.seaLevelRise[index][1] * 1100 / 9;
+
+        if (this.props.carbonData) {
+            //index: CARBON
+            // var yearGap = 390;
+            // var monthGap = yearGap / 12;
+            // var year_index = currDate - 2010;
+            // var month_index = this.props.currentDate.getMonth() - 1;
+    
+            // var current_index = yearGap * year_index + month_index * monthGap;
+            // current_index = current_index | 0;
+    
+            //map from 387 to 413 to 0.0 to 1.0 using same formula as above
+            var distLevel = (this.props.carbonData[currDate - 1880].trend - 387) / (413 - 387);
+            this.setState({ distortionLevel: distLevel });
         }
-        this.setState({ fatDetune: detune });
+
+        if (this.props.seaLevelRise) {
+            //index: SEA LEVEL
+            index = currDate - 1880;
+            
+            //map from 0 to 9 to 0 to 1100 using same formula as above
+            var detune = 0;
+    
+            if (index < 0) {
+                detune = 0;
+            }
+    
+            if (currDate > 2013) {
+                detune = this.props.seaLevelRise[(2013 - 1880)][1] * 1100 / 9;
+            }
+            else {
+                detune = this.props.seaLevelRise[index][1] * 1100 / 9;
+            }
+            this.setState({ fatDetune: detune });
+        }
     }
 
     startAudio() {
@@ -220,6 +228,7 @@ class OWSonification extends React.Component {
     }
 
     componentDidMount() {
+
         //Effects
         this.dist = new Tone.Distortion(0).toDestination();
 

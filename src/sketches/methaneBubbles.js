@@ -95,98 +95,100 @@ export function setupMethaneBubbles(p, methaneData) {
  * @param {*} currentDate Current date stored in state
  */
 export function drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise) {
-    // create the bubbles and call their methods
-    // data starts on/after 1983
-    const yyyy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
-        currentDate
-    );
-    const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(
-        currentDate
-    );
-    const dd = "01";
-    const date = `${yyyy}-${mm}-${dd}`;
-    const startingValue = methaneData.arr[0].average;
-    const startingDate = methaneData.arr[0].date;
-    const startingYearEstValue = 1116; // retrieved from https://www.methanelevels.org/
-
-    // we will add a new height to the starting height to make our landscape rise and fall
-    // with the date and sea seaLevelRise data
-    const currentYear = currentDate.getFullYear();
-    const index = currentYear - 1880;
-
-    if (index < 0) {
-        newHeight = 0;
-    }
-    if (currentYear > 2013) {
-        newHeight = seaLevelRise[2013 - 1880][1] * 3 + (currentYear - 2014) / 3;
-    } else {
-        newHeight = seaLevelRise[index][1] * 3;
-    }
-
-    // make more bubbles and modify speed
-    for (let i = 0; i < bubbles.length; i++) {
-        // check if mouse is hovering over bubble
-        // if not, move normally
-        // otherwise, compare current mouse position with initially selected bubble position
-        if (!hoveredBubbleData.mouseOver) {
-            bubbles[i].move();
-        } else if (
-            p.dist(p.mouseX, p.mouseY, hoveredBubble.x, hoveredBubble.y) >
-            hoveredBubble.size
-        ) {
-            hoveredBubbleData.mouseOver = false;
+    if (methaneData.arr) {
+        // create the bubbles and call their methods
+        // data starts on/after 1983
+        const yyyy = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
+            currentDate
+        );
+        const mm = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(
+            currentDate
+        );
+        const dd = "01";
+        const date = `${yyyy}-${mm}-${dd}`;
+        const startingValue = methaneData.arr[0].average;
+        const startingDate = methaneData.arr[0].date;
+        const startingYearEstValue = 1116; // retrieved from https://www.methanelevels.org/
+    
+        // we will add a new height to the starting height to make our landscape rise and fall
+        // with the date and sea seaLevelRise data
+        const currentYear = currentDate.getFullYear();
+        const index = currentYear - 1880;
+    
+        if (index < 0) {
+            newHeight = 0;
         }
-        bubbles[i].display();
-    }
-
-    // update bubble here
-    if (methaneData.map.get(date)) {
-        const currentValue = methaneData.map.get(date);
-        const diff = currentValue - startingValue; // diff btwn curr avg and start avg
-        const ratio = startingValue / currentValue;
-        const newNumBubbles = parseInt(diff + startingNumBubbles);
-
-        // update current data value
-        //console.log(currentValue);
-        hoveredBubbleData.value = currentValue;
-
-        if (newNumBubbles > bubbles.length) {
-            for (let j = bubbles.length; j < newNumBubbles; j++) {
-                bubbles[j] = new Bubble(
-                    p,
-                    p.random(0, p.width),
-                    p.random((-2 / ratio) * 2, (-1.5 / ratio) * 2),
-                    p.random(10, 20),
-                    currentValue
-                );
+        if (currentYear > 2013) {
+            newHeight = seaLevelRise[2013 - 1880][1] * 3 + (currentYear - 2014) / 3;
+        } else {
+            newHeight = seaLevelRise[index][1] * 3;
+        }
+    
+        // make more bubbles and modify speed
+        for (let i = 0; i < bubbles.length; i++) {
+            // check if mouse is hovering over bubble
+            // if not, move normally
+            // otherwise, compare current mouse position with initially selected bubble position
+            if (!hoveredBubbleData.mouseOver) {
+                bubbles[i].move();
+            } else if (
+                p.dist(p.mouseX, p.mouseY, hoveredBubble.x, hoveredBubble.y) >
+                hoveredBubble.size
+            ) {
+                hoveredBubbleData.mouseOver = false;
             }
+            bubbles[i].display();
         }
-
-        if (newNumBubbles < bubbles.length) {
-            bubbles = bubbles.splice(bubbles.length - newNumBubbles);
-        }
-    } else {
-        // set to null if no data available
-        // console.log(`Current year: ${currentYear} (${typeof(currentYear)}), Starting year: ${startingYear} (${typeof(startingYear)})`)
-        hoveredBubbleData.value = `${(
-            startingYearEstValue +
-            (currentYear - startingYear) * 10
-        ).toString()} (approximation)`;
-
-        // use last known date (make sure to set first date to earliest and vice versa)
-        // 1. get the date where data starts for api
-        const new_yyyy = startingDate.substring(0, 4);
-        const new_mm = startingDate
-            .substring(5, startingDate.length)
-            .padStart(2, "0");
-        const new_dd = "01";
-        const new_date = new Date(`${new_yyyy}-${new_mm}-${new_dd}`);
-
-        // 2. update bubble here (could be < lower bound or > upper bound)
-        if (new_date >= currentDate) {
-            bubbles = bubbles.splice(0, startingNumBubbles);
-            for (let i = 0; i < startingNumBubbles; i++) {
-                bubbles[i].setSpeed(p.random(-1.5, -1));
+    
+        // update bubble here
+        if (methaneData.map.get(date)) {
+            const currentValue = methaneData.map.get(date);
+            const diff = currentValue - startingValue; // diff btwn curr avg and start avg
+            const ratio = startingValue / currentValue;
+            const newNumBubbles = parseInt(diff + startingNumBubbles);
+    
+            // update current data value
+            //console.log(currentValue);
+            hoveredBubbleData.value = currentValue;
+    
+            if (newNumBubbles > bubbles.length) {
+                for (let j = bubbles.length; j < newNumBubbles; j++) {
+                    bubbles[j] = new Bubble(
+                        p,
+                        p.random(0, p.width),
+                        p.random((-2 / ratio) * 2, (-1.5 / ratio) * 2),
+                        p.random(10, 20),
+                        currentValue
+                    );
+                }
+            }
+    
+            if (newNumBubbles < bubbles.length) {
+                bubbles = bubbles.splice(bubbles.length - newNumBubbles);
+            }
+        } else {
+            // set to null if no data available
+            // console.log(`Current year: ${currentYear} (${typeof(currentYear)}), Starting year: ${startingYear} (${typeof(startingYear)})`)
+            hoveredBubbleData.value = `${(
+                startingYearEstValue +
+                (currentYear - startingYear) * 10
+            ).toString()} (approximation)`;
+    
+            // use last known date (make sure to set first date to earliest and vice versa)
+            // 1. get the date where data starts for api
+            const new_yyyy = startingDate.substring(0, 4);
+            const new_mm = startingDate
+                .substring(5, startingDate.length)
+                .padStart(2, "0");
+            const new_dd = "01";
+            const new_date = new Date(`${new_yyyy}-${new_mm}-${new_dd}`);
+    
+            // 2. update bubble here (could be < lower bound or > upper bound)
+            if (new_date >= currentDate) {
+                bubbles = bubbles.splice(0, startingNumBubbles);
+                for (let i = 0; i < startingNumBubbles; i++) {
+                    bubbles[i].setSpeed(p.random(-1.5, -1));
+                }
             }
         }
     }
