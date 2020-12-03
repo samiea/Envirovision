@@ -39,7 +39,6 @@ class Sun {
         this.move = function () {
             // check if mouse is pressed and within range of sun
             if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size / 2 + 20) {
-                console.log(this.size);
                 //get the sun above the ocean
                 if (p.mouseY < p.height / 2) {
                     hoveredSunData.mouseOver = true;
