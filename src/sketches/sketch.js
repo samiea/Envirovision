@@ -15,13 +15,13 @@ import {
 import { setupMethaneBubbles, drawMethaneBubbles } from "./methaneBubbles";
 import { setupSmogClouds, drawSmogClouds, hoveredSmogData } from "./smogClouds";
 import { drawSky } from "./skyColor";
-import { drawLegend } from "./legend";
+import { drawLegend, drawGuide } from "./legend";
 import { hoveredBubbleData } from "./methaneBubbles";
 
 export default function sketch(p) {
     const wrapper = document.getElementById("page-wrapper");
 
-    // let showLegend = true;
+    let showLegend = true;
     let temperatureData = null;
     let microGrowth2050 = null;
     let macroGrowth2050 = null;
@@ -38,7 +38,7 @@ export default function sketch(p) {
         canvas.parent().remove();
         canvas.parent("app");
         document.getElementById("p5-canvas").style.display = "block";
-        // document.getElementById("guide-button").onclick = () => showLegend = !showLegend; // set guide button to show guide and (use noFill)
+        document.getElementById("guide-button").onclick = () => showLegend = !showLegend; // set guide button to show guide and (use noFill)
         document.getElementById("play-audio-button").style.margin = '10px';
         document.getElementById("slider").style.bottom = `-${wrapper.offsetHeight}px`;
         document.getElementById("slider").style.visibility = 'visible';
@@ -61,7 +61,11 @@ export default function sketch(p) {
         drawMicroPlasticDots(p, microGrowth2050, currentDate, seaLevelRise);
         drawMacroPlastics(p, macroGrowth2050, currentDate, seaLevelRise);
 
-        if (hoveredBubbleData.mouseOver) {
+        if (showLegend) {
+            p.noFill();
+            drawGuide(p);
+        }
+        else if (hoveredBubbleData.mouseOver) {
             const text =
                 "The bubbles rising up through the ocean represent methane entering the atmosphere, and increase and decrease in number accordingly.";
             const value = hoveredBubbleData.value

@@ -148,7 +148,7 @@ class SmogBubble {
     }
     this.move = function(){// check if mouse is pressed and within range of bubble
       //console.log(this.size);
-      if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size) {
+      if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size / 2 + 20) {
           hoveredSmogData.mouseOver = true;
           hoveredSmog = this;
 
@@ -221,7 +221,7 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
 
                 smogClouds[i].move(p);
               }
-              else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size) {
+              else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size / 2 + 20) {
                   hoveredSmogData.mouseOver = false;
               }
 
@@ -236,7 +236,7 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
 
                 smogClouds[j].move(p);
               }
-              else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size) {
+              else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size / 2 + 20) {
                   hoveredSmogData.mouseOver = false;
               }
 

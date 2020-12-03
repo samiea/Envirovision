@@ -51,10 +51,7 @@ class Bubble {
             }
 
             // check if mouse is pressed and within range of bubble
-            if (
-                p.mouseIsPressed &&
-                p.dist(p.mouseX, p.mouseY, this.x, this.y) < size
-            ) {
+            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < size) {
                 hoveredBubbleData.mouseOver = true;
                 hoveredBubble = this;
             }
@@ -86,13 +83,7 @@ export function setupMethaneBubbles(p, methaneData) {
 
     for (let i = 0; i < startingNumBubbles; i++) {
         // initialize the bubbles
-        bubbles[i] = new Bubble(
-            p,
-            p.random(0, p.width),
-            p.random(-1.5, -1),
-            p.random(10, 20),
-            null
-        );
+        bubbles[i] = new Bubble(p, p.random(0, p.width), p.random(-1.5, -1), p.random(10, 20), null);
     }
 }
 

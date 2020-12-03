@@ -4,6 +4,9 @@ export function drawGuide(p) {
     const maxWidth =
         window.screen.availWidth - (window.outerWidth - window.innerWidth);
     const width_ratio = p.windowWidth / maxWidth;
+    const maxHeight =
+        window.screen.availHeight - (window.outerHeight - window.innerHeight);
+    const height_ratio = p.windowHeight / maxHeight;
 
     const strokeWeight = 5; // font boldness
 

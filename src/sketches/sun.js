@@ -21,12 +21,7 @@ class Sun {
          * Display sun on sketch
          */
         this.display = function (p, currentDate, temperatureData) {
-            var color = changeSunColor(
-                p,
-                currentDate,
-                { r: 232, g: 152, b: 98 },
-                { r: 200, g: 100, b: 90 },
-                temperatureData
+            var color = changeSunColor(p, currentDate, { r: 232, g: 152, b: 98 }, { r: 200, g: 100, b: 90 }, temperatureData
             );
 
             p.fill(color.r, color.g, color.b);
@@ -34,7 +29,7 @@ class Sun {
             p.ellipse(this.x, this.y, currentY_value * 100);
             if (hoveredSunData.mouseOver) {
                 p.fill(225, 225, 0, 70);
-                p.ellipse(this.x, this.y, this.size + 20);
+                p.ellipse(this.x, this.y, currentY_value * 100 + 20);
             }
         };
 
@@ -43,10 +38,8 @@ class Sun {
          */
         this.move = function () {
             // check if mouse is pressed and within range of sun
-            if (
-                p.mouseIsPressed &&
-                p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size
-            ) {
+            if (p.mouseIsPressed && p.dist(p.mouseX, p.mouseY, this.x, this.y) < this.size / 2 + 20) {
+                console.log(this.size);
                 //get the sun above the ocean
                 if (p.mouseY < p.height / 2) {
                     hoveredSunData.mouseOver = true;
@@ -85,7 +78,7 @@ function calcSun(temperatureData, current_date) {
         }
 
         currentY_value = average / 50 + 2;
-        hoveredSunData.value = currentY_value.toFixed(2) - 2;
+        hoveredSunData.value = Number.parseFloat(currentY_value.toFixed(2) - 2).toPrecision(4);
     }
 }
 
@@ -95,10 +88,7 @@ function createSun(p, temperatureData, currentDate) {
             sunObject.move();
         } else if (p.mouseY > p.height / 2) {
             hoveredSunData.mouseOver = false;
-        } else if (
-            p.dist(p.mouseX, p.mouseY, hoveredSun.x, hoveredSun.y) >
-            hoveredSun.size
-        ) {
+        } else if (p.dist(p.mouseX, p.mouseY, hoveredSun.x, hoveredSun.y) > hoveredSun.size / 2 + 20) {
             hoveredSunData.mouseOver = false;
         }
         sunObject.display(p, currentDate, temperatureData);
