@@ -9,7 +9,7 @@ let hoveredSmog = null;
 class SmogCloud {
     constructor(p, todayData, initial) {
         let diff = 0;
-        if(todayData == undefined || initial == undefined) {
+        if(!todayData || !initial) {
             this.todayData = undefined;
             this.oldData = undefined
         }
@@ -37,12 +37,12 @@ class SmogCloud {
         this.display = function (todayData) {
             this.oldData = this.todayData
             this.todayData = todayData;
-            if(this.todayData == undefined) {
+            if(this.todayData === undefined) {
                 this.todayData = this.oldData;
             }
             // console.log("Displaying smog cloud");
 
-            if(this.oldData != undefined) {
+            if(this.oldData) {
                 p.noStroke();
                 let cloudColor = p.color(100);
                 cloudColor.setAlpha(this.opacity);
@@ -73,8 +73,8 @@ class SmogCloud {
         };
 
         this.move = function () {
-            if(this.oldData != undefined) {
-                this.addLimit += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10;
+            if(this.oldData) {
+                this.addlimit += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10;
                 for (let x = 0; x < this.smogBubbles.length; x++) {
                     if (Math.abs(this.smogBubbles[x].xOffset) > this.width / 2 - 10 + this.addLimit/3) {
                         this.smogBubbles[x].xVelocity *= -1;
@@ -158,7 +158,7 @@ class SmogBubble {
 }
 
 export function setupSmogClouds(p, nitrousData, currentDate) {
-    if(nitrousData == undefined) {
+    if(!nitrousData) {
         for (let i = 0; i < initial_clouds; i++) {
             smogClouds[i] = new SmogCloud(p, null, null);
         }
@@ -173,6 +173,11 @@ export function setupSmogClouds(p, nitrousData, currentDate) {
 }
 
 export function drawSmogClouds(p, nitrousData, currentDate) {
+        if (!nitrousData) {
+            console.error("Nitrous data was not loaded successfully");
+            return null;
+        }
+
         let currIndex = 33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()
 
         if(originalData == null && nitrousData != null) {
@@ -180,7 +185,7 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
 
         }
 
-        else if(nitrousData != undefined && currIndex > 0 && currIndex < nitrousData.length) {
+        else if(nitrousData && currIndex > 0 && currIndex < nitrousData.length) {
             let diff = Math.round(((nitrousData[currIndex].average - originalData.average)/10)) - extra_clouds;
             //console.log(diff);
 
@@ -226,16 +231,16 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
         else {
             hoveredSmogData.value = nitrousData[0].average
 
-            for(var i = 0; i < smogClouds.length; i++) {
+            for(var j = 0; j < smogClouds.length; j++) {
               if (!hoveredSmogData.mouseOver) {
 
-                smogClouds[i].move(p);
+                smogClouds[j].move(p);
               }
               else if (p.dist(p.mouseX, p.mouseY, hoveredSmog.x, hoveredSmog.y) > hoveredSmog.size) {
                   hoveredSmogData.mouseOver = false;
               }
 
-                smogClouds[i].display(nitrousData[0]);
+                smogClouds[j].display(nitrousData[0]);
             }
         }
 

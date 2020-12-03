@@ -1,16 +1,15 @@
-import React from 'react'
-import './Child1.css'
-import P5Wrapper from 'react-p5-wrapper';
-import sketch from './sketches/sketch';
+import React from "react";
+import P5Wrapper from "react-p5-wrapper";
+import sketch from "./sketches/sketch";
 
-class Child1 extends React.Component {
+class OWVisualization extends React.Component {
     constructor(props) {
         super();
         this.methaneMap = new Map();
     }
 
     render() {
-      //console.log(this.props);
+        //console.log(this.props);
         return (
             <P5Wrapper
                 sketch={sketch}
@@ -21,25 +20,26 @@ class Child1 extends React.Component {
                 seaLevelRise={this.props.seaLevelRise}
                 carbonData={this.props.carbonData}
                 nitrousData={this.props.nitrousData}
-                methaneData={{"map": this.methaneMap, "arr": this.props.methaneData}}>
-
-            </P5Wrapper>
-            //<P5Wrapper sketch={wave}></P5Wrapper>
+                methaneData={{
+                    map: this.methaneMap,
+                    arr: this.props.methaneData,
+                }}
+            />
         );
     }
 
     componentDidMount() {
         if (this.props.methaneData) {
-            this.props.methaneData.forEach(e => { // look over methane data
+            this.props.methaneData.forEach((e) => {
+                // look over methane data
                 let yyyy = e.date.substring(0, 4);
-                let mm = e.date.substring(5, e.date.length).padStart(2, '0');
+                let mm = e.date.substring(5, e.date.length).padStart(2, "0");
                 let dd = "01";
 
                 let date = `${yyyy}-${mm}-${dd}`;
                 this.methaneMap.set(date, e.average); // map date to average
             });
-        }
-        else {
+        } else {
             console.error(`Methane data ${this.props.methaneData}`);
         }
         // console.log("Child Mounted");
@@ -50,4 +50,4 @@ class Child1 extends React.Component {
     }
 }
 
-export default Child1
+export default OWVisualization;

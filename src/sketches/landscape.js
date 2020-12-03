@@ -1,5 +1,5 @@
 const noiseSpeed = 0.01;
-const noiseHeight = 20;
+const noiseHeight = 30; // controls how high up waves go
 const num_clouds = 3;
 const cloud_ellipses = [
     { x: 0, y: 20, rx: 70, ry: 40 },
@@ -57,71 +57,88 @@ const cloud_ellipses = [
     { x: 1180, y: 20, rx: 38, ry: 25 },
     { x: 1200, y: 100, rx: 70, ry: 40 },
 ];
-let noiseY;
 let clouds = [];
 //new height to add to the height of the wave to indicate see level rise
 let newHeight = 0;
 
 export function setupLandscape(p) {
-    for (let i = 0; i < 3; i++) { // initialize the clouds
+    for (let i = 0; i < 3; i++) {
+        // initialize the clouds
         clouds[i] = new Cloud(p, num_clouds - i);
     }
+}
 
-    noiseY = (p.height * 3) / 4; // y-noise for waves
-};
-
-
-export function drawLandscape(p,currentDate,seaLevelRise,temperatureData) { // this loops everything inside body
+export function drawLandscape(p, currentDate, seaLevelRise, temperatureData) {
+    // this loops everything inside body
     //we wil add a new height to the starting height to make our landscape rise and fall
     // with the date and sea seaLevelRise data
 
     var currentYear = currentDate.getFullYear();
     var index = currentYear - 1880;
 
-    if (index<0){
-      newHeight = 0
+    if (index < 0) {
+        newHeight = 0;
     }
-    if (currentYear>2013)
-    {
-      newHeight = seaLevelRise[(2013-1880)][1]*3+((currentYear-2014))/3
+    if (currentYear > 2013) {
+        newHeight = seaLevelRise[2013 - 1880][1] * 3 + (currentYear - 2014) / 3;
+    } else {
+        newHeight = seaLevelRise[index][1] * 3;
     }
-    else{
-      newHeight = seaLevelRise[index][1]*3
-    }
+    newHeight *= 2;
 
-
-    drawClouds(currentYear);
-    drawWaves(p,currentDate,temperatureData);
+    drawClouds(p, currentYear);
+    drawWaves(p, currentDate, temperatureData);
     p.noStroke();
 }
 
-function drawClouds(currentYear) { // create the clouds and call their moethods
+function drawClouds(p, currentYear) {
+    // create the clouds to call their methods
     for (var i = 0; i < num_clouds; i++) {
         clouds[i].move();
         clouds[i].display(currentYear);
     }
+    p.rect(0, p.windowHeight / 2 - 18, p.windowWidth, p.windowHeight / 2 + 18);
 }
 
-function drawWaves(p,currentDate,temperatureData) { // create the waves
+function drawWaves(p, currentDate, temperatureData) {
+    // create the waves
+    var startColor = { r: 194, g: 247, b: 254 };
+    var endColor = { r: 116, g: 199, b: 145 };
+    var color = calcWaveColor(
+        p,
+        currentDate,
+        startColor,
+        endColor,
+        temperatureData
+    );
+    createWave(p, 10 - newHeight, color, 2); // 0
 
-    var startColor = { r: 194, g: 247, b: 254 }
-    var endColor = {r: 116, g:199, b:145 }
-    var color = calcWaveColor(p,currentDate, startColor,endColor,temperatureData)
-    createWave(p, (0 - newHeight), color , 2);
+    startColor = { r: 84, g: 182, b: 282 };
+    endColor = { r: 109, g: 163, b: 103 };
+    color = calcWaveColor(
+        p,
+        currentDate,
+        startColor,
+        endColor,
+        temperatureData
+    );
+    createWave(p, 65 - newHeight, color, 2); // 65
 
-    var startColor = { r: 84, g: 182, b: 282 }
-    var endColor = {r: 109, g:163, b:103 }
-    var color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
-    createWave(p, (65 - newHeight), color, 2);
-
-    var startColor = { r: 112, g: 219, b: 245 }
-    var endColor = {r: 50, g:189, b:34 }
-    var color = calcWaveColor(p,currentDate,startColor,endColor,temperatureData)
-    createWave(p, (80 - newHeight), color, 2);
+    startColor = { r: 112, g: 219, b: 245 };
+    endColor = { r: 50, g: 189, b: 34 };
+    color = calcWaveColor(
+        p,
+        currentDate,
+        startColor,
+        endColor,
+        temperatureData
+    );
+    createWave(p, 80 - newHeight, color, 2); // 80
 }
 
-export function drawSeaboard(p) { // create the landscape
-    createWave(p, (180), { r: 250, g: 219, b: 97 }, 1);
+export function drawSeaboard(p) {
+    // create the landscape
+    createWave(p, 0, { r: 250, g: 219, b: 97 }, 1);
 }
 
 /**
@@ -134,45 +151,50 @@ export function drawSeaboard(p) { // create the landscape
 function createWave(p, offsetY, rgb, dim) {
     p.noFill();
     p.stroke(rgb.r, rgb.g, rgb.b); // draw wave
-    p.strokeWeight(p.height / 2);
+    p.strokeWeight(p.windowHeight / 1.5); // controls how tall the wave is
     p.beginShape(); // create shape for area under waves
-    p.curveVertex(0, p.height / 2);
+    p.curveVertex(0, p.windowHeight / 2);
     for (let i = 0; i < p.width; i += 50) {
-        let y =
-            dim === 1 ?
-            p.map(p.noise(i), 0, 1, 200, 300) + noiseY + offsetY :
-                p.noise(p.frameCount * noiseSpeed + i) * noiseHeight +
-                noiseY +
-                offsetY; // redraw y-coordinates for waves
-        p.curveVertex(i, y);
+        let y;
+        if (dim === 1) {
+            y = p.map(p.noise(i), 0, 1, 200, 300);
+            p.curveVertex(i, p.windowHeight * 1.55 - y);
+        } else {
+            y = p.noise(p.frameCount * noiseSpeed + i) * noiseHeight; // + noiseY + offsetY;
+            p.curveVertex(i, y + p.windowHeight / 1.22 + offsetY);
+        }
+        // console.log(y);
     }
-    p.curveVertex(p.width, p.height / 2);
+    p.curveVertex(p.width, p.windowHeight / 2);
     p.endShape(p.LINES); // end shape for area under waves
 }
 
-class Cloud { // class for cloud objects
+class Cloud {
+    // class for cloud objects
     constructor(p, key) {
-        this.x = (p.width - 1200 * key); // initial x position
-        this.y = (p.height / 2 - 15); // initial y position
+        this.x = p.width - 1200 * key; // initial x position
+        this.y = p.height / 2; // initial y position
 
         this.display = function (currentYear) {
-            var color = 255-((currentYear-1950))*2
+            var color = 255 - (currentYear - 1950) * 2;
             //console.log(color);
             p.fill(color);
             p.beginShape(); // create shape for area under ellipses
             for (let i = 0; i < cloud_ellipses.length; i++) {
-                p.ellipse( // create ellipses that form clouds
+                p.ellipse(
+                    // create ellipses that form clouds
                     this.x + cloud_ellipses[i].x,
                     this.y + cloud_ellipses[i].y,
                     cloud_ellipses[i].rx,
                     cloud_ellipses[i].ry
                 );
-                p.curveVertex( // create vertices to paint area under cloud white
+                p.curveVertex(
+                    // create vertices to paint area under cloud white
                     this.x + cloud_ellipses[i].x,
                     this.y + cloud_ellipses[i].y
                 );
             }
-            p.curveVertex(p.width, p.height);
+            p.curveVertex(p.windowWidth, p.windowHeight);
             p.endShape(p.CLOSE); // end shape for area under ellipses
         };
 
@@ -183,13 +205,18 @@ class Cloud { // class for cloud objects
                 this.x = p.width - 1200 * num_clouds; // reset cloud to this position
             }
 
-            this.y = (p.height / 2 - 15) - newHeight ; // update Yposition
+            this.y = p.height / 2 - 15 - newHeight; // update Yposition
         };
     }
 }
 
-export function calcWaveColor(p, currentDate ,startColor, endColor, temperatureData ) {
-
+export function calcWaveColor(
+    p,
+    currentDate,
+    startColor,
+    endColor,
+    temperatureData
+) {
     var currentYear = currentDate.getFullYear();
 
     var index = ((currentYear - 1880) * temperatureData.length) / 140 - 100;
@@ -201,17 +228,16 @@ export function calcWaveColor(p, currentDate ,startColor, endColor, temperatureD
     }
     //console.log(i);
     //smallest is 0 largest is 115
-    average = average + 3
+    average = average + 3;
 
-    var rGap = (startColor.r-endColor.r)/ 115;
-    var gGap = (startColor.g-endColor.g)/ 115;
-    var bGap = (startColor.b-endColor.b)/ 115;
+    var rGap = (startColor.r - endColor.r) / 115;
+    var gGap = (startColor.g - endColor.g) / 115;
+    var bGap = (startColor.b - endColor.b) / 115;
 
-     // code body moved outside (above) statement block
-     var rIndex = startColor.r - ((rGap * average) | 0);
-     var gIndex = startColor.g - ((gGap * average) | 0);
-     var bIndex = startColor.b - ((bGap * average) | 0);
+    // code body moved outside (above) statement block
+    var rIndex = startColor.r - ((rGap * average) | 0);
+    var gIndex = startColor.g - ((gGap * average) | 0);
+    var bIndex = startColor.b - ((bGap * average) | 0);
 
-     return {r:rIndex, g:gIndex, b:bIndex}
-
+    return { r: rIndex, g: gIndex, b: bIndex };
 }

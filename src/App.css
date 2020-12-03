@@ -1,65 +1,84 @@
-.App-container {
-    margin: 0px;
-    padding: 0px;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: white;
+/* app css classes */
+
+/* .app-container {
+} */
+
+/* scroll button css classes */
+
+.scrollTop {
+    position: fixed; 
+    width: 10%;
+    bottom: 20px;
+    right: 20px;
+    height: 10%;
+    z-index: 1000;
+    cursor: pointer;
+    animation: fadeIn 0.3s;
+    transition: opacity 0.4s;
+    opacity: 0.5;
+  }
+  
+  .scrollTop:hover{
+    opacity: 1;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
+    }
 }
 
-.App-container .ticks {
-  font-size: 10px;
-}
+/* slider css classes */
 
-.App-container
+.app-container .ticks {
+    font-size: 10px;
+}
+  
+.app-container
 .track,
 .track-inset,
 .track-overlay {
     stroke-linecap: round;
 }
 
-.Child2 {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-}
-
 .slider-svg {
-    position: fixed;
+    position: absolute;
     min-height: 100px;
-    max-height: 150px;
-    bottom: 40px;
+    visibility: hidden;
     width: 100%;
     background: rgba(255,255,255,0);
 }
 
-.App-container .track-text {
+.app-container .track-text {
     font-size: 0.8vw;
 }
 
-.App-container .label {
+.app-container .label {
     font-size: 15px;
 }
 
-.App-container .track {
+.app-container .track {
     stroke: #000;
     stroke-opacity: 0.3;
     stroke-width: 10px;
 }
 
-.App-container .track-inset {
+.app-container .track-inset {
     stroke: #dcdcdc;
     stroke-width: 8px;
 }
 
-.App-container .track-overlay {
+.app-container .track-overlay {
     pointer-events: stroke;
     stroke-width: 50px;
     stroke: transparent;
     cursor: crosshair;
 }
 
-.App-container .handle {
+.app-container .handle {
     fill: #fff;
     stroke: #000;
     stroke-opacity: 0.5;
@@ -72,8 +91,6 @@
     border: none;
     color: white;
     cursor: pointer;
-    width: 60px;
-    height: 30px;
 }
 
 #play-button:hover {
