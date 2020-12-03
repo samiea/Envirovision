@@ -1,23 +1,21 @@
 {
   "files": {
-    "main.css": "/Ocean-Weather-Visualization/static/css/main.ff320066.chunk.css",
-    "main.js": "/Ocean-Weather-Visualization/static/js/main.217ac76f.chunk.js",
-    "main.js.map": "/Ocean-Weather-Visualization/static/js/main.217ac76f.chunk.js.map",
-    "runtime-main.js": "/Ocean-Weather-Visualization/static/js/runtime-main.41f43b2d.js",
-    "runtime-main.js.map": "/Ocean-Weather-Visualization/static/js/runtime-main.41f43b2d.js.map",
-    "static/js/2.3e5b46ca.chunk.js": "/Ocean-Weather-Visualization/static/js/2.3e5b46ca.chunk.js",
-    "static/js/2.3e5b46ca.chunk.js.map": "/Ocean-Weather-Visualization/static/js/2.3e5b46ca.chunk.js.map",
+    "main.css": "/Ocean-Weather-Visualization/static/css/main.c2cec478.chunk.css",
+    "main.js": "/Ocean-Weather-Visualization/static/js/main.aad3055e.chunk.js",
+    "main.js.map": "/Ocean-Weather-Visualization/static/js/main.aad3055e.chunk.js.map",
+    "runtime-main.js": "/Ocean-Weather-Visualization/static/js/runtime-main.5a492e1a.js",
+    "runtime-main.js.map": "/Ocean-Weather-Visualization/static/js/runtime-main.5a492e1a.js.map",
+    "static/js/2.774b585a.chunk.js": "/Ocean-Weather-Visualization/static/js/2.774b585a.chunk.js",
+    "static/js/2.774b585a.chunk.js.map": "/Ocean-Weather-Visualization/static/js/2.774b585a.chunk.js.map",
     "index.html": "/Ocean-Weather-Visualization/index.html",
-    "precache-manifest.0a18e61bf77716353f5bb018f485ef0b.js": "/Ocean-Weather-Visualization/precache-manifest.0a18e61bf77716353f5bb018f485ef0b.js",
-    "service-worker.js": "/Ocean-Weather-Visualization/service-worker.js",
-    "static/css/main.ff320066.chunk.css.map": "/Ocean-Weather-Visualization/static/css/main.ff320066.chunk.css.map",
-    "static/js/2.3e5b46ca.chunk.js.LICENSE.txt": "/Ocean-Weather-Visualization/static/js/2.3e5b46ca.chunk.js.LICENSE.txt",
-    "static/media/bubbles.wav": "/Ocean-Weather-Visualization/static/media/bubbles.978d43ed.wav"
+    "static/css/main.c2cec478.chunk.css.map": "/Ocean-Weather-Visualization/static/css/main.c2cec478.chunk.css.map",
+    "static/js/2.774b585a.chunk.js.LICENSE.txt": "/Ocean-Weather-Visualization/static/js/2.774b585a.chunk.js.LICENSE.txt",
+    "static/media/bubbles.4cef8389.wav": "/Ocean-Weather-Visualization/static/media/bubbles.4cef8389.wav"
   },
   "entrypoints": [
-    "static/js/runtime-main.41f43b2d.js",
-    "static/js/2.3e5b46ca.chunk.js",
-    "static/css/main.ff320066.chunk.css",
-    "static/js/main.217ac76f.chunk.js"
+    "static/js/runtime-main.5a492e1a.js",
+    "static/js/2.774b585a.chunk.js",
+    "static/css/main.c2cec478.chunk.css",
+    "static/js/main.aad3055e.chunk.js"
   ]
 }
