@@ -118,8 +118,8 @@ class SmogCloud {
 class SmogBubble {
     constructor(p, xlimit, ylimit, wMod, hMod) {
         this.opacity = p.random(50, 200);
-        this.xVelocity = 20;
-        this.yVelocity = 20;
+        this.xVelocity = p.random(0.3, 0.7);
+        this.yVelocity = p.random(0.3, 0.7);
         this.xOffset = p.random((xlimit / 2) * -1, xlimit / 2);
         this.yOffset = p.random((ylimit / 2) * -1, ylimit / 2);
         this.rx = p.random(70 + wMod, 150 + wMod);
