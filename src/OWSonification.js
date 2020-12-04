@@ -1,7 +1,7 @@
 import React from "react";
 import * as Tone from "tone";
 import bubbles from "./sounds/bubbles.wav";
-import "./OWSonification.css";
+import "./styles/OWSonification.css";
 class OWSonification extends React.Component {
     constructor(props) {
         super();

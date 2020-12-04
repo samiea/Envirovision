@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./styles/App.css";
 import OWVisualization from "./OWVisualization"; // import both children
 import OWSonification from "./OWSonification";
 import axios from "axios"; // used for API stuff

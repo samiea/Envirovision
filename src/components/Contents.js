@@ -6,7 +6,6 @@ class Contents extends Component {
 			<section id="wrapper">
 				<section id="one" className="wrapper spotlight style1">
 					<div className="inner">
-                        <img className="image" src={`${process.env.PUBLIC_URL}/images/pic01.jpg`} alt="" />
 						<div className="content">
 							<h2 className="major">[artist statement]</h2>
 							<p>
