@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Ocean-Weather-Visualization/static/css/main.c2cec478.chunk.css",
-    "main.js": "/Ocean-Weather-Visualization/static/js/main.aad3055e.chunk.js",
-    "main.js.map": "/Ocean-Weather-Visualization/static/js/main.aad3055e.chunk.js.map",
-    "runtime-main.js": "/Ocean-Weather-Visualization/static/js/runtime-main.5a492e1a.js",
-    "runtime-main.js.map": "/Ocean-Weather-Visualization/static/js/runtime-main.5a492e1a.js.map",
-    "static/js/2.774b585a.chunk.js": "/Ocean-Weather-Visualization/static/js/2.774b585a.chunk.js",
-    "static/js/2.774b585a.chunk.js.map": "/Ocean-Weather-Visualization/static/js/2.774b585a.chunk.js.map",
-    "index.html": "/Ocean-Weather-Visualization/index.html",
-    "static/css/main.c2cec478.chunk.css.map": "/Ocean-Weather-Visualization/static/css/main.c2cec478.chunk.css.map",
-    "static/js/2.774b585a.chunk.js.LICENSE.txt": "/Ocean-Weather-Visualization/static/js/2.774b585a.chunk.js.LICENSE.txt",
-    "static/media/bubbles.4cef8389.wav": "/Ocean-Weather-Visualization/static/media/bubbles.4cef8389.wav"
+    "main.css": "/Envirovision/static/css/main.4ca3f91a.chunk.css",
+    "main.js": "/Envirovision/static/js/main.91f53d78.chunk.js",
+    "main.js.map": "/Envirovision/static/js/main.91f53d78.chunk.js.map",
+    "runtime-main.js": "/Envirovision/static/js/runtime-main.9a1e5e4b.js",
+    "runtime-main.js.map": "/Envirovision/static/js/runtime-main.9a1e5e4b.js.map",
+    "static/js/2.680e2423.chunk.js": "/Envirovision/static/js/2.680e2423.chunk.js",
+    "static/js/2.680e2423.chunk.js.map": "/Envirovision/static/js/2.680e2423.chunk.js.map",
+    "index.html": "/Envirovision/index.html",
+    "static/css/main.4ca3f91a.chunk.css.map": "/Envirovision/static/css/main.4ca3f91a.chunk.css.map",
+    "static/js/2.680e2423.chunk.js.LICENSE.txt": "/Envirovision/static/js/2.680e2423.chunk.js.LICENSE.txt",
+    "static/media/bubbles.4cef8389.wav": "/Envirovision/static/media/bubbles.4cef8389.wav"
   },
   "entrypoints": [
-    "static/js/runtime-main.5a492e1a.js",
-    "static/js/2.774b585a.chunk.js",
-    "static/css/main.c2cec478.chunk.css",
-    "static/js/main.aad3055e.chunk.js"
+    "static/js/runtime-main.9a1e5e4b.js",
+    "static/js/2.680e2423.chunk.js",
+    "static/css/main.4ca3f91a.chunk.css",
+    "static/js/main.91f53d78.chunk.js"
   ]
 }
