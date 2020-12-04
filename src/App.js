@@ -4,18 +4,19 @@ import OWVisualization from "./OWVisualization"; // import both children
 import OWSonification from "./OWSonification";
 import axios from "axios"; // used for API stuff
 
-// below imports are for data files to avoid 429 errors from requests while testing
 import macroGrowth2050 from "./data/plastic_pollution/macroGrowth2050.json";
 import microGrowth2050 from "./data/plastic_pollution/microGrowth2050.json";
 import seaLevelRise from "./data/seaLevelRise/seaLevelRise.json";
+import nitrousData from "./data/nitrous.json";
+import methaneData from "./data/methane.json";
+import carbonData from "./data/carbon.json";
+import temperatureData from "./data/temperature.json";
 
 import * as d3 from "d3";
 import Header from "./components/Header";
 import Contents from "./components/Contents";
 // import Features from "./components/Features";
 import Footer from "./components/Footer";
-
-export const startingYear = 1950;
 
 class App extends React.Component {
     // you can create class-scope fields in here like in Java
@@ -35,7 +36,7 @@ class App extends React.Component {
             //sea seaLevelRise
             seaLevelRise: seaLevelRise.seaLevelRise,
 
-            currentDate: new Date(`${startingYear}-11-01`), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+            currentDate: new Date("1950-11-01"), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
             dataIsLoaded: false,
         };
     }
@@ -95,12 +96,23 @@ class App extends React.Component {
             });
 
             // order of promises is retained; reference: https://stackoverflow.com/questions/28066429/promise-all-order-of-resolved-values/28066851
-            const data = await Promise.all(promises);
+            await Promise.all(promises)
+                .then((result) => {
+                    console.log("Request successful");
+                    this.state.carbonData = result[0].data.co2; // directly modifying the state like this does NOT force re-render
+                    this.state.methaneData = result[1].data.methane;
+                    this.state.nitrousData = result[2].data.nitrous;
+                    this.state.temperatureData = result[3].data.result;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    console.log("Switching to static files");
+                    this.state.carbonData = carbonData.co2;
+                    this.state.methaneData = methaneData.methane;
+                    this.state.nitrousData = nitrousData.nitrous;
+                    this.state.temperatureData = temperatureData.result;
+                });
 
-            this.state.carbonData = data[0].data.co2; // directly modifying the state like this does NOT force re-render
-            this.state.methaneData = data[1].data.methane;
-            this.state.nitrousData = data[2].data.nitrous;
-            this.state.temperatureData = data[3].data.result;
 
             this.setState({ dataIsLoaded: true }); // calling this.setState(...) forces re-render
         };

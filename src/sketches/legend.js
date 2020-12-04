@@ -12,7 +12,7 @@ export function drawGuide(p) {
     const topPadding = 80;
     const bottomPadding = 150;
 
-    const textSize = 26 * width_ratio; // scales with window width
+    const textSize = 24 * width_ratio; // scales with window width
     const textBoxWidth = p.width - rightPadding - leftPadding; // scales with window width
     const textBoxHeight = p.height - topPadding - bottomPadding; // scales with window height
 

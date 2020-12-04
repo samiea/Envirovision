@@ -126,7 +126,7 @@ function drawWaves(p, currentDate, temperatureData) {
         createWave(p, 65 - newHeight, color, 2); // 65
     
         startColor = { r: 112, g: 219, b: 245 };
-        endColor = { r: 50, g: 189, b: 34 };
+        endColor = { r: 77, g: 202, b: 123 };
         color = calcWaveColor(
             p,
             currentDate,

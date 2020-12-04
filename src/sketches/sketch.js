@@ -37,26 +37,37 @@ export default function sketch(p) {
         canvas.id("p5-canvas");
         canvas.parent().remove();
         canvas.parent("app");
-        document.getElementById("p5-canvas").style.display = "block";
-        document.getElementById("guide-button").onclick = () => showLegend = !showLegend; // set guide button to show guide and (use noFill)
-        document.getElementById("play-audio-button").style.margin = '10px';
-        document.getElementById("slider").style.bottom = `-${wrapper.offsetHeight}px`;
-        document.getElementById("slider").style.visibility = 'visible';
-        setupLandscape(p);
+        
+        const p5Canvas = document.getElementById("p5-canvas");
+        if (p5Canvas) p5Canvas.style.display = "block";
+    
+        const guideButton = document.getElementById("guide-button")
+        if (guideButton) guideButton.onclick = () => showLegend = !showLegend; // set guide button to show guide and (use noFill)
+
+        const playAudioButton = document.getElementById("play-audio-button")
+        if (playAudioButton) playAudioButton.style.margin = '10px';
+
+        const slider = document.getElementById("slider")
+        if (slider) {
+            slider.style.bottom = `-${wrapper.offsetHeight}px`;
+            slider.style.visibility = 'visible';
+        }
+
         setUpSun(p, temperatureData, currentDate);
-        setupSmogClouds(p);
         setupMethaneBubbles(p, methaneData);
+        setupLandscape(p);
+        setupSmogClouds(p);
         setupMicroPlasticDrops(p);
         setupMacroPlastics(p);
     };
 
     p.draw = () => {
         p.clear();
-        drawSky(p, carbonData, currentDate);
-        drawSun(p, temperatureData, currentDate);
-        drawLandscape(p, currentDate, seaLevelRise, temperatureData);
-        drawSmogClouds(p, nitrousData, currentDate);
-        drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise);
+        if (carbonData) drawSky(p, carbonData, currentDate);
+        if (temperatureData) drawSun(p, temperatureData, currentDate);
+        if (temperatureData) drawLandscape(p, currentDate, seaLevelRise, temperatureData);
+        if (nitrousData) drawSmogClouds(p, nitrousData, currentDate);
+        if (methaneData) drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise);
         drawSeaboard(p);
         drawMicroPlasticDots(p, microGrowth2050, currentDate, seaLevelRise);
         drawMacroPlastics(p, macroGrowth2050, currentDate, seaLevelRise);

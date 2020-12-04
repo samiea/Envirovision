@@ -1,5 +1,3 @@
-import { startingYear } from "../App.js";
-
 export const hoveredBubbleData = { mouseOver: false, value: null };
 const startingNumBubbles = 30; // always starts with 30 bubbles
 let bubbles = []; // holds Bubble objects
@@ -171,7 +169,7 @@ export function drawMethaneBubbles(p, methaneData, currentDate, seaLevelRise) {
             // console.log(`Current year: ${currentYear} (${typeof(currentYear)}), Starting year: ${startingYear} (${typeof(startingYear)})`)
             hoveredBubbleData.value = `${(
                 startingYearEstValue +
-                (currentYear - startingYear) * 10
+                (currentYear - 1950) * 10
             ).toString()} (approximation)`;
     
             // use last known date (make sure to set first date to earliest and vice versa)
