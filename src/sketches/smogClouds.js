@@ -2,9 +2,7 @@ let smogClouds = [];
 let originalData = null;
 const initial_clouds = 4;
 let extra_clouds = 0;
-
 let color;
-
 export let hoveredSmogData = { mouseOver: false, value: null };
 let hoveredSmog = null;
 
@@ -18,7 +16,7 @@ class SmogCloud {
         else {
             this.todayData = todayData;
             this.oldData = initial;
-            diff = Math.round(((todayData.average - initial.average)))/10
+            diff = Math.round(((todayData.average - initial.average)))
         }
 
 
@@ -50,8 +48,8 @@ class SmogCloud {
                 cloudColor.setAlpha(this.opacity);
                 p.fill(cloudColor);
 
-                this.width += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10
-                this.height += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10
+                this.width += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))*4
+                this.height += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))*4
                 if (hoveredSmogData.mouseOver) {
                     p.fill(225, 225, 0, 70)
                 }
@@ -60,8 +58,8 @@ class SmogCloud {
                 for (let x = 0; x < this.smogBubbles.length; x++) {
                     cloudColor.setAlpha(this.smogBubbles[x].opacity);
                     p.fill(cloudColor);
-                    this.smogBubbles[x].rx += (this.todayData.average - this.oldData.average)* 10
-                    this.smogBubbles[x].ry += (this.todayData.average - this.oldData.average)* 10
+                    this.smogBubbles[x].rx += (this.todayData.average - this.oldData.average)*4
+                    this.smogBubbles[x].ry += (this.todayData.average - this.oldData.average)*4
 
                     //this.smogBubbles[x].rxVelocity += (this.todayData.average - this.oldData.average)
                     //this.smogBubbles[x].ryVelocity += (this.todayData.average - this.oldData.average)
@@ -76,7 +74,7 @@ class SmogCloud {
 
         this.move = function () {
             if(this.oldData) {
-                this.addlimit += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 10;
+                this.addlimit += (parseFloat(this.todayData.average) - parseFloat(this.oldData.average))* 4;
                 for (let x = 0; x < this.smogBubbles.length; x++) {
                     if (Math.abs(this.smogBubbles[x].xOffset) > this.width / 2 - 10 + this.addLimit/3) {
                         this.smogBubbles[x].xVelocity *= -1;
@@ -160,6 +158,7 @@ class SmogBubble {
 }
 
 export function setupSmogClouds(p, nitrousData, currentDate) {
+
     if(!nitrousData) {
         for (let i = 0; i < initial_clouds; i++) {
             smogClouds[i] = new SmogCloud(p, null, null);
@@ -167,7 +166,7 @@ export function setupSmogClouds(p, nitrousData, currentDate) {
     }
     else {
         let currIndex = 33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()
-        for(let i = 0; i < nitrousData[0].average ; i++) {
+        for(let i = 0; i < nitrousData[0].average / 10; i++) {
             smogClouds[i] = new SmogCloud(p, nitrousData[currIndex], nitrousData[0]);
         }
     }
@@ -176,7 +175,7 @@ export function setupSmogClouds(p, nitrousData, currentDate) {
 
 export function drawSmogClouds(p, nitrousData, currentDate) {
 
-  color = 255 - (currentDate.getFullYear() - 1950) * 2;
+    color = 255 - (currentDate.getFullYear() - 1950) * 2;
 
     if (nitrousData) {
 
@@ -188,7 +187,7 @@ export function drawSmogClouds(p, nitrousData, currentDate) {
         }
 
         else if(nitrousData && currIndex > 0 && currIndex < nitrousData.length) {
-            let diff = Math.round(((nitrousData[currIndex].average - originalData.average)/10)) - extra_clouds;
+            let diff = Math.round(((nitrousData[currIndex].average - originalData.average)/10)) - extra_clouds -1;
             //console.log(diff);
 
             if(diff > 0) {
