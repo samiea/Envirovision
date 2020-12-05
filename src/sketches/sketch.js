@@ -37,10 +37,10 @@ export default function sketch(p) {
         canvas.id("p5-canvas");
         canvas.parent().remove();
         canvas.parent("app");
-        
+
         const p5Canvas = document.getElementById("p5-canvas");
         if (p5Canvas) p5Canvas.style.display = "block";
-    
+
         const guideButton = document.getElementById("guide-button")
         if (guideButton) guideButton.onclick = () => showLegend = !showLegend; // set guide button to show guide and (use noFill)
 
@@ -57,7 +57,7 @@ export default function sketch(p) {
         setupMethaneBubbles(p, methaneData);
         setupLandscape(p);
         setupSmogClouds(p);
-        setupMicroPlasticDrops(p);
+        //setupMicroPlasticDrops(p);
         setupMacroPlastics(p);
     };
 
@@ -141,5 +141,6 @@ export default function sketch(p) {
         methaneData = newProps.methaneData;
         seaLevelRise = newProps.seaLevelRise;
         nitrousData = newProps.nitrousData;
+        console.log(newProps);
     };
 }

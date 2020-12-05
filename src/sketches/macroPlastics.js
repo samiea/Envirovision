@@ -143,7 +143,7 @@ export function setupMacroPlastics(p) {
     //
     //set up plastic
     //
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 1; i++) {
         macro_plastic[i] = new GarbagePile(p, i);
     }
 }
@@ -192,6 +192,7 @@ export function drawMacroPlastics(
         //calculate the actual data from the value
         //console.log(newSize);
         var num;
+
         if (currentDate > 1963) {
             num = newSize * (1180000 / 103);
             hoveredMacroPlasticData.value = num.toFixed(2);
@@ -200,7 +201,11 @@ export function drawMacroPlastics(
             hoveredMacroPlasticData.value = num.toFixed(2);
         }
 
-        newSize = Math.round(newSize / 4) + 5;
+        if (currentDate < 1965) {
+          newSize = 0
+        }
+
+        newSize = Math.round(newSize / 4) -1;
         newHeight = Math.round(newSize * 1.25);
 
         //add drops

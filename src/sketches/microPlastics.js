@@ -88,6 +88,8 @@ export function drawMicroPlasticDots(
         let newSize = -1 * (microGrowth2050[currentDate - 1950][1] - 367);
         let num;
 
+
+
         if (currentDate > 1971) {
             num = newSize * (590000 / 78);
             hoveredMicroPlasticData.value = num.toFixed(2);
@@ -96,7 +98,10 @@ export function drawMicroPlasticDots(
             hoveredMicroPlasticData.value = num.toFixed(2);
         }
 
-        newSize = newSize * 2 + 200;
+        if (currentDate < 1965) {
+          newSize = 0
+        }
+        newSize = newSize * 5 ;
 
         //add drops
         if (newSize > drops.length) {

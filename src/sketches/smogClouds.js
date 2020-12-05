@@ -3,6 +3,8 @@ let originalData = null;
 const initial_clouds = 4;
 let extra_clouds = 0;
 
+let color;
+
 export let hoveredSmogData = { mouseOver: false, value: null };
 let hoveredSmog = null;
 
@@ -16,10 +18,10 @@ class SmogCloud {
         else {
             this.todayData = todayData;
             this.oldData = initial;
-            diff = Math.round(((todayData.average - initial.average)*10))
+            diff = Math.round(((todayData.average - initial.average)))/10
         }
 
-        
+
 
         this.xVelocity = p.random(-2, 2); //cloud movement velocity
         this.x = p.random(50, p.width);
@@ -44,7 +46,7 @@ class SmogCloud {
 
             if(this.oldData) {
                 p.noStroke();
-                let cloudColor = p.color(100);
+                let cloudColor = p.color(color);
                 cloudColor.setAlpha(this.opacity);
                 p.fill(cloudColor);
 
@@ -87,7 +89,7 @@ class SmogCloud {
                     if(Math.abs(this.smogBubbles[x].xOffset) > this.width / 2 + this.addLimit + 10 || Math.abs(this.smogBubbles[x].yOffset) > this.height / 2 + this.addLimit/3 + 10) {
                         this.smogBubbles[x].xOffset = p.random((this.width / 2 + this.addLimit) * -1, this.width / 2);
                         this.smogBubbles[x].yOffset = p.random((this.height / 2 + this.addLimit) * -1, this.height / 2);
- 
+
                     }
                     if (this.smogBubbles[x].rx < 70 + this.addLimit || this.smogBubbles[x].rx > 150 + this.addLimit) {
                         this.smogBubbles[x].rxVelocity *= -1;
@@ -165,7 +167,7 @@ export function setupSmogClouds(p, nitrousData, currentDate) {
     }
     else {
         let currIndex = 33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()
-        for(let i = 0; i < nitrousData[0].average / 10; i++) {
+        for(let i = 0; i < nitrousData[0].average ; i++) {
             smogClouds[i] = new SmogCloud(p, nitrousData[currIndex], nitrousData[0]);
         }
     }
@@ -173,6 +175,9 @@ export function setupSmogClouds(p, nitrousData, currentDate) {
 }
 
 export function drawSmogClouds(p, nitrousData, currentDate) {
+
+  color = 255 - (currentDate.getFullYear() - 1950) * 2;
+
     if (nitrousData) {
 
         let currIndex = 33 + ((currentDate.getFullYear() - 2004) * 12) + currentDate.getMonth()

@@ -72,23 +72,26 @@ export function drawLandscape(p, currentDate, seaLevelRise, temperatureData) {
     // this loops everything inside body
     //we wil add a new height to the starting height to make our landscape rise and fall
     // with the date and sea seaLevelRise data
+    if (seaLevelRise != null){
+      var currentYear = currentDate.getFullYear();
+      var index = currentYear - 1880;
 
-    var currentYear = currentDate.getFullYear();
-    var index = currentYear - 1880;
+      if (index < 0) {
+          newHeight = 0;
+      }
+      if (currentYear > 2013) {
+          newHeight = seaLevelRise[2013 - 1880][1] * 3 + (currentYear - 2014) / 3;
+      } else {
 
-    if (index < 0) {
-        newHeight = 0;
+          newHeight = seaLevelRise[index][1] * 3;
+      }
+      newHeight *= 2;
+
+      drawClouds(p, currentYear);
+      drawWaves(p, currentDate, temperatureData);
+      p.noStroke();
     }
-    if (currentYear > 2013) {
-        newHeight = seaLevelRise[2013 - 1880][1] * 3 + (currentYear - 2014) / 3;
-    } else {
-        newHeight = seaLevelRise[index][1] * 3;
-    }
-    newHeight *= 2;
 
-    drawClouds(p, currentYear);
-    drawWaves(p, currentDate, temperatureData);
-    p.noStroke();
 }
 
 function drawClouds(p, currentYear) {
@@ -113,7 +116,7 @@ function drawWaves(p, currentDate, temperatureData) {
             temperatureData
         );
         createWave(p, 10 - newHeight, color, 2); // 0
-    
+
         startColor = { r: 84, g: 182, b: 282 };
         endColor = { r: 109, g: 163, b: 103 };
         color = calcWaveColor(
@@ -124,7 +127,7 @@ function drawWaves(p, currentDate, temperatureData) {
             temperatureData
         );
         createWave(p, 65 - newHeight, color, 2); // 65
-    
+
         startColor = { r: 112, g: 219, b: 245 };
         endColor = { r: 77, g: 202, b: 123 };
         color = calcWaveColor(
