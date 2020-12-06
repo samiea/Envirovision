@@ -5,7 +5,7 @@ import "./styles/OWSonification.css";
 class OWSonification extends React.Component {
     constructor(props) {
         super();
-        
+
         //Setting state
         this.state = { 
             //Sounds load states
@@ -20,7 +20,7 @@ class OWSonification extends React.Component {
             consonantIntervals: [0, 4, 7, 9], //unison, maj third, perf fifth, maj sixth
             dissonantIntervals: [1, 2, 3, 5, 6, 8, 10, 11], //min second, maj second, min third, perf fourth, tritone, min sixth, min seventh, maj seventh
             consonanceProbability: 100,
-            
+
             //Synth parameters
             fatSpread: 0,
             fatDetune: 0,
@@ -28,17 +28,16 @@ class OWSonification extends React.Component {
 
             //All audio on/off
             audioState: false,
-            
+
             //Audio layer solo states
             playbackState: false,
             fatOscState: false,
             amOscState: false,
-            
+
             //Updating
             updateCount: 0,
             dataUpdateCount: 0,
 
-            //Using Chrome? Change this between browsers
             chromeFlag: 0
         };
 
@@ -63,10 +62,13 @@ class OWSonification extends React.Component {
         //set effects
         this.dist.wet.rampTo(0);
         this.dist.distortion = 0;
+        this.rev.decay = 12;
 
         //set frequency
         this.fatOsc.frequency.rampTo(65.41);
         this.am.frequency.rampTo(this.state.trebleFreqs[0]);
+        this.am.partialCount = 1;
+
     }
 
     getNewData() {
@@ -86,16 +88,16 @@ class OWSonification extends React.Component {
         if (this.props.microGrowth2050 && this.props.macroGrowth2050) {
             //index: MICROPLASTICS
             index = currDate - 1950;
-    
-            //map from 90 to 620 to 100 to 0 using same formula as above
-            var cp = (this.props.microGrowth2050[index][1] - 90) * (0 - 100) / (620 + 90) + 100;
+
+            //map from 350 to 250 to 100 to 0 using same formula as above
+            var cp = (this.props.microGrowth2050[index][1] - 350) * (0 - 100) / (250 - 350) + 100;
             this.setState({ consonanceProbability: cp });        
-    
+
             //index: MACROPLASTICS
             index = currDate - 1950;
-            
-            //map from 90 to 620 to 0.5 to 4.0 using same formula as above
-            var aH = (this.props.macroGrowth2050[index][1] - 90) * (4.0 - 0.5) / (620 - 90) + 0.5;
+
+            //map from 400 to 200 to 0 to 30 using same formula as above
+            var aH = Math.floor((this.props.macroGrowth2050[index][1] - 400) * (30 - 0) / (200 - 400) + 0);
             this.setState({ amHarm: aH });
         }
 
@@ -105,10 +107,10 @@ class OWSonification extends React.Component {
             // var monthGap = yearGap / 12;
             // var year_index = currDate - 2010;
             // var month_index = this.props.currentDate.getMonth() - 1;
-    
+
             // var current_index = yearGap * year_index + month_index * monthGap;
             // current_index = current_index | 0;
-    
+
             //map from 387 to 413 to 0.0 to 1.0 using same formula as above
             var distLevel = (this.props.carbonData[currDate - 1880].trend - 387) / (413 - 387);
             this.setState({ distortionLevel: distLevel });
@@ -117,14 +119,14 @@ class OWSonification extends React.Component {
         if (this.props.seaLevelRise) {
             //index: SEA LEVEL
             index = currDate - 1880;
-            
+
             //map from 0 to 9 to 0 to 1100 using same formula as above
             var detune = 0;
-    
+
             if (index < 0) {
                 detune = 0;
             }
-    
+
             if (currDate > 2013) {
                 detune = this.props.seaLevelRise[(2013 - 1880)][1] * 1100 / 9;
             }
@@ -142,7 +144,7 @@ class OWSonification extends React.Component {
         Tone.Transport.scheduleRepeat((time) => {
             //Refresh data
             this.getNewData();
-            
+
             //Microplastics: Consonance probability
             var rand = Math.random() * 100; //get random number between 0 and 100
 
@@ -150,36 +152,38 @@ class OWSonification extends React.Component {
 
             if (rand < this.state.consonanceProbability) {
                 intervalIndex = Math.floor(Math.random() * 4);
+                console.log("Consonant!");
                 this.am.frequency.rampTo(this.state.trebleFreqs[this.state.consonantIntervals[intervalIndex]]);
             }
             else {
                 intervalIndex = Math.floor(Math.random() * 8);
+                console.log("Dissonant!");
                 this.am.frequency.rampTo(this.state.trebleFreqs[this.state.dissonantIntervals[intervalIndex]]);
             }
 
             //Macroplastics: AM harmonicity
-            this.am.harmonicity.rampTo(this.state.amHarm);
-            
+            this.am.partialCount = this.state.amHarm;
+
             //Temperature: Fat osc spread
             this.fatOsc.spread = this.state.fatSpread;
-            
+
             //Sea level rise: Fat osc detune
             this.fatOsc.detune.setValueAtTime(this.state.fatDetune, Tone.now());
 
             //Carbon: Distortion level
             this.dist.distortion = this.state.distortionLevel;
             this.dist.wet.rampTo(this.state.distortionLevel);
-
-        }, "1hz", Tone.now());
+            this.rev.wet.rampTo(1 - this.state.distortionLevel);
+        }, "1.5hz", Tone.now());
 
         if (this.state.audioState === false) {
             this.player.start(Tone.now());
             this.fatOsc.start(Tone.now());
             this.am.start(Tone.now());
 
-            this.player.volume.rampTo(0);
-            this.fatOsc.volume.rampTo(-16);
-            this.am.volume.rampTo(-24);
+            this.player.volume.rampTo(-16);
+            this.fatOsc.volume.rampTo(-32);
+            this.am.volume.rampTo(-40);
             this.setState({ audioState: true });
         }
         else if (this.state.audioState === true) {
@@ -214,20 +218,27 @@ class OWSonification extends React.Component {
 
         return (
             <div className="OWSonification" >
-                <button id="guide-button">
-                    show/hide guide
-                </button>
-                <button id="play-audio-button" disabled={!isLoaded} onClick={this.startAudio}>
-                    audio on/off
-                </button>
-                <button id="record-audio-button" disabled={!this.state.chromeFlag} onClick={this.recordAudio}>
-                    record audio
-                </button>
+            <button id="guide-button">
+            show/hide guide
+            </button>
+            <button id="play-audio-button" disabled={!isLoaded} onClick={this.startAudio}>
+            audio on/off
+            </button>
+            <button id="record-audio-button" disabled={this.state.chromeFlag === 0} onClick={this.recordAudio}>
+            record audio
+            </button>
             </div>
         );
     }
 
     componentDidMount() {
+
+        if (window !== null && Reflect.has(window, "MediaRecorder")) {
+            console.log("Recorder available!");
+            this.rec = new Tone.Recorder();
+            Tone.Destination.connect(this.rec);
+            this.setState({ chromeFlag: 1 });
+        }
 
         //Effects
         this.dist = new Tone.Distortion(0).toDestination();
@@ -249,13 +260,10 @@ class OWSonification extends React.Component {
         this.fatOsc = new Tone.FatOscillator("C3", "sawtooth", 40).chain(this.dist, this.rev, Tone.Destination);
 
         this.am = new Tone.AMOscillator("E3", "square", "sine").chain(this.dist, this.rev, Tone.Destination);
-    
+
         this.fm = new Tone.FMOscillator("G3", "sine", "square").chain(this.dist, this.rev, Tone.Destination);
 
-        if (this.state.chromeFlag === 1) {
-            this.rec = new Tone.Recorder();
-            Tone.Destination.connect(this.rec);
-        }
+        console.log("Mounted!");
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
