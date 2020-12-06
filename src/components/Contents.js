@@ -24,9 +24,9 @@ class Contents extends Component {
 							</p>
 							<p>
 								Our ambition was to create a 2D dynamic webpage
-								where visualizations based on data are reflected
-								in the objects present on the screen that
-								viewers can engage with. These objects are
+								where visualizations based on live data are
+								reflected in the objects present on the screen
+								that viewers can engage with. These objects are
 								kinetic representations of changing climate and
 								pollution levels over time for global ocean and
 								weather data. By presenting visualizations of
