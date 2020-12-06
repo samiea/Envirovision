@@ -5,9 +5,9 @@ class Header extends Component {
         return (
             <section id="banner">
                 <div className="inner">
-                    <h2>[project title]</h2>
+                    <h2>Envirovision</h2>
                     <p>
-                        [project motto]
+                        An artistic data-driven rendition of climate change over the past several decades through data sonification and visualization
                     </p>
                 </div>
             </section>

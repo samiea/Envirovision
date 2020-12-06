@@ -98,7 +98,7 @@ class App extends React.Component {
             // order of promises is retained; reference: https://stackoverflow.com/questions/28066429/promise-all-order-of-resolved-values/28066851
             await Promise.all(promises)
                 .then((result) => {
-                    console.log("Request successful");
+                    // console.log("Request successful");
                     this.state.carbonData = result[0].data.co2; // directly modifying the state like this does NOT force re-render
                     this.state.methaneData = result[1].data.methane;
                     this.state.nitrousData = result[2].data.nitrous;

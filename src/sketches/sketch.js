@@ -1,7 +1,6 @@
 import { setUpSun, drawSun, hoveredSunData, resizeSun } from "./sun";
 import { setupLandscape, drawLandscape, drawSeaboard } from "./landscape";
 import {
-    setupMicroPlasticDrops,
     drawMicroPlasticDots,
     resizeMicroPlastics,
     hoveredMicroPlasticData,
@@ -141,6 +140,5 @@ export default function sketch(p) {
         methaneData = newProps.methaneData;
         seaLevelRise = newProps.seaLevelRise;
         nitrousData = newProps.nitrousData;
-        console.log(newProps);
     };
 }
