@@ -50,7 +50,11 @@ class Contents extends Component {
 								We used carbon dioxide, methane, nitrous oxide
 								and average global temperature derived
 								from&nbsp;
-								<a href="https://global-warming.org">
+								<a
+									href="https://global-warming.org"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									global-warming.org
 								</a>
 								. We used this to change sun size and color,
@@ -58,35 +62,40 @@ class Contents extends Component {
 								as well as the audio. We demonstrate sea level
 								to rise with data acquired from the EPA, and
 								micro/macro plastic data from&nbsp;
-								<a href="https://ourworldindata.org">
+								<a
+									href="https://ourworldindata.org"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									ourworldindata.org
 								</a>
 								.
 							</p>
-                            <p>
-                            <p>
-								Additionally, it is very seldom that people hear
-								data as well; certain auditory data is normal,
-								such as the beeping of a heartbeat monitor in a
-								hospital or an old clock bell tolling to tell
-								the hour, but rarely is it presented in a
-								similar fashion as data visuals are. In this
-								project, we added an optional audio component
-								that uses the same data that is being used to
-								determine the visuals, and translates it into
-								sound. The detune spread of the bass sound's
-								multiple oscillators is controlled by the
-								temperature, the overall bass detune is
-								controlled by the sea level, the probability of
-								a consonant vs dissonant interval as defined by
-								medieval counterpoint rules is controlled by the
-								microplastic level, the number of partials of
-								the treble synthesizer is controlled by the
-								macro plastic levels, and distortion and reverb
-								effects are inversely controlled by the carbon
-								levels.
+							<p>
+								<p>
+									Additionally, it is very seldom that people
+									hear data as well; certain auditory data is
+									normal, such as the beeping of a heartbeat
+									monitor in a hospital or an old clock bell
+									tolling to tell the hour, but rarely is it
+									presented in a similar fashion as data
+									visuals are. In this project, we added an
+									optional audio component that uses the same
+									data that is being used to determine the
+									visuals, and translates it into sound. The
+									detune spread of the bass sound's multiple
+									oscillators is controlled by the
+									temperature, the overall bass detune is
+									controlled by the sea level, the probability
+									of a consonant vs dissonant interval as
+									defined by medieval counterpoint rules is
+									controlled by the microplastic level, the
+									number of partials of the treble synthesizer
+									is controlled by the macro plastic levels,
+									and distortion and reverb effects are
+									inversely controlled by the carbon levels.
+								</p>
 							</p>
-                            </p>
 							<a
 								href={"index.html"}
 								onClick={(e) => {
