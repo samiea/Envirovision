@@ -26,7 +26,7 @@ class Contents extends Component {
 								Our ambition was to create a 2D dynamic webpage
 								where sonifications and visualizations based on
 								live data are reflected in the objects present
-								on the screen that user can engage with. These
+								on the screen that users can engage with. These
 								objects are auditory and kinetic representations
 								of changing climate and pollution levels over
 								time for global ocean and weather data. By
