@@ -43,7 +43,7 @@ export function drawGuide(p) {
             "\n\nMicroplastics: The small white dots drifting downward through the ocean represent microplastics, tiny plastic particulates polluting the oceans. They increase and decrease in number based on microplastic levels in the oceans." +
             "\n\nMacroplastics: The large brown and grey shapes on the ocean surface represent macroplastics, larger plastic objects polluting the oceans. They increase and decrease in number based on macroplastic levels in the oceans." +
             "\n\nSky Color: The color of the sky is based on carbon dioxide data, darkening as CO2 levels in the atmosphere increase." +
-            "\n\nSmog: The grey smog clouds increase and decrease in density, size, and number based on of nitrous oxide levels in the atmosphere." +
+            "\n\nSmog: The grey smog clouds increase and decrease in density, size, and number based on nitrous oxide levels in the atmosphere." +
             "\n\nSun Size: The sun increases and decreases in size based on global temperature averages - larger means hotter, smaller means cooler."
     );
 
