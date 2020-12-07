@@ -7,7 +7,7 @@ class Footer extends Component {
 				<div className="inner">
                     <h2 className="major">Meet The Artists</h2>
                     <p>
-                        Got questions or comments? Contact us! We are Computer Science students at Virginia Tech studying creative computing with an aim to make positive impacts on the world
+                        Got questions or comments? Contact us! We are Computer Science students at Virginia Tech studying creative computing with an aim to make positive impacts on the world.
                     </p>
                     <div class="row">
                         <div class="col-6 col-12-medium">

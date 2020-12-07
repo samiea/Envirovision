@@ -23,6 +23,28 @@ class Contents extends Component {
 								numbers alone.
 							</p>
 							<p>
+								Additionally, it is very seldom that people hear
+								data as well; certain auditory data is normal,
+								such as the beeping of a heartbeat monitor in a
+								hospital or an old clock bell tolling to tell
+								the hour, but rarely is it presented in a
+								similar fashion as data visuals are. In this
+								project, we added an optional audio component
+								that uses the same data that is being used to
+								determine the visuals, and translates it into
+								sound. The detune spread of the bass sound's
+								multiple oscillators is controlled by the
+								temperature, the overall bass detune is
+								controlled by the sea level, the probability of
+								a consonant vs dissonant interval as defined by
+								medieval counterpoint rules is controlled by the
+								microplastic level, the number of partials of
+								the treble synthesizer is controlled by the
+								macro plastic levels, and distortion and reverb
+								effects are inversely controlled by the carbon
+								levels.
+							</p>
+							<p>
 								Our ambition was to create a 2D dynamic webpage
 								where sonifications and visualizations based on
 								live data are reflected in the objects present
@@ -75,7 +97,7 @@ class Contents extends Component {
 								}}
 								className="special"
 							>
-								Click to scroll to our visualization
+								Click to scroll to our content
 							</a>
 						</div>
 					</div>
