@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Envirovision/static/css/main.4ca3f91a.chunk.css",
-    "main.js": "/Envirovision/static/js/main.a862165c.chunk.js",
-    "main.js.map": "/Envirovision/static/js/main.a862165c.chunk.js.map",
+    "main.js": "/Envirovision/static/js/main.fd6e1fee.chunk.js",
+    "main.js.map": "/Envirovision/static/js/main.fd6e1fee.chunk.js.map",
     "runtime-main.js": "/Envirovision/static/js/runtime-main.9a1e5e4b.js",
     "runtime-main.js.map": "/Envirovision/static/js/runtime-main.9a1e5e4b.js.map",
     "static/js/2.9f0e700c.chunk.js": "/Envirovision/static/js/2.9f0e700c.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.9a1e5e4b.js",
     "static/js/2.9f0e700c.chunk.js",
     "static/css/main.4ca3f91a.chunk.css",
-    "static/js/main.a862165c.chunk.js"
+    "static/js/main.fd6e1fee.chunk.js"
   ]
 }
