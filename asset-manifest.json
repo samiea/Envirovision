@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/Envirovision/static/css/main.4ca3f91a.chunk.css",
-    "main.js": "/Envirovision/static/js/main.ee7aae42.chunk.js",
-    "main.js.map": "/Envirovision/static/js/main.ee7aae42.chunk.js.map",
+    "main.js": "/Envirovision/static/js/main.b30ef1ee.chunk.js",
+    "main.js.map": "/Envirovision/static/js/main.b30ef1ee.chunk.js.map",
     "runtime-main.js": "/Envirovision/static/js/runtime-main.9a1e5e4b.js",
     "runtime-main.js.map": "/Envirovision/static/js/runtime-main.9a1e5e4b.js.map",
-    "static/js/2.9f0e700c.chunk.js": "/Envirovision/static/js/2.9f0e700c.chunk.js",
-    "static/js/2.9f0e700c.chunk.js.map": "/Envirovision/static/js/2.9f0e700c.chunk.js.map",
+    "static/js/2.833956d6.chunk.js": "/Envirovision/static/js/2.833956d6.chunk.js",
+    "static/js/2.833956d6.chunk.js.map": "/Envirovision/static/js/2.833956d6.chunk.js.map",
     "index.html": "/Envirovision/index.html",
     "static/css/main.4ca3f91a.chunk.css.map": "/Envirovision/static/css/main.4ca3f91a.chunk.css.map",
-    "static/js/2.9f0e700c.chunk.js.LICENSE.txt": "/Envirovision/static/js/2.9f0e700c.chunk.js.LICENSE.txt",
+    "static/js/2.833956d6.chunk.js.LICENSE.txt": "/Envirovision/static/js/2.833956d6.chunk.js.LICENSE.txt",
     "static/media/bubbles.4cef8389.wav": "/Envirovision/static/media/bubbles.4cef8389.wav"
   },
   "entrypoints": [
     "static/js/runtime-main.9a1e5e4b.js",
-    "static/js/2.9f0e700c.chunk.js",
+    "static/js/2.833956d6.chunk.js",
     "static/css/main.4ca3f91a.chunk.css",
-    "static/js/main.ee7aae42.chunk.js"
+    "static/js/main.b30ef1ee.chunk.js"
   ]
 }
